@@ -1,0 +1,228 @@
+{
+  "NALSAR_University_of_Law": {
+    "full_name": "NALSAR University of Law, Hyderabad",
+    "type": "National Law University — Specialized Legal Education",
+    "category": "Law",
+    "admission": {
+      "exam": "CLAT (Common Law Admission Test)",
+      "selectivity": "Highly selective — general category cutoff typically Rank 1 to 130",
+      "note": "One of the most competitive law schools in India"
+    },
+    "fee_structure_first_year": {
+      "Annual_Tuition_Fee": {"General": 165000, "SC_ST": 165000},
+      "Other_Academic_Charges": {"General": 15000, "SC_ST": 15000},
+      "User_Charges_Facilities": {"General": 67000, "SC_ST": 67000},
+      "One_Time_Registration": {"General": 10000, "SC_ST": 10000},
+      "Dining_Mess_Advance": {"General": 40000, "SC_ST": 40000},
+      "Refundable_Security_Deposit": {"General": 20000, "SC_ST": 14000},
+      "Total_First_Year": {"General": 317000, "SC_ST": 311000}
+    },
+    "scholarships": [
+      {
+        "scheme": "Ishan Uday Special Scholarship",
+        "eligibility": "Students from North Eastern region with family income below Rs 4.5 LPA",
+        "amount": "Rs 5,400 per month (General Degree) or Rs 7,800 per month (Professional Degree)"
+      },
+      {
+        "scheme": "PG Indira Gandhi Scholarship",
+        "eligibility": "Single girl child enrolled in PG program, age 30 or below",
+        "amount": "Rs 36,200 per annum for 2 academic years"
+      }
+    ]
+  },
+
+  "NIMS_Medical_Sciences": {
+    "full_name": "Nizam's Institute of Medical Sciences (NIMS)",
+    "type": "Autonomous Medical University",
+    "location": "Hyderabad, Telangana",
+    "category": "Medical",
+    "programs": [
+      {
+        "degree": "B.Sc Nursing",
+        "eligibility": "10+2 with 45% in PCB & English; female candidates only; age 17-25",
+        "entrance": "TS EAMCET",
+        "fee_per_year": 37050
+      },
+      {
+        "degree": "BPT (Bachelor of Physiotherapy)",
+        "eligibility": "10+2 with 50% in Physics, Chemistry, Biology",
+        "entrance": "TS EAMCET",
+        "fee_per_year": 40850
+      },
+      {
+        "degree": "MD (Doctor of Medicine)",
+        "eligibility": "MBBS with minimum 55% aggregate marks",
+        "entrance": "NEET PG",
+        "fee_range": "Rs 19,000 to Rs 2,00,000"
+      },
+      {
+        "degree": "MS (Master of Surgery)",
+        "eligibility": "MBBS with minimum 55% aggregate marks",
+        "entrance": "NEET PG",
+        "fee_range": "Rs 19,000 to Rs 2,00,000"
+      },
+      {
+        "degree": "MHM (Master of Hospital Management)",
+        "eligibility": "Bachelor's degree in any field with 50% aggregate",
+        "entrance": "NIMSET",
+        "fee": 107000
+      },
+      {
+        "degree": "MPT (Master of Physiotherapy)",
+        "eligibility": "BPT with minimum 50% aggregate marks",
+        "entrance": "NIMSET"
+      },
+      {
+        "degree": "DM (Doctorate of Medicine — Specialty)",
+        "eligibility": "MD degree in relevant medical discipline",
+        "entrance": "NEET SS"
+      },
+      {
+        "degree": "M.Ch (Magistar Chirurgiae — Surgery)",
+        "eligibility": "MS degree in relevant surgical discipline",
+        "entrance": "NEET SS"
+      },
+      {
+        "degree": "DNB (Diplomate of National Board)",
+        "eligibility": "MBBS degree + compulsory rotating internship",
+        "entrance": "NEET PG",
+        "fee": 315000
+      }
+    ],
+    "neet_cutoffs_NIMS_Hyderabad": {
+      "2019_vs_2020": [
+        {"category": "OC (Open Category)", "score_2019": 592, "score_2020": 607},
+        {"category": "BCA (Backward Class A)", "score_2019": 504, "score_2020": 538},
+        {"category": "BCB (Backward Class B)", "score_2019": 582, "score_2020": 594},
+        {"category": "BCD (Backward Class D)", "score_2019": 575, "score_2020": 590},
+        {"category": "BCE (Backward Class E)", "score_2019": 579, "score_2020": 598},
+        {"category": "SC (Scheduled Caste)", "score_2019": 490, "score_2020": 519},
+        {"category": "ST (Scheduled Tribe)", "score_2019": 516, "score_2020": 529}
+      ]
+    }
+  },
+
+  "Osmania_Medical_College": {
+    "full_name": "Osmania Medical College (OMC)",
+    "type": "Historic Government Medical College",
+    "location": "Hyderabad, Telangana",
+    "note": "One of the oldest and most respected medical colleges in Hyderabad"
+  },
+
+  "University_of_Hyderabad_HCU": {
+    "full_name": "University of Hyderabad (HCU — Hyderabad Central University)",
+    "type": "Central University — Multi-disciplinary Research University",
+    "campus_size_acres": 2300,
+    "category": "Multi-disciplinary Research",
+    "hostels": {
+      "total_hostels": 23,
+      "allocation_method": "First-come, first-served through Samarth portal",
+      "fifty_km_rule": "Any candidate residing within 50 km of Hyderabad twin cities (Hyderabad + Secunderabad) is NOT eligible for campus hostel accommodation",
+      "exclusions": [
+        "Candidates within 50 km radius of twin cities",
+        "Boarders joining a second program for a similar degree level"
+      ],
+      "occupancy_rule": "Once allotment confirmed on Samarth portal, candidates must occupy room and sign register within 48 hours or allotment is cancelled"
+    },
+    "hostel_fees": {
+      "UR_EWS_OBC": {
+        "Mess_Deposit_Refundable": 2500,
+        "Room_Rent_Per_Semester": 500,
+        "Crockery_Licensing_Fee_Per_Year": 250,
+        "UoH_Hostel_Fund_One_Time": 600,
+        "Total_Hostel_Admission": 3850
+      },
+      "SC_ST_PWD": {
+        "Mess_Deposit_Refundable": 2500,
+        "Room_Rent_Per_Semester": 0,
+        "Crockery_Licensing_Fee_Per_Year": 250,
+        "UoH_Hostel_Fund_One_Time": 400,
+        "Total_Hostel_Admission": 3150
+      },
+      "SC_ST_Income_Below_2_Lakhs": {
+        "Mess_Deposit_Refundable": 1500,
+        "Room_Rent_Per_Semester": 0,
+        "Crockery_Licensing_Fee_Per_Year": 250,
+        "UoH_Hostel_Fund_One_Time": 400,
+        "Total_Hostel_Admission": 2150
+      }
+    },
+    "international_admission_requirements": {
+      "GRE_General": {
+        "Verbal": "Score >= 500",
+        "Quantitative": "Score >= 500",
+        "Analytical_Writing": "Score >= 4.0"
+      },
+      "GRE_Subject": {
+        "Biology_Biochemistry": "Subject Score >= 600"
+      },
+      "English_Proficiency": {
+        "IELTS_Academic": "Minimum score >= 6.5",
+        "TOEFL_Paper": ">=560",
+        "TOEFL_Computer": ">=220",
+        "TOEFL_Internet": ">=80"
+      }
+    }
+  },
+
+  "Osmania_University_CBCS": {
+    "full_name": "Osmania University — Choice Based Credit System (CBCS)",
+    "type": "State University — Multi-disciplinary",
+    "location": "Hyderabad, Telangana",
+    "cbcs_rules": {
+      "attendance_requirement": "75% minimum attendance required for term examinations",
+      "academic_calendar": "Two semesters per year, each offering 90 teaching days",
+      "internal_assessment": {
+        "weightage": "20% of total course marks",
+        "structure": {
+          "two_internal_tests": "15 marks each",
+          "assignment": "5 marks",
+          "test_format": {
+            "MCQs": "10 questions × 0.5 marks = 5 marks",
+            "Fill_in_the_blanks": "10 questions × 0.5 marks = 5 marks",
+            "Short_answer_questions": "5 questions × 1 mark = 5 marks"
+          }
+        }
+      },
+      "end_semester_exam": {
+        "weightage": "80% of total course marks",
+        "evaluation": "Dual examiner system to ensure grading consistency"
+      },
+      "grade_calculation": {
+        "SGPA_formula": "SGPA = Sum(Letter Grade Points × Credits) / Sum(Credits)",
+        "CGPA_formula": "CGPA = Sum(SGPA × Credits) / Sum(Total Credits)",
+        "note": "SGPA computed per semester; CGPA is the cumulative weighted average across all semesters"
+      }
+    }
+  },
+
+  "BITS_Pilani_Hyderabad": {
+    "full_name": "BITS Pilani — Hyderabad Campus (Shameerpet)",
+    "type": "Private Deemed University — Residential Branch Campus",
+    "campus_size_acres": 200,
+    "student_strength": "2,800+ students",
+    "model": "Fully residential self-contained academic township",
+    "campus_facilities": {
+      "commercial_complex": {
+        "size_sqft": 15000,
+        "outlets": [
+          {"category": "Banking Services", "details": "State Bank of Hyderabad (SBH) Branch + ATM"},
+          {"category": "Academic Store", "details": "The Book Syndicate Academic Store"},
+          {"category": "Grocery Supermarket", "details": "MORE Retail Supermarket"},
+          {"category": "Dine-In Restaurant", "details": "Multicuisine Restaurant"},
+          {"category": "Bakery & Confectionery", "details": "Fresh Bakery and Hot Food Counter"},
+          {"category": "Grooming Salons", "details": "Dedicated separate beauty parlors for men and women"},
+          {"category": "Healthcare Pharmacy", "details": "On-site pharmacy dispensing medical prescriptions"},
+          {"category": "Fruiterer", "details": "Fresh Fruit and Vegetable Stall"},
+          {"category": "Telecommunications", "details": "Telecom and Electronic Utility Shop"},
+          {"category": "Postal Services", "details": "Government Post Office Branch"}
+        ]
+      },
+      "medical_center": {
+        "availability": "24/7 with resident clinical staff",
+        "equipment": ["ECG machine", "Blood sugar checking facilities"],
+        "emergency_tie_up": "Medicity Hospital, Medchal"
+      }
+    }
+  }
+}

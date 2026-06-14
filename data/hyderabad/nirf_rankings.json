@@ -1,0 +1,39 @@
+{
+  "nirf_rankings_2024": {
+    "description": "National Institutional Ranking Framework (NIRF) 2024 rankings for Indian higher education institutions",
+    "assessment_parameters": [
+      "Teaching, Learning and Resources (TLR)",
+      "Research and Professional Practices (RP)",
+      "Graduation Outcomes (GO)",
+      "Outreach and Inclusivity (OI)",
+      "Perception (PR)"
+    ],
+    "overall_rankings": [
+      {"rank": 1, "institution": "Indian Institute of Technology Madras", "score": 87.31, "location": "Chennai"},
+      {"rank": 2, "institution": "Indian Institute of Science (IISc)", "score": 85.00, "location": "Bengaluru"},
+      {"rank": 3, "institution": "Indian Institute of Technology Bombay", "score": 81.62, "location": "Mumbai"},
+      {"rank": 4, "institution": "Indian Institute of Technology Delhi", "score": 80.67, "location": "New Delhi"},
+      {"rank": 5, "institution": "Indian Institute of Technology Kanpur", "score": 77.25, "location": "Kanpur"}
+    ],
+    "engineering_rankings": [
+      {"rank": 1, "institution": "Indian Institute of Technology Madras", "score": 88.72, "location": "Chennai"},
+      {"rank": 2, "institution": "Indian Institute of Technology Delhi", "score": 85.74, "location": "New Delhi"},
+      {"rank": 3, "institution": "Indian Institute of Technology Bombay", "score": 83.65, "location": "Mumbai"}
+    ],
+    "university_rankings": [
+      {"rank": 1, "institution": "Indian Institute of Science", "score": 85.05, "location": "Bengaluru"},
+      {"rank": 2, "institution": "Jawaharlal Nehru University (JNU)", "score": 71.00, "location": "New Delhi"},
+      {"rank": 3, "institution": "Manipal Academy of Higher Education", "score": 69.25, "location": "Manipal"}
+    ],
+    "college_rankings": [
+      {"rank": 1, "institution": "Hindu College", "score": 84.01, "location": "Delhi"},
+      {"rank": 2, "institution": "Miranda House", "score": 83.20, "location": "Delhi"},
+      {"rank": 3, "institution": "Hans Raj College", "score": 81.75, "location": "Delhi"}
+    ],
+    "medical_rankings": [
+      {"rank": 1, "institution": "All India Institute of Medical Sciences (AIIMS)", "location": "New Delhi", "score": 91.80},
+      {"rank": 2, "institution": "PGIMER", "location": "Chandigarh"},
+      {"rank": 3, "institution": "Christian Medical College", "location": "Vellore"}
+    ]
+  }
+}

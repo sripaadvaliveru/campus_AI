@@ -1,0 +1,177 @@
+{
+  "institution": "IIIT Hyderabad",
+  "full_name": "International Institute of Information Technology Hyderabad",
+  "established": 1998,
+  "type": "Autonomous Deemed University — Public-Private Partnership (PPP) Model",
+  "campus": "66-acre urban campus, Gachibowli, Hyderabad",
+  "category": "Information Technology & Computer Science (Specialized)",
+
+  "supercomputing_infrastructure": {
+    "Ada_Cluster": {
+      "purpose": "Highly intensive AI/ML workloads",
+      "nodes": 92,
+      "per_node_specs": {
+        "processors": "Dual Intel Xeon E5-2640 v4",
+        "RAM_GB": 128,
+        "GPUs": "4x Nvidia GTX 1080 Ti or RTX 2080 Ti",
+        "storage": "2 TB SATA scratch disk + 960 GB SSD SATA"
+      },
+      "total_CPU_cores": 3680,
+      "total_GPU_cores": 1472512,
+      "total_RAM_GB": 11776,
+      "peak_performance_TFLOPS": 70.66
+    },
+    "Abacus_Cluster": {
+      "nodes": 59,
+      "node_model": "HP SL230s",
+      "per_node_specs": {
+        "processors": "Dual Intel Xeon E5-2640",
+        "RAM_GB": "48 to 96",
+        "storage": "2 TB scratch disk",
+        "interconnect": "4X QDR Infiniband"
+      },
+      "peak_performance_TFLOPS": 14
+    }
+  },
+
+  "specialized_labs": {
+    "Polymer_Lab": {
+      "equipment": ["Spin-coaters", "Vacuum systems", "Microscopes", "Precision pipettes"],
+      "purpose": "Device characterization and material science research"
+    },
+    "Embedded_Systems_IoT_Lab": {
+      "equipment": ["ARM processor kits", "FPGA boards", "TI mixed signal system development tools"],
+      "purpose": "Embedded systems and IoT development"
+    }
+  },
+
+  "hostels_residential": {
+    "policy": "On-campus housing is mandatory for all students",
+    "room_allocation": {
+      "1st_year_UG": "Double-occupancy rooms",
+      "2nd_year_UG": "Double-occupancy rooms",
+      "3rd_year_and_above": "Single-occupancy rooms"
+    },
+    "hostel_blocks": [
+      {"name": "Palash Nivas (OBH)", "residents": "Undergraduate seniors and 1st year PG students"},
+      {"name": "New Boys Hostel (NBH)", "residents": "Research MS and PhD students"},
+      {"name": "Bakul Nivas", "residents": "1st-year UG and 2nd-year PG students"},
+      {"name": "Old Parijaat Nivas", "residents": "Women students"},
+      {"name": "New Parijaat Nivas", "residents": "Women students"}
+    ]
+  },
+
+  "dining_food": {
+    "booking_system": "Specialized mess booking portal — students must register food preferences 4 days in advance",
+    "dining_halls": [
+      {
+        "name": "Kadamba Dining Services",
+        "cuisine": "South Indian vegetarian and non-vegetarian",
+        "non_veg_frequency": "Non-vegetarian meals 5 times per week",
+        "eggs": "Eggs served daily"
+      },
+      {
+        "name": "Palash Dining Services",
+        "cuisine": "Traditional North Indian vegetarian meals"
+      },
+      {
+        "name": "Yuktahar Dining Services",
+        "cuisine": "Oil-free, light, balanced Saatvik-style vegetarian meals"
+      }
+    ],
+    "commercial_outlets": [
+      {
+        "name": "Devid's Bakery",
+        "timings": "4 PM to 4 AM",
+        "specialty": "Ice cream brownies and baked goods"
+      },
+      {
+        "name": "Tantra",
+        "timings": "Late night",
+        "specialty": "Full meal-sized portions"
+      },
+      {
+        "name": "Ministry of Cheese",
+        "specialty": "Quick bites and snacks"
+      },
+      {
+        "name": "General Canteens",
+        "locations": ["Near Vindhya Block", "Near basketball court"]
+      }
+    ]
+  },
+
+  "student_life_clubs": {
+    "clubs": ["Music Club", "Dance Club", "Quizzing Club", "Literary Club", "Design Club", "Programming Club", "Open Source Development Club"],
+    "major_annual_events": [
+      {"name": "Octave", "description": "Inter-house music competition"},
+      {"name": "Cult Night", "description": "Final house dance competition, the cultural highlight of the year"}
+    ],
+    "sports": ["Football", "Table Tennis", "Basketball", "Yoga", "Inter-batch sports tournaments"]
+  },
+
+  "admissions": {
+    "application_fee": 2500,
+    "allotment_fee_non_refundable": 10000,
+    "first_semester_tuition_fee": 250000,
+    "pathways": [
+      {
+        "channel": "JEE Main Pathway",
+        "degree": "B.Tech (CSE / ECE)",
+        "criteria": "National JEE Main Percentile Rank",
+        "counseling": "JoSAA or IIIT Counseling"
+      },
+      {
+        "channel": "UGEE Channel",
+        "degree": "B.Tech + MS Dual Degree",
+        "criteria": "IIITH UGEE Entrance Exam + Interview",
+        "key_date_2026": "Interview: June 19-20, 2026"
+      },
+      {
+        "channel": "DASA UG Channel",
+        "degree": "B.Tech / Dual Degree",
+        "criteria": "Foreign Nationals, OCI, or PIO candidates",
+        "process": "Direct Admission Portal"
+      },
+      {
+        "channel": "PGEE Channel",
+        "degree": "M.Tech / MS by Research",
+        "criteria": "IIITH PGEE Entrance Examination"
+      },
+      {
+        "channel": "GATE Pathway",
+        "degree": "M.Tech Programs",
+        "criteria": "Valid GATE Score",
+        "key_date_2026": "Choice-locking: May 15 to June 8, 2026",
+        "counseling": "CCMT Counseling"
+      }
+    ]
+  },
+
+  "placements": {
+    "2023": {
+      "registered_students": 349,
+      "placed_students": 341,
+      "placement_rate": "97.70%",
+      "highest_salary_LPA": 102.00,
+      "average_salary_LPA": 23.43,
+      "lowest_salary_LPA": 3.00
+    },
+    "2024": {
+      "registered_students": 414,
+      "placed_students": 411,
+      "placement_rate": "99.27%",
+      "highest_salary_LPA": 65.00,
+      "average_salary_LPA": 26.34,
+      "lowest_salary_LPA": 5.00
+    },
+    "2025": {
+      "registered_students": 389,
+      "placed_students": 374,
+      "placement_rate": "96.14%",
+      "highest_salary_LPA": 128.00,
+      "average_salary_LPA": 33.96,
+      "lowest_salary_LPA": 6.00
+    }
+  }
+}

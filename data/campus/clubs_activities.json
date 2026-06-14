@@ -1,0 +1,222 @@
+{
+  "clubs_and_activities": {
+    "technical_clubs": [
+      {
+        "name": "Coding Club / Programming Club",
+        "activities": ["Competitive programming contests", "Hackathons", "Coding workshops (Python, Java, C++)", "LeetCode/Codeforces problem-solving sessions"],
+        "platforms": "HackerRank, Codeforces, LeetCode, CodeChef",
+        "how_to_join": "Attend orientation at the beginning of semester. Fill membership form. Nominal fee of Rs. 100-300/year.",
+        "benefits": "Improves DSA skills, competitive programming profile, internship readiness"
+      },
+      {
+        "name": "Robotics Club",
+        "activities": ["Robot building workshops", "Line-follower, maze-solver competitions", "Participation in Robocon, ROBOFEST, IIT Techfests", "Drone technology sessions"],
+        "how_to_join": "Attend technical selection round or workshop",
+        "benefits": "Hardware skills, team collaboration, national competition exposure"
+      },
+      {
+        "name": "IEEE Student Branch",
+        "activities": ["Technical workshops on emerging technologies", "Paper presentations", "IEEE conferences", "Industry expert talks"],
+        "eligibility": "Open to all engineering students. Annual IEEE student membership fee applies.",
+        "how_to_join": "Register at ieee.org and join your college's IEEE student branch",
+        "benefits": "Access to IEEE digital library, networking with global engineers, professional development"
+      },
+      {
+        "name": "Web Development Club",
+        "activities": ["HTML/CSS/JavaScript workshops", "Full-stack development projects", "Hackathons", "Website building for college events"],
+        "tech_stack": "React, Node.js, Django, MongoDB, Firebase",
+        "how_to_join": "Semester registration drive; open-source project contribution"
+      },
+      {
+        "name": "AI/ML Club",
+        "activities": ["Machine learning workshops (scikit-learn, TensorFlow, PyTorch)", "Kaggle competitions", "Research paper reading groups", "AI project showcases"],
+        "how_to_join": "Basic Python knowledge required; attend introductory session"
+      },
+      {
+        "name": "Entrepreneurship Cell (E-Cell)",
+        "activities": ["Startup pitching workshops", "Business plan competitions", "Investor meets", "Mentorship programs", "Incubation center access"],
+        "how_to_join": "Open to all students passionate about entrepreneurship",
+        "benefits": "Startup ecosystem exposure, networking with entrepreneurs and VCs, seed funding opportunities"
+      },
+      {
+        "name": "SAE Collegiate Club (for auto/mech)",
+        "activities": ["Formula Student / BAJA SAE car design", "Participation in national SAE competitions"],
+        "eligibility": "Mechanical, Aerospace, Automotive engineering students preferred"
+      },
+      {
+        "name": "Photography & Filmmaking Club",
+        "activities": ["Photography walks", "Short film production", "Photo editing workshops (Lightroom, Photoshop)", "Campus media coverage"],
+        "how_to_join": "Portfolio submission or open audition; interest in visual media"
+      },
+      {
+        "name": "Electronics Club / Hardware Club",
+        "activities": ["Arduino/Raspberry Pi projects", "PCB designing", "Electronics project exhibitions", "IoT workshops"],
+        "how_to_join": "Interest in electronics; attend first session for orientation"
+      }
+    ],
+    "cultural_clubs": [
+      {
+        "name": "Music Club",
+        "sub_types": ["Western Band (electric guitar, drums, keyboard)", "Indian Classical Music (vocal, sitar, tabla)", "Choir Group"],
+        "activities": ["Weekly practice sessions", "Cultural fest performances", "Inter-college music competitions", "College band formation"],
+        "how_to_join": "Audition at the start of semester or during cultural fest registrations",
+        "events": "Freshers party, annual cultural fest (Mood-I, Saarang, Culturals, Utsav — varies by college)"
+      },
+      {
+        "name": "Dance Club",
+        "sub_types": ["Classical Dance (Bharatnatyam, Kuchipudi, Kathak, Odissi)", "Folk Dance (Garba, Bhangra, Bihu)", "Western Dance (Hip-hop, Contemporary, Salsa)", "Fusion Dance"],
+        "activities": ["Regular practice sessions", "Annual Day performances", "Inter-college competitions (Rann-Utsav, Mood-I, etc.)", "Flash mobs"],
+        "how_to_join": "Audition at semester start; some sub-groups have open practice sessions"
+      },
+      {
+        "name": "Drama / Theatre Club",
+        "activities": ["Street plays (nukkad natak)", "One-act plays", "Full-length stage productions", "Mime and mono-act", "Inter-college drama festivals"],
+        "how_to_join": "Audition with a short performance; no prior experience required usually",
+        "benefits": "Public speaking, confidence, storytelling, stage management skills"
+      },
+      {
+        "name": "Fine Arts Club",
+        "activities": ["Painting (oil, watercolor, acrylic)", "Sketching and illustration", "Sculpture", "Digital art", "Campus mural projects", "Art exhibitions"],
+        "how_to_join": "Portfolio or interest; workshops open to all"
+      },
+      {
+        "name": "Literary Club / Quill Club",
+        "activities": ["Creative writing workshops", "Poetry slams", "Debates and elocution", "College magazine publication", "Book reading sessions", "Spell-bee and quiz competitions"],
+        "how_to_join": "Open to all; writing sample or interest declaration"
+      },
+      {
+        "name": "Cultural Fest Committee",
+        "activities": ["Organizing annual cultural festival", "Event management", "Sponsorship outreach", "Artist management", "Volunteer coordination"],
+        "how_to_join": "Open recruitment; roles include coordinator, volunteer, design team, media team, logistics",
+        "importance": "Cultural fest is the biggest student-organized event; great leadership and management experience"
+      }
+    ],
+    "sports_clubs": [
+      {
+        "name": "Cricket Team",
+        "activities": ["Daily practice sessions", "Inter-college tournaments", "University-level tournaments", "Annual cricket league within campus"],
+        "how_to_join": "Trials at the start of academic year; conducted by physical education department"
+      },
+      {
+        "name": "Football Team",
+        "activities": ["Regular practice", "Inter-college football tournaments", "Intramural football"],
+        "how_to_join": "Trials; register with physical education department"
+      },
+      {
+        "name": "Basketball Team",
+        "activities": ["Daily practice", "3x3 and 5x5 inter-college tournaments"],
+        "how_to_join": "Trials at PE department"
+      },
+      {
+        "name": "Badminton Club",
+        "activities": ["Regular practice", "Singles and doubles tournaments", "Friendly matches between departments"],
+        "how_to_join": "Open for all; PE department registration"
+      },
+      {
+        "name": "Chess Club",
+        "activities": ["Chess tournaments (Blitz, Rapid, Classical)", "Online chess competitions (Chess.com, Lichess)", "Inter-college chess championships"],
+        "how_to_join": "Open for all; basic chess knowledge helpful"
+      },
+      {
+        "name": "Athletics Club",
+        "activities": ["Track and field (100m, 200m, 400m, long jump, shot put)", "Annual athletics meet", "University-level athletics"],
+        "how_to_join": "PE department selection"
+      }
+    ],
+    "social_service": [
+      {
+        "name": "NSS (National Service Scheme)",
+        "overview": "NSS is a Central Government program for students to engage in community service. 240 hours of community work earns NSS certificate.",
+        "activities": ["Blood donation camps", "Village adoption programs", "Literacy drives", "Environmental campaigns (tree plantation, clean campus)", "Disaster relief support", "Health awareness camps"],
+        "benefits": "NSS certificate adds value to resume; extra marks in some university systems; personality development",
+        "how_to_join": "Register at the beginning of academic year through NSS unit. Limited seats — early registration recommended.",
+        "annual_camp": "7-day special NSS camp in an adopted village; mandatory for certificate completion"
+      },
+      {
+        "name": "NCC (National Cadet Corps)",
+        "overview": "Para-military training program for college students. Three wings: Army, Navy, Air Force.",
+        "activities": ["Parade and drill training", "Camp attendance (Annual Training Camp)", "Social service activities", "Shooting practice", "Trekking and mountaineering"],
+        "benefits": "NCC C-Certificate holders get preference in government jobs, army entry, GD/leadership skills",
+        "how_to_join": "Registration at beginning of year; physical fitness test and interview",
+        "certificate_levels": "A Certificate (after 1st year), B Certificate (after 2nd year), C Certificate (after 3rd year) — C Certificate is most valued"
+      },
+      {
+        "name": "Rotaract Club",
+        "overview": "Youth wing of Rotary International. Focus on community service and leadership.",
+        "activities": ["Community service projects", "Blood donation", "Environment initiatives", "Leadership conferences"],
+        "how_to_join": "Contact Rotaract club president; annual membership fee of Rs. 500-1000"
+      },
+      {
+        "name": "Red Cross Youth Wing",
+        "activities": ["First aid training", "Blood donation drives", "Disaster relief", "Healthcare awareness"],
+        "how_to_join": "Register at beginning of year; orientation session"
+      }
+    ],
+    "student_governance": [
+      {
+        "name": "Student Council / Student Union",
+        "overview": "Elected body representing student interests to college management. Organizes events, addresses grievances, manages student welfare.",
+        "positions": ["President", "Vice President", "General Secretary", "Cultural Secretary", "Sports Secretary", "Class Representatives (CR)"],
+        "elections": "Held annually at the start of academic year. Nomination → Campaigning → Voting → Results",
+        "responsibilities": "Represent students in college committees, organize events, manage student welfare fund, address academic and non-academic issues",
+        "how_to_participate": "Vote in elections as a student; contest elections if interested; become Class Representative (CR) for your batch"
+      },
+      {
+        "name": "Anti-Ragging Committee",
+        "overview": "Mandatory committee per UGC Regulation 2009 to prevent and punish ragging on campus.",
+        "complaint_mechanism": "UGC Anti-Ragging Helpline: 1800-180-5522 | antiragging.in",
+        "penalties": "Expulsion, rustication, cancellation of admission, FIR under IPC for severe ragging cases"
+      },
+      {
+        "name": "Internal Complaints Committee (ICC) / POSH Committee",
+        "overview": "Handles complaints of sexual harassment on campus as per Prevention of Sexual Harassment (POSH) Act 2013.",
+        "contact": "Contact ICC/POSH committee through college administration or women's cell",
+        "confidentiality": "All complaints are treated with strict confidentiality"
+      }
+    ],
+    "major_annual_events": [
+      {
+        "name": "Freshers' Party / Orientation",
+        "timing": "August – September (beginning of academic year)",
+        "description": "Welcome event for new students organized by senior students. Cultural performances, fun games, Fresher of the Year contest."
+      },
+      {
+        "name": "Cultural Fest (Annual College Fest)",
+        "timing": "October – March (varies by college)",
+        "description": "Multi-day mega event with competitions in music, dance, drama, fine arts, literary events, sports. Inter-college participation. Pro-nights with celebrity performances in large colleges.",
+        "famous_fests": ["Saarang (IIT Madras)", "Mood Indigo (IIT Bombay)", "Rendezvous (IIT Delhi)", "Kalotsav (NIT Calicut)", "Spandan (IIT BHU)", "Enthiran (Thiagarajar)", "Waves (BITS Goa)"]
+      },
+      {
+        "name": "Technical Fest / Techno-fest",
+        "timing": "October – February",
+        "description": "Technical competitions: robotics, coding, paper presentation, project expo, hackathon, quizzes. Industry talks and workshops.",
+        "famous_fests": ["Shaastra (IIT Madras)", "Techfest (IIT Bombay)", "Pragyan (NIT Trichy)", "Wissenaire (IIT BBS)"]
+      },
+      {
+        "name": "Sports Meet / Annual Athletic Meet",
+        "timing": "November – February",
+        "description": "College-wide sports competition across cricket, football, athletics, badminton, chess, indoor games. Inter-departmental and inter-year competitions."
+      },
+      {
+        "name": "Industry Visit / Educational Tour",
+        "timing": "During semester as part of curriculum",
+        "description": "Department-organized visits to industry, research centers, historical sites. Mandatory attendance; enhances practical learning."
+      },
+      {
+        "name": "Convocation",
+        "timing": "November – January (varies by university)",
+        "description": "Annual ceremony for conferring degrees to outgoing batch. Chief guest from industry or government. Gold medals awarded for academic excellence."
+      },
+      {
+        "name": "Republic Day / Independence Day Celebrations",
+        "timing": "January 26 and August 15",
+        "description": "Flag hoisting, cultural programs, march past, speeches. Attendance often mandatory for students."
+      },
+      {
+        "name": "Annual Day / College Foundation Day",
+        "timing": "Varies by institution",
+        "description": "Celebration of college founding. Cultural performances, award distribution, alumni meet."
+      }
+    ]
+  }
+}

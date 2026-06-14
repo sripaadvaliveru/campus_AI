@@ -1,0 +1,125 @@
+{
+  "college_types": [
+    {
+      "type": "Engineering & Technology",
+      "abbreviations": ["B.Tech", "BE", "M.Tech", "ME", "B.E.", "MTech"],
+      "common_branches": [
+        "Computer Science & Engineering (CSE)",
+        "Electronics & Communication Engineering (ECE)",
+        "Electrical Engineering (EEE / EE)",
+        "Mechanical Engineering (ME / MECH)",
+        "Civil Engineering (CE)",
+        "Information Technology (IT)",
+        "Chemical Engineering (CHE)",
+        "Aerospace Engineering",
+        "Biotechnology Engineering",
+        "Artificial Intelligence & Data Science (AIDS)",
+        "Cyber Security",
+        "Robotics & Automation",
+        "Industrial Engineering",
+        "Agricultural Engineering",
+        "Mining Engineering",
+        "Petroleum Engineering",
+        "Production Engineering",
+        "Instrumentation Engineering"
+      ],
+      "duration": "4 years (B.Tech/BE), 2 years (M.Tech/ME)",
+      "regulatory_body": "AICTE (All India Council for Technical Education)",
+      "top_institutions": ["IITs", "NITs", "IIITs", "BITS Pilani", "VIT", "Manipal", "SRM", "Anna University Affiliates", "Mumbai University Affiliates"],
+      "exam_pattern": "Semester-wise with internal (20-30%) + external exams (70-80%)",
+      "grading": "CGPA/SGPA on 10-point scale (most universities)",
+      "attendance": "Minimum 75% attendance required (85% in some)",
+      "typical_intake": "60-180 students per branch per year"
+    },
+    {
+      "type": "Medical & Health Sciences",
+      "programs": ["MBBS", "BDS", "BAMS", "BHMS", "B.Pharm", "M.Pharm", "BPT", "BOT", "B.Sc Nursing", "MD", "MS", "MDS"],
+      "duration": "MBBS: 5.5 years, BDS: 5 years, B.Pharm: 4 years, Nursing: 4 years",
+      "regulatory_body": "NMC (National Medical Commission), DCI (Dental Council), PCI (Pharmacy Council)",
+      "admission": "Through NEET UG/PG entrance exam",
+      "grading": "Pass/Fail with marks percentage; 50% pass mark (45% for SC/ST)",
+      "typical_features": "Clinical rotations, internship mandatory, hands-on patient care training"
+    },
+    {
+      "type": "Arts, Science & Commerce",
+      "programs": ["BA", "B.Sc", "B.Com", "MA", "M.Sc", "M.Com", "BBA", "BCA"],
+      "common_subjects_science": ["Physics", "Chemistry", "Mathematics", "Biology", "Computer Science", "Statistics", "Botany", "Zoology"],
+      "common_subjects_arts": ["English", "History", "Political Science", "Sociology", "Psychology", "Economics", "Philosophy"],
+      "common_subjects_commerce": ["Accountancy", "Business Studies", "Economics", "Finance", "Taxation", "Auditing"],
+      "duration": "3 years (UG), 2 years (PG)",
+      "regulatory_body": "UGC (University Grants Commission)",
+      "grading": "CGPA or percentage-based; semester or annual pattern",
+      "exam_pattern": "Annual or semester system depending on university"
+    },
+    {
+      "type": "Management & Business",
+      "programs": ["MBA", "BBA", "PGDM", "Executive MBA", "MMS"],
+      "specializations": ["Finance", "Marketing", "Human Resources", "Operations", "IT Management", "International Business", "Entrepreneurship", "Healthcare Management", "Rural Management"],
+      "duration": "2 years (MBA/PGDM), 3 years (BBA)",
+      "regulatory_body": "AICTE, UGC, AACSB (international accreditation)",
+      "admission": "Through CAT, MAT, XAT, GMAT, CMAT, state-level MBA entrance exams",
+      "grading": "CGPA on 4 or 10-point scale",
+      "typical_features": "Case studies, industry projects, summer internship mandatory, placement cell very active"
+    },
+    {
+      "type": "Law",
+      "programs": ["BA LLB", "B.Com LLB", "BBA LLB", "LLB", "LLM"],
+      "duration": "5 years (integrated BA LLB), 3 years (LLB after graduation), 1-2 years (LLM)",
+      "regulatory_body": "Bar Council of India (BCI)",
+      "admission": "Through CLAT, AILET, LSAT India, state law entrance exams",
+      "grading": "Marks percentage; minimum 45-50% to pass",
+      "typical_features": "Moot court practice, internships with advocates/courts, legal aid clinics"
+    },
+    {
+      "type": "Architecture & Design",
+      "programs": ["B.Arch", "M.Arch", "B.Des", "M.Des", "B.Planning"],
+      "duration": "5 years (B.Arch), 2 years (M.Arch)",
+      "regulatory_body": "Council of Architecture (COA), NID (National Institute of Design)",
+      "admission": "Through NATA, JEE Paper 2, UCEED (Design)",
+      "typical_features": "Studio work, design portfolio, site visits, jury presentations"
+    },
+    {
+      "type": "Agriculture & Allied Sciences",
+      "programs": ["B.Sc Agriculture", "B.Sc Horticulture", "B.Sc Forestry", "B.V.Sc", "B.F.Sc (Fisheries)", "M.Sc Agriculture"],
+      "duration": "4 years (UG), 2 years (PG)",
+      "regulatory_body": "ICAR (Indian Council of Agricultural Research)",
+      "admission": "Through ICAR AIEEA, state agricultural university entrance exams",
+      "typical_features": "Farm practicals, field visits, research projects, RAWE (Rural Agricultural Work Experience)"
+    },
+    {
+      "type": "Education & Teacher Training",
+      "programs": ["B.Ed", "M.Ed", "D.El.Ed", "B.P.Ed", "M.P.Ed", "Integrated B.A./B.Sc B.Ed"],
+      "duration": "2 years (B.Ed), 1-2 years (M.Ed)",
+      "regulatory_body": "NCTE (National Council for Teacher Education)",
+      "admission": "Through state B.Ed entrance exams, CTET, TET for teacher jobs"
+    },
+    {
+      "type": "Fine Arts & Performing Arts",
+      "programs": ["BFA", "MFA", "B.Mus", "M.Mus", "B.Performing Arts"],
+      "duration": "4 years (BFA), 2 years (MFA)",
+      "regulatory_body": "UGC, Sangeet Natak Akademi (Performing Arts)"
+    },
+    {
+      "type": "Pharmacy",
+      "programs": ["D.Pharm", "B.Pharm", "M.Pharm", "Pharm.D"],
+      "duration": "2 years (D.Pharm), 4 years (B.Pharm), 2 years (M.Pharm), 6 years (Pharm.D)",
+      "regulatory_body": "Pharmacy Council of India (PCI)"
+    }
+  ],
+  "autonomous_vs_affiliated": {
+    "autonomous": "Sets its own syllabus, conducts its own exams, grants degrees in its own name or through a university. Example: BITS Pilani, VIT, Manipal.",
+    "affiliated": "Follows parent university's syllabus and exam schedule. Degrees awarded by the parent university. Most government and private colleges fall in this category.",
+    "deemed_university": "UGC-granted status allowing institution to function as an independent university. Example: Amity University, SASTRA University.",
+    "central_university": "Established by Central Government. Example: Delhi University, JNU, BHU.",
+    "state_university": "Established by State Government. Example: Mumbai University, Osmania University.",
+    "national_importance": "Institutions of National Importance: IITs, NITs, IISc, IIMs, AIIMS."
+  },
+  "accreditation_bodies": {
+    "NAAC": "National Assessment and Accreditation Council - grades colleges A++, A+, A, B++, B+, B, C, D",
+    "NBA": "National Board of Accreditation - accredits engineering & management programs",
+    "NIRF": "National Institutional Ranking Framework - annual ranking by MHRD/Ministry of Education",
+    "ABET": "International accreditation for engineering programs",
+    "AACSB": "International accreditation for business schools",
+    "IET": "Institution of Engineering and Technology accreditation"
+  }
+}

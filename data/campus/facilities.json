@@ -1,0 +1,193 @@
+{
+  "facilities": {
+    "library": {
+      "overview": "The college library is a central knowledge hub available to all students, faculty, and staff. Most college libraries are open 6 days a week (Monday–Saturday) and some have digital 24/7 access.",
+      "timings": {
+        "weekdays": "8:00 AM – 8:00 PM (general); extended to 10 PM during exam seasons",
+        "saturday": "9:00 AM – 5:00 PM",
+        "sunday": "Closed (some digital libraries open)",
+        "exam_season": "Extended hours notified through library notice board / student portal"
+      },
+      "services": [
+        "Book lending (2-5 books per student for 7-14 days)",
+        "Reference section (books for in-library use only)",
+        "Digital library / e-resources (NPTEL, DELNET, INFLIBNET/N-LIST access)",
+        "Journals and periodicals (national and international)",
+        "Newspaper section",
+        "Reading rooms / silent study zone",
+        "Photocopy / printing facility",
+        "Internet terminals",
+        "Thesis and project report archive",
+        "Competitive exam section (UPSC, GATE, CAT books)"
+      ],
+      "membership": "Valid college ID card is mandatory for library membership and book borrowing.",
+      "fine_policy": "Overdue fine: Rs. 1-5 per book per day. Lost book: student pays replacement cost + Rs. 100 fine.",
+      "n_list_access": "INFLIBNET N-LIST provides access to 6000+ e-journals and 3,35,000+ e-books. Access through library credentials on nlist.inflibnet.ac.in",
+      "how_to_access_ebook": "Login to your college's N-LIST/DELNET portal using student ID. Access from campus WiFi for free.",
+      "book_reservation": "Popular books can be reserved online or through the library desk. You'll be notified when the book is available."
+    },
+    "hostel": {
+      "overview": "On-campus hostels provide affordable residential accommodation for outstation students. Separate hostels for boys and girls.",
+      "types": ["Boys Hostel", "Girls Hostel", "PG Hostel (for postgraduate students)", "International Students Hostel (in some colleges)", "Faculty Quarters (for teaching staff)"],
+      "room_types": ["Single occupancy (for senior students / extra fee)", "Double sharing", "Triple sharing", "Dormitory (4-6 students per room)"],
+      "facilities_in_hostel": [
+        "Attached/common bathrooms",
+        "Study room / reading room",
+        "Common room with TV",
+        "Laundry / washing area",
+        "Mess (canteen providing subsidized food)",
+        "24/7 security",
+        "Visitor's room (for meeting guests during designated hours)",
+        "WiFi connectivity",
+        "Gym / indoor games (in some hostels)",
+        "Hot water facility",
+        "First aid / medical room"
+      ],
+      "timings": {
+        "entry_curfew": "10:00 PM – 10:30 PM for girls; 11:00 PM – 12:00 AM for boys (varies by institution)",
+        "mess_timings": {
+          "breakfast": "7:00 AM – 9:00 AM",
+          "lunch": "12:00 PM – 2:00 PM",
+          "snacks": "4:30 PM – 6:00 PM",
+          "dinner": "7:30 PM – 9:30 PM"
+        },
+        "visiting_hours": "Usually 4:00 PM – 7:00 PM on weekdays; 10:00 AM – 7:00 PM on weekends (family only)"
+      },
+      "allotment_process": "Fill hostel application form online or at the hostel office. Allotment based on merit/first-come-first-serve. Pay hostel fee and submit documents.",
+      "documents_required": ["Application form", "Anti-ragging declaration", "Parent/guardian declaration", "Medical fitness certificate", "2 passport photos", "ID proof"],
+      "rules": [
+        "Maintain silence during study hours (10 PM – 6 AM)",
+        "No consumption of alcohol, tobacco or drugs",
+        "Cooking in rooms is strictly prohibited",
+        "Guests must be registered at the hostel office",
+        "Any electrical appliances must be declared to warden",
+        "Abide by curfew timings; late entries require prior permission",
+        "Ragging in any form is a criminal offence (UGC Regulation 2009)"
+      ],
+      "warden_contact": "Contact the Chief Warden or Block Warden for hostel-related issues. Emergency: security desk at hostel gate.",
+      "fee_general": "Rs. 10,000 – Rs. 60,000 per year depending on room type and institution (includes mess charges in most cases)"
+    },
+    "canteen_cafeteria": {
+      "overview": "Campus canteens provide affordable, hygienic meals and snacks to students and faculty throughout the day.",
+      "typical_timings": "7:00 AM – 9:00 PM (main canteen); Small stalls: 8:00 AM – 8:00 PM",
+      "menu_type": "Vegetarian and non-vegetarian options; South Indian, North Indian, Chinese, Continental in larger campuses",
+      "average_cost": "Meals: Rs. 40-80; Snacks: Rs. 10-30; Tea/Coffee: Rs. 5-15",
+      "special_facilities": ["Outdoor seating area", "AC section (in some colleges)", "Wi-Fi zone", "Digital payment (UPI/card)"],
+      "food_committee": "Student Food Committee monitors quality and hygiene. Report issues to committee or mess/canteen warden.",
+      "special_dietary": "Jain food, diabetic meals available on request in many colleges. Inform the canteen manager in advance."
+    },
+    "sports_complex": {
+      "overview": "College sports facilities promote physical fitness and represent the institution in inter-college and national competitions.",
+      "indoor_facilities": [
+        "Badminton courts",
+        "Table tennis",
+        "Chess / carrom",
+        "Gymnasium / fitness center",
+        "Boxing / wrestling hall (in some colleges)",
+        "Indoor basketball court (in some colleges)"
+      ],
+      "outdoor_facilities": [
+        "Cricket ground",
+        "Football / soccer ground",
+        "Basketball courts",
+        "Volleyball courts",
+        "Tennis courts",
+        "400m athletics track",
+        "Kabaddi / Kho-kho ground",
+        "Swimming pool (in premium colleges)"
+      ],
+      "timings": "Morning: 6:00 AM – 8:00 AM; Evening: 4:00 PM – 7:00 PM",
+      "registration": "Register with the Physical Education (PE) department to access sports facilities and join teams.",
+      "inter_college": "College sports teams participate in inter-college tournaments, university games, and AIU (Association of Indian Universities) championships.",
+      "sports_quota": "Sports quota admissions available in many colleges. Outstation training and leave granted to state/national level sports persons."
+    },
+    "medical_center": {
+      "overview": "College health centers / dispensaries provide first-aid, basic medical consultations, and health emergency support.",
+      "services": [
+        "General physician consultation",
+        "First aid for injuries",
+        "Basic medications (free or subsidized)",
+        "Blood pressure / blood sugar monitoring",
+        "Health awareness programs",
+        "Vaccination drives",
+        "Mental health counseling (in progressive colleges)"
+      ],
+      "timings": "9:00 AM – 5:00 PM on weekdays; Emergency support 24/7 through security desk",
+      "emergency": "For medical emergencies, contact the security desk or medical officer immediately. Ambulance available at most campuses.",
+      "tie_up_hospitals": "Most colleges have tie-up with nearby hospitals for advanced treatment. Students may get concession.",
+      "mental_health": "Many UGC-compliant colleges now have counseling services for academic stress, anxiety, and personal issues. Strictly confidential.",
+      "health_insurance": "Some institutions provide group health insurance to students. Check with the student affairs office."
+    },
+    "placement_cell": {
+      "overview": "The Training & Placement (T&P) Cell is the bridge between students and industry. It coordinates campus recruitment drives, internships, and career development.",
+      "services": [
+        "Campus placement coordination",
+        "Internship tie-ups and student placement",
+        "Resume building workshops",
+        "Mock interviews and GD practice",
+        "Aptitude training",
+        "Soft skills development",
+        "Industry expert talks",
+        "Higher education guidance (GATE, GRE, CAT, IELTS prep)",
+        "Entrepreneurship support"
+      ],
+      "placement_process": {
+        "pre_placement": "Register on placement portal → Attend pre-placement talks → Submit updated resume",
+        "aptitude_test": "Online/offline aptitude test (Verbal, Quantitative, Logical Reasoning, Technical)",
+        "interviews": "Technical interview → HR interview (sometimes Group Discussion in between)",
+        "offer_letter": "Selected candidates receive offer letter; must respond within deadline"
+      },
+      "eligibility_criteria": {
+        "cgpa": "Most companies require minimum 6.0-7.5 CGPA; some require 8.0+",
+        "backlogs": "Zero active backlogs typically required; some companies allow cleared backlogs",
+        "gaps": "Explain any academic gaps honestly during interview"
+      },
+      "top_recruiters_general": ["TCS", "Infosys", "Wipro", "Cognizant", "Accenture", "HCL", "Tech Mahindra", "Capgemini", "IBM", "Amazon", "Deloitte", "KPMG", "L&T", "Bosch", "Siemens", "Microsoft (top IITs)", "Google (top IITs/NITs)"],
+      "placement_statistics": "Placement statistics (% placed, average/highest packages) are published annually by college. Available on college website.",
+      "contact": "Visit T&P cell with your updated resume. Register early in final year. Attend all placement preparation sessions."
+    },
+    "computer_labs": {
+      "overview": "Campus computer laboratories provide access to computing resources, software tools, and high-speed internet.",
+      "timings": "9:00 AM – 6:00 PM (regular); may extend to 8 PM during project season",
+      "software_available": "MATLAB, AutoCAD, Simulink, ANSYS, Tally, Adobe suite, SPSS, Scilab, Oracle, MySQL, Python, Java IDEs, C/C++ compilers — varies by college type",
+      "internet_access": "High-speed internet (10 Mbps – 1 Gbps) available in labs; many campuses have campus-wide WiFi",
+      "printing": "Printing and scanning available in labs on chargeable basis (Rs. 2-5 per page)"
+    },
+    "library_digital": {
+      "nptel": "NPTEL (National Programme on Technology Enhanced Learning) — Free video lectures from IIT/IISc faculty on swayam.gov.in and nptel.ac.in",
+      "swayam": "SWAYAM platform offers free MOOCs. UGC-approved credit transfer for completed SWAYAM courses.",
+      "coursera_edx": "Premium platforms; many colleges have institutional subscriptions",
+      "ieee_acm": "Digital library access to IEEE Xplore, ACM Digital Library through INFLIBNET in participating colleges"
+    },
+    "transport": {
+      "overview": "College transport services connect the campus with major city/town areas.",
+      "types": ["College buses with fixed routes", "Shared autos/cabs near campus", "Cycle rental schemes", "Metro/public transport connectivity (urban campuses)"],
+      "bus_pass": "Students can apply for a monthly/semester bus pass at the transport office. Subsidized rates for regular routes.",
+      "timing": "Morning pick-up: 7:00 AM – 8:30 AM (drops at campus); Evening drop: 4:30 PM – 6:00 PM",
+      "route_info": "Route charts available at the transport office, notice boards, and college website/app.",
+      "railway_concession": "Full-time students are eligible for 50-75% concession on railway tickets for travel to home town. Apply through the college with bonafide certificate."
+    },
+    "wifi_internet": {
+      "overview": "Campus WiFi is provided to all students free of charge after registration.",
+      "how_to_connect": "Register your device with the IT department or student portal. Login using student credentials.",
+      "bandwidth": "Varies: 50 Mbps to 10 Gbps depending on institution (IITs have dedicated NMEICT 1 Gbps+ links)",
+      "policy": "Academic use only. Torrenting, streaming excessive videos, and illegal downloads are prohibited and monitored.",
+      "it_support": "Contact IT support desk for WiFi issues: password reset, device registration, VPN access."
+    },
+    "bank_atm": {
+      "overview": "Most college campuses have branch/extension counter or ATM of nationalized banks.",
+      "common_banks": ["SBI (State Bank of India)", "Bank of Baroda", "Canara Bank", "Punjab National Bank"],
+      "services": "Account opening for fresh students, educational loan processing, demand draft, ATM",
+      "scholarship_accounts": "Scholarship disbursements often made directly to student bank accounts linked with Aadhar."
+    },
+    "student_center": {
+      "overview": "Student Activity Centre / Student Centre is the hub for all extracurricular activities.",
+      "contains": ["Student council office", "Club rooms (cultural, technical, sports clubs)", "Event management area", "Common lounge", "Photocopy / stationery shop", "College cooperative store (books, stationery at discount)"]
+    },
+    "auditorium_seminar_halls": {
+      "auditorium": "Main auditorium capacity: 500-2000 persons; used for convocations, cultural fests, major seminars",
+      "seminar_halls": "Seminar halls: 50-200 capacity; used for departmental events, guest lectures, workshops",
+      "booking": "Book through the college administration office or student affairs department. Departments get priority; student clubs apply through coordinator."
+    }
+  }
+}

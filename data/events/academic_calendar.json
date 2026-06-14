@@ -1,0 +1,75 @@
+{
+  "academic_year": "2024-2025",
+  "odd_semester": {
+    "name": "Odd Semester (July - November 2024)",
+    "events": [
+      {"date": "2024-07-15", "event": "Odd Semester Begins", "category": "academic", "description": "New academic year starts. Orientation for freshers on 16th July."},
+      {"date": "2024-07-16", "event": "Freshers' Orientation Day", "category": "orientation", "description": "Welcome orientation for first-year students. Schedule: 9 AM - 5 PM in the Main Auditorium."},
+      {"date": "2024-07-17", "event": "Regular Classes Begin (All Batches)", "category": "academic", "description": "Regular class schedule begins for all semesters."},
+      {"date": "2024-08-05", "event": "Internal Assessment 1 (IA-1) Begins", "category": "exam", "description": "First internal assessments / cycle tests begin for all departments."},
+      {"date": "2024-08-15", "event": "Independence Day", "category": "holiday", "description": "National holiday. Flag hoisting at 8:30 AM followed by cultural programs."},
+      {"date": "2024-08-20", "event": "Course Registration Deadline (Late)", "category": "academic", "description": "Last date for late course registration with fee. Contact academic office."},
+      {"date": "2024-09-01", "event": "Freshers' Party / Welcome Ceremony", "category": "cultural", "description": "Welcome event for new students. Organized by student council. Venue: College Auditorium. 5 PM onwards."},
+      {"date": "2024-09-10", "event": "Internal Assessment 2 (IA-2) Begins", "category": "exam", "description": "Second internal assessments begin. Check department notice board for schedule."},
+      {"date": "2024-09-15", "event": "Engineering Day / Technical Day", "category": "technical", "description": "Technical activities, guest lectures from industry. Paper presentation competition."},
+      {"date": "2024-09-20", "event": "Blood Donation Camp (NSS)", "category": "social", "description": "Annual blood donation camp organized by NSS unit. All students encouraged to participate. 9 AM - 4 PM at Student Center."},
+      {"date": "2024-10-02", "event": "Gandhi Jayanti", "category": "holiday", "description": "National holiday. Cleanliness drives organized by NSS and college."},
+      {"date": "2024-10-10", "event": "Annual Technical Fest Begins", "category": "technical", "description": "3-day annual technical festival. Events: Hackathon, Robotics, Paper Presentation, Technical Quiz, Coding Contest. Inter-college participation."},
+      {"date": "2024-10-12", "event": "Annual Technical Fest Ends", "category": "technical", "description": "Technical fest concludes. Prize distribution ceremony at 5 PM."},
+      {"date": "2024-10-15", "event": "Dussehra Holiday (approx)", "category": "holiday", "description": "Festival holiday. Exact dates subject to government notification."},
+      {"date": "2024-10-20", "event": "Attendance Warning Issued", "category": "academic", "description": "Shortage attendance lists published. Students below 75% must meet class advisor immediately."},
+      {"date": "2024-11-01", "event": "Diwali Holiday (approx)", "category": "holiday", "description": "Diwali festival break (3-5 days). Exact dates per academic calendar."},
+      {"date": "2024-11-10", "event": "Internal Assessment 3 (IA-3) Begins", "category": "exam", "description": "Third internal assessments. Lab practicals and viva may be scheduled this week."},
+      {"date": "2024-11-15", "event": "Last Working Day - Odd Semester", "category": "academic", "description": "Last day of regular classes. Complete all internal assessments and lab records submission."},
+      {"date": "2024-11-18", "event": "End Semester Exam Begins", "category": "exam", "description": "Odd semester final examinations begin. Hall tickets available on portal 2 weeks before."},
+      {"date": "2024-12-15", "event": "End Semester Exams End (approx)", "category": "exam", "description": "Final exams conclude. Winter break begins."},
+      {"date": "2024-12-25", "event": "Christmas Holiday", "category": "holiday", "description": "College closed for Christmas."}
+    ]
+  },
+  "even_semester": {
+    "name": "Even Semester (January - May 2025)",
+    "events": [
+      {"date": "2025-01-02", "event": "Even Semester Begins", "category": "academic", "description": "Even semester starts. Check timetable on portal/notice board."},
+      {"date": "2025-01-15", "event": "Pongal / Makar Sankranti Holiday", "category": "holiday", "description": "Festival holiday — Pongal (South India), Makar Sankranti (North India)."},
+      {"date": "2025-01-26", "event": "Republic Day", "category": "holiday", "description": "National holiday. Flag hoisting at 8:00 AM. Compulsory attendance for students in campus."},
+      {"date": "2025-02-05", "event": "Internal Assessment 1 (IA-1) Even Sem", "category": "exam", "description": "First cycle tests of even semester begin."},
+      {"date": "2025-02-15", "event": "Annual Cultural Fest Begins", "category": "cultural", "description": "3-day annual cultural festival. Events: Music, Dance, Drama, Fine Arts, Literary, Fashion Show, Pro-Night. Inter-college participation."},
+      {"date": "2025-02-17", "event": "Annual Cultural Fest Ends", "category": "cultural", "description": "Cultural fest concludes. Prize distribution and closing ceremony."},
+      {"date": "2025-02-28", "event": "National Science Day", "category": "academic", "description": "Science exhibition, poster presentations, quiz competitions. Department-wise events."},
+      {"date": "2025-03-08", "event": "International Women's Day", "category": "social", "description": "Programs organized by Women's Cell and ICC. Guest lectures on women's empowerment."},
+      {"date": "2025-03-10", "event": "Internal Assessment 2 (IA-2) Even Sem", "category": "exam", "description": "Second internal assessments begin."},
+      {"date": "2025-03-14", "event": "Holi Holiday", "category": "holiday", "description": "Festival holiday."},
+      {"date": "2025-03-25", "event": "Sports Meet Begins", "category": "sports", "description": "Annual inter-department sports tournament. Events: Cricket, Football, Basketball, Badminton, Athletics, Chess, Volleyball."},
+      {"date": "2025-03-30", "event": "Sports Meet Ends", "category": "sports", "description": "Sports meet concludes. Prize distribution ceremony."},
+      {"date": "2025-04-01", "event": "Campus Placement Season Opens", "category": "placement", "description": "Campus recruitment drives begin. Final year students: ensure registration on placement portal and updated resume."},
+      {"date": "2025-04-10", "event": "Internal Assessment 3 (IA-3) Even Sem", "category": "exam", "description": "Third internal assessments begin. Project reviews for final year students."},
+      {"date": "2025-04-14", "event": "Ambedkar Jayanti / Tamil New Year / Vishu", "category": "holiday", "description": "Festival/holiday. Exact dates per government calendar."},
+      {"date": "2025-04-18", "event": "Good Friday", "category": "holiday", "description": "National holiday."},
+      {"date": "2025-04-20", "event": "Last Working Day - Even Semester", "category": "academic", "description": "Last day of regular classes. Submit all project reports, lab records, and assignments."},
+      {"date": "2025-04-25", "event": "Final Year Project Viva-Voce", "category": "exam", "description": "Final year students: project viva examinations. Check department schedule."},
+      {"date": "2025-04-28", "event": "End Semester Exam Begins", "category": "exam", "description": "Even semester final examinations begin."},
+      {"date": "2025-05-30", "event": "End Semester Exams End (approx)", "category": "exam", "description": "Final exams conclude. Summer vacation begins."},
+      {"date": "2025-06-15", "event": "Supplementary Exam Registration Deadline", "category": "exam", "description": "Last date to register for supplementary exams (for students with backlogs)."}
+    ]
+  },
+  "placement_calendar": {
+    "events": [
+      {"period": "August - September", "event": "Pre-Placement Talks (PPT) by companies", "description": "Companies visit campus for PPTs. Mandatory attendance for registered students."},
+      {"period": "September - October", "event": "Aptitude Training & Mock Tests", "description": "Placement cell organizes aptitude training. Attend for CAT, AMCAT, Cocubes preparation."},
+      {"period": "October - December", "event": "Mass Recruiters Campus Drives", "description": "IT companies (TCS, Infosys, Wipro, Cognizant) conduct campus drives. Register on placement portal."},
+      {"period": "January - March", "event": "Core Company Drives", "description": "Sector-specific companies (Engineering, Finance, Consulting) visit campus."},
+      {"period": "April - May", "event": "Late Placement Drives and Off-Campus", "description": "Additional drives; off-campus placement support by T&P cell for unplaced students."}
+    ]
+  },
+  "important_deadlines": [
+    {"deadline": "July 20", "description": "Last date for scholarship application (NSP Portal) — annual deadline varies"},
+    {"deadline": "August 1", "description": "Hostel application last date (odd semester)"},
+    {"deadline": "September 30", "description": "GATE exam notification usually released; apply by November"},
+    {"deadline": "October 15", "description": "CAT exam registration closes; exam in November"},
+    {"deadline": "November 30", "description": "NTA CUET PG registration (for next academic year)"},
+    {"deadline": "December 31", "description": "GRE scores validity — plan 5 years ahead"},
+    {"deadline": "January 15", "description": "Hostel application last date (even semester)"},
+    {"deadline": "February 28", "description": "CLAT application last date (approx)"},
+    {"deadline": "March 31", "description": "Income tax (parent) documents for scholarship renewal"}
+  ]
+}

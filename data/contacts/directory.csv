@@ -1,0 +1,36 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Dr. Arun Kumar Sharma,Professor & HoD,Computer Science & Engineering,hod.cse@college.edu.in,+91-98765-00001,CSE Block - Room 201,9:00 AM - 5:00 PM (Mon-Fri),Machine Learning and Data Science
+2,Dr. Priya Venkataraman,Associate Professor,Computer Science & Engineering,priya.v@college.edu.in,+91-98765-00002,CSE Block - Room 205,10:00 AM - 4:00 PM (Mon-Sat),Computer Networks and Cybersecurity
+3,Dr. Ramesh Chandra Gupta,Professor & HoD,Electronics & Communication Engineering,hod.ece@college.edu.in,+91-98765-00003,ECE Block - Room 101,9:00 AM - 5:00 PM (Mon-Fri),VLSI Design and Embedded Systems
+4,Dr. Meenakshi Sundaram,Assistant Professor,Electronics & Communication Engineering,meenakshi.s@college.edu.in,+91-98765-00004,ECE Block - Room 105,10:00 AM - 3:00 PM (Mon-Fri),Signal Processing and Communication
+5,Dr. Vikram Singh Chauhan,Professor & HoD,Mechanical Engineering,hod.me@college.edu.in,+91-98765-00005,ME Block - Room 301,9:00 AM - 5:00 PM (Mon-Fri),Thermal Engineering and Manufacturing
+6,Dr. Lakshmi Narasimhan,Associate Professor,Mechanical Engineering,lakshmi.n@college.edu.in,+91-98765-00006,ME Block - Room 310,10:00 AM - 4:00 PM (Mon-Sat),Robotics and Automation
+7,Dr. Suresh Babu Reddy,Professor & HoD,Civil Engineering,hod.civil@college.edu.in,+91-98765-00007,Civil Block - Room 401,9:00 AM - 5:00 PM (Mon-Fri),Structural Engineering and Concrete Technology
+8,Dr. Anjali Srivastava,Associate Professor,Civil Engineering,anjali.s@college.edu.in,+91-98765-00008,Civil Block - Room 405,9:00 AM - 3:00 PM (Mon-Fri),Environmental Engineering and GIS
+9,Dr. Krishnamurthy Pillai,Professor & HoD,Electrical Engineering,hod.eee@college.edu.in,+91-98765-00009,EEE Block - Room 501,9:00 AM - 5:00 PM (Mon-Fri),Power Systems and Control Engineering
+10,Dr. Sunita Joshi,Assistant Professor,Electrical Engineering,sunita.j@college.edu.in,+91-98765-00010,EEE Block - Room 508,10:00 AM - 4:00 PM (Mon-Fri),Renewable Energy and Smart Grid
+11,Dr. Anand Mohan Tripathi,Professor & Dean (Academics),Administration,dean.academics@college.edu.in,+91-98765-00011,Admin Block - Dean's Office,10:00 AM - 5:00 PM (Mon-Fri),Academic Policy and Curriculum Development
+12,Mr. Rajendra Prasad Nair,Registrar,Administration,registrar@college.edu.in,+91-98765-00012,Admin Block - Registrar Office,9:30 AM - 5:30 PM (Mon-Sat),University Administration and Student Records
+13,Dr. Padmavathi Rao,Dean (Student Welfare),Administration,dean.welfare@college.edu.in,+91-98765-00013,Admin Block - Room W-01,9:00 AM - 5:00 PM (Mon-Fri),Student Counseling and Welfare Programs
+14,Mr. Sanjay Kumar Mishra,Training & Placement Officer,Placement Cell,tpo@college.edu.in,+91-98765-00014,Placement Cell - Ground Floor,9:00 AM - 6:00 PM (Mon-Sat),Corporate Relations and Campus Placement
+15,Mrs. Gomathi Selvam,Librarian (Chief),Central Library,librarian@college.edu.in,+91-98765-00015,Central Library - Main Desk,8:00 AM - 8:00 PM (Mon-Sat),Library Management and Digital Resources
+16,Dr. Balasubramanian Iyer,Professor & HoD,Information Technology,hod.it@college.edu.in,+91-98765-00016,IT Block - Room 601,9:00 AM - 5:00 PM (Mon-Fri),Cloud Computing and Software Engineering
+17,Dr. Kavitha Rajan,Associate Professor,Information Technology,kavitha.r@college.edu.in,+91-98765-00017,IT Block - Room 608,9:00 AM - 4:00 PM (Mon-Fri),Database Systems and Web Technologies
+18,Dr. Pankaj Dubey,Professor & HoD,Mathematics & Sciences (Basic Sciences),hod.maths@college.edu.in,+91-98765-00018,Science Block - Room S-101,9:00 AM - 5:00 PM (Mon-Fri),Applied Mathematics and Numerical Methods
+19,Dr. Nalini Krishnaswamy,Associate Professor,Physics (Basic Sciences),nalini.k@college.edu.in,+91-98765-00019,Science Block - Room S-105,10:00 AM - 4:00 PM (Mon-Fri),Photonics and Materials Science
+20,Dr. Subramaniam Aiyar,Professor,Chemistry (Basic Sciences),subramanian.a@college.edu.in,+91-98765-00020,Science Block - Room S-201,9:00 AM - 5:00 PM (Mon-Fri),Green Chemistry and Environmental Chemistry
+21,Mrs. Deepa Menon,Controller of Examinations,Examination Cell,coe@college.edu.in,+91-98765-00021,Admin Block - Exam Cell,9:30 AM - 5:00 PM (Mon-Sat),Examination Management and Result Processing
+22,Mr. Harish Chandrakar,Finance Officer / Accounts Head,Finance & Accounts,accounts@college.edu.in,+91-98765-00022,Admin Block - Accounts Section,9:30 AM - 4:30 PM (Mon-Fri),Financial Management and Fee Collection
+23,Dr. Ritu Sharma,Chief Medical Officer,Health Center,doctor@college.edu.in,+91-98765-00023,Health Center - Ground Floor,9:00 AM - 5:00 PM (Mon-Sat),General Medicine and Student Health
+24,Mr. Mohan Lal Singh,Physical Education Director,Sports Department,sports@college.edu.in,+91-98765-00024,Sports Complex - Office,7:00 AM - 6:00 PM (Mon-Sat),Sports Management and Physical Education
+25,Mrs. Savitha Kamath,Hostel Warden (Girls),Girls Hostel,warden.girls@college.edu.in,+91-98765-00025,Girls Hostel - Warden Office,24/7 (Emergency),Hostel Administration
+26,Mr. Raghu Veerannachar,Hostel Warden (Boys),Boys Hostel,warden.boys@college.edu.in,+91-98765-00026,Boys Hostel - Warden Office,24/7 (Emergency),Hostel Administration
+27,Dr. Smitha Pillai,Professor & Coordinator (R&D),Research & Development Cell,rnd@college.edu.in,+91-98765-00027,R&D Block - Room R-201,9:00 AM - 5:00 PM (Mon-Fri),Research Grants and Publications
+28,Mr. Ashok Tiwari,IT Support Manager,IT / Technical Support,it.support@college.edu.in,+91-98765-00028,IT Support Center,9:00 AM - 6:00 PM (Mon-Sat),Network Administration and Technical Support
+29,Dr. Geetha Krishnan,NSS Program Officer,NSS Unit,nss@college.edu.in,+91-98765-00029,Student Center - NSS Room,10:00 AM - 4:00 PM (Mon-Sat),Community Service and Social Work
+30,Dr. Pradeep Sahoo,NCC Officer,NCC Unit,ncc@college.edu.in,+91-98765-00030,NCC Office - Admin Block,9:00 AM - 5:00 PM (Mon-Fri),National Cadet Corps and Defense Training
+31,Mrs. Usha Bhatt,Admissions Officer,Admissions Office,admissions@college.edu.in,+91-98765-00031,Admin Block - Admissions Office,9:30 AM - 5:30 PM (Mon-Sat),Admissions and Enrollment
+32,Dr. Senthilkumar Arumugam,Professor & HoD,Biotechnology,hod.biotech@college.edu.in,+91-98765-00032,BT Block - Room B-101,9:00 AM - 5:00 PM (Mon-Fri),Molecular Biology and Genetic Engineering
+33,Dr. Asha Kaur,Associate Professor,MBA (Management Studies),asha.kaur@college.edu.in,+91-98765-00033,Management Block - Room M-201,10:00 AM - 4:00 PM (Mon-Fri),Marketing Management and Consumer Behavior
+34,Dr. Naveen Khanna,Professor & HoD,MBA (Management Studies),hod.mba@college.edu.in,+91-98765-00034,Management Block - Room M-101,9:00 AM - 5:00 PM (Mon-Fri),Finance and Strategic Management
+35,Security Control Room,Campus Security,Security Department,security@college.edu.in,+91-98765-00099,Main Gate Security Post,24/7,Campus Safety and Emergency Response

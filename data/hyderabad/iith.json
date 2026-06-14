@@ -1,0 +1,185 @@
+{
+  "institution": "IIT Hyderabad",
+  "full_name": "Indian Institute of Technology Hyderabad",
+  "type": "Central Government Institute (2nd Generation IIT)",
+  "campus": "Kandi campus, designed through collaborative Japanese-Indian master plan",
+  "category": "Engineering & Technology",
+
+  "fractal_academics": {
+    "description": "IIT Hyderabad's pioneering 'Fractal Academics' curriculum model, first deployed for Electrical Engineering in 2013, expanded to all engineering disciplines in 2014",
+    "structure": "Each traditional semester is divided into 6 segments, each spanning 2.5 to 3 weeks",
+    "credit_system": {
+      "formula": "C = 0.5 × n, where n is the number of segments a course spans",
+      "full_course": "A full-semester 3-contact-hour theory course = 3 credits (spans all 6 segments)",
+      "segment_credit": "Each individual segment = 0.5 credits",
+      "example": "A course running in Segments 5 and 6 (Segment 56) spans n=2 segments → C = 0.5 × 2 = 1.0 credit",
+      "breadth_courses": "1 credit (short, 2-week intensive courses)",
+      "depth_courses": "1.5 to 2.5 credits (specialized courses spanning multiple segments)"
+    },
+    "benefits": [
+      "Promotes interdisciplinary exploration through short breadth courses",
+      "Reduces student stress by breaking large courses into manageable segments",
+      "Allows faster course completion and flexible scheduling",
+      "Students can complete a second major by taking extra credits from 4th semester onward, provided no active academic backlogs"
+    ]
+  },
+
+  "admissions_ug": {
+    "process": "JEE Main → JEE Advanced → JoSAA Online Counseling",
+    "required_documents": [
+      "JEE Main and JEE Advanced scorecard (original)",
+      "Qualifying degree certificate (10+2 or equivalent)",
+      "Admission offer letter",
+      "First and last pages of Aadhaar Card or Voter ID Card",
+      "PAN Card",
+      "Category certificates (if applicable: SC/ST/OBC/EWS/PH)"
+    ]
+  },
+
+  "fee_structure_ug": {
+    "note": "First semester total fees at admission",
+    "components": {
+      "One-Time Joining Fee": {"GEN_OBC": 7000, "SC_ST_PH": 7000, "Foreign": 7000},
+      "Student Activity Funds": {"GEN_OBC": 6000, "SC_ST_PH": 6000, "Foreign": 6000},
+      "Refundable Security Deposit": {"GEN_OBC": 6000, "SC_ST_PH": 6000, "Foreign": 6000},
+      "Semester Tuition Fee": {"GEN_OBC": 100000, "SC_ST_PH": 0, "Foreign": 300000},
+      "Registration & Operational Charges": {"GEN_OBC": 14675, "SC_ST_PH": 14675, "Foreign": 14675},
+      "Student Welfare Fund": {"GEN_OBC": 1000, "SC_ST_PH": 1000, "Foreign": 1000},
+      "Hostel Accommodation Charges": {"GEN_OBC": 18000, "SC_ST_PH": 18000, "Foreign": 18000},
+      "Dining Mess Expenses (111 Days)": {"GEN_OBC": 14430, "SC_ST_PH": 14430, "Foreign": 14430},
+      "Annual Medical Insurance Premium": {"GEN_OBC": 1888, "SC_ST_PH": 1888, "Foreign": 1888}
+    },
+    "grand_total_first_semester": {
+      "GEN_OBC": 168993,
+      "SC_ST_PH": 68993,
+      "Foreign_Nationals": 368993
+    }
+  },
+
+  "fee_structure_pg_phd": {
+    "MTech_MSc_MDes_MA_Regular_GEN_OBC": {
+      "semester_tuition_fee": 12000,
+      "operational_charges": 13500,
+      "hostel_charges": 16000,
+      "dining_charges": 20020
+    },
+    "MTech_MSc_MDes_MA_SC_ST_PH": {
+      "semester_tuition_fee": 0,
+      "operational_charges": 13500,
+      "hostel_charges": 16000,
+      "dining_charges": 20020
+    },
+    "MTech_Sponsored_Govt_Lab_Industry": {
+      "semester_tuition_fee": 40000,
+      "operational_charges": 13500
+    },
+    "MTech_Self_Sponsored": {
+      "semester_tuition_fee": 240000,
+      "operational_charges": 13500
+    },
+    "PhD_Regular": {
+      "semester_tuition_fee": 10000,
+      "operational_charges": 13500,
+      "hostel_charges": 16000,
+      "dining_charges": 20020
+    },
+    "PhD_SC_ST_PH": {
+      "semester_tuition_fee": 0,
+      "operational_charges": 13500
+    },
+    "PhD_External_Scholar": {
+      "semester_tuition_fee": 35000,
+      "operational_charges": 13500,
+      "hostel": "Day Scholar only, Rs 2000 security deposit"
+    }
+  },
+
+  "scholarships_financial_aid": {
+    "SC_ST_PH_tuition_waiver": "100% tuition fee waiver for all SC/ST/PH students",
+    "income_based_waivers": [
+      {"family_income": "Below Rs 1 Lakh per annum", "waiver": "100% tuition fee waiver"},
+      {"family_income": "Rs 1 Lakh to Rs 5 Lakh per annum", "waiver": "67% tuition fee waiver"}
+    ],
+    "merit_cum_means_MCM": {
+      "eligibility": "Top 25% of low-income students with family income below Rs 4.5 Lakhs",
+      "cgpa_requirement": "Minimum CGPA of 7.0 with no active backlogs",
+      "monthly_stipend": "Rs 1,000 per month",
+      "combined_with": "Applicable tuition waiver"
+    },
+    "SC_ST_pocket_allowance": {
+      "eligibility": "SC/ST students with family income below Rs 4.5 Lakhs",
+      "monthly_allowance": "Rs 250 per month",
+      "additional_benefits": "Hostel and mess fee waivers"
+    }
+  },
+
+  "placements_2024": {
+    "batch_size": "800+ students registered",
+    "total_placements": 494,
+    "participating_companies": 310,
+    "companies_made_offers": 147,
+    "total_offers": 522,
+    "international_offers": 43,
+    "pre_placement_offers_PPO": 87,
+    "highest_domestic_package_LPA": 90,
+    "average_package_LPA": "20.07 to 22.5",
+    "median_by_degree": {
+      "BTech": "Rs 21.00 LPA",
+      "MTech": "Rs 15.00 to 21.80 LPA",
+      "MSc": "Rs 14.00 LPA",
+      "MDes": "Rs 14.00 to 21.88 LPA"
+    }
+  },
+
+  "transport": {
+    "description": "IITH manages direct transit connections to bridge its 60 km distance from central Hyderabad",
+    "connections": ["Lingampally", "Miyapur", "Patancheru"],
+    "airport_access": "Pushpak Airport coaches run every 15 minutes from BHEL Circle",
+    "routes": {
+      "Dammaiguda Route": {
+        "stops": [
+          {"stop": "Dammaiguda Near Food Court", "AM": "07:05", "PM": "07:35"},
+          {"stop": "Nagaram Bachpan School", "AM": "07:10", "PM": "06:40"},
+          {"stop": "Kushaiguda Bus Stop (Market)", "AM": "07:15", "PM": "06:19"},
+          {"stop": "ECIL X Roads Opp Bus Stop", "AM": "07:17", "PM": "06:15"},
+          {"stop": "Kapra Radhika Bus Stop", "AM": "07:19", "PM": "06:03"},
+          {"stop": "AS Rao Nagar Universal Bookstore", "AM": "07:27", "PM": "05:54"},
+          {"stop": "RK Puram Bus Stop", "AM": "07:35", "PM": "05:47"},
+          {"stop": "MS Campus Transport Yard (Departure)", "AM": "09:00", "PM": "05:15"}
+        ]
+      },
+      "Nagole_Uppal Route": {
+        "stops": [
+          {"stop": "Nagole Bus Stop (Opp KIA)", "AM": "07:15", "PM": "07:00"},
+          {"stop": "Uppal Ring Road Bus Stop", "AM": "07:23", "PM": "06:52"},
+          {"stop": "Uppal Survey of India Office", "AM": "07:26", "PM": "06:49"},
+          {"stop": "Habsiguda St #8 Opp Union Bank", "AM": "07:29", "PM": "06:46"},
+          {"stop": "Ramanthapur Opp TV Tower", "AM": "07:35", "PM": "06:40"},
+          {"stop": "Amberpet 6# Bus Stop", "AM": "07:39", "PM": "06:36"},
+          {"stop": "Shivam Road Opp Syndicate Bank", "AM": "07:43", "PM": "06:32"},
+          {"stop": "O.U. Gate Opp Reliance Digital", "AM": "07:45", "PM": "06:30"},
+          {"stop": "Vidya Nagar Durgabai Deshmukh", "AM": "07:47", "PM": "06:28"},
+          {"stop": "Liberty X Roads Opp TTD", "AM": "07:56", "PM": "06:15"},
+          {"stop": "Masab Tank Mahaveer Hospital", "AM": "08:20", "PM": "06:05"},
+          {"stop": "NMDC Bus Stop", "AM": "08:23", "PM": "06:03"},
+          {"stop": "Mehdipatnam Jayabhushan Hospital", "AM": "08:40", "PM": "05:55"},
+          {"stop": "Nanakramguda Golf Edge", "AM": "08:47", "PM": "05:20"}
+        ]
+      },
+      "Miyapur Transit Line": {
+        "stops": [
+          {"stop": "Madinaguda Reliance Trends", "AM": "08:15", "PM": "05:34"},
+          {"stop": "Madinaguda Opp Green Bawarchi", "AM": "08:17", "PM": "05:32"},
+          {"stop": "Madinaguda My Home Jewel", "AM": "08:19", "PM": "05:30"},
+          {"stop": "Gangaram Bus Stop Opp SBI", "AM": "08:21", "PM": "05:28"},
+          {"stop": "Chanda Nagar", "AM": "08:23", "PM": "05:26"},
+          {"stop": "BHEL Main Gate Circle", "AM": "08:25", "PM": "05:24"},
+          {"stop": "Lingampally Opp South Park", "AM": "08:30", "PM": "05:19"},
+          {"stop": "Gulmohar Park Colony Bus Stop", "AM": "08:32", "PM": "05:17"},
+          {"stop": "Doyens Township Bus Stop", "AM": "08:33", "PM": "05:16"},
+          {"stop": "HCU Bus Stop", "AM": "08:34", "PM": "05:15"}
+        ]
+      }
+    }
+  }
+}

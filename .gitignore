@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Environment files (NEVER commit your API key!)
+.env
+
+# Generated files (commented out so they can be committed for Streamlit Cloud/Spaces deployment)
+# vector_store/
+# campus.db
+
+
+# Streamlit config (allow config.toml but ignore secrets and cache)
+.streamlit/*
+!.streamlit/config.toml
+
+# PDF handbooks (may contain sensitive info)
+data/handbooks/*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb

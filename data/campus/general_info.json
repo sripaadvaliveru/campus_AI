@@ -1,0 +1,176 @@
+{
+  "academic_regulations": {
+    "attendance": {
+      "general_requirement": "Minimum 75% attendance is mandatory in most Indian colleges for appearing in semester/annual exams.",
+      "strict_colleges": "Some colleges like IITs, NITs, and medical colleges require 85% attendance.",
+      "medical_condonation": "Students with attendance between 65-75% may apply for medical/other condonation with valid documents.",
+      "detention": "Students with less than 65% attendance may be detained from appearing in exams.",
+      "how_to_check": "Attendance is usually available on the college's student portal, ERP system, or notified by respective department/class coordinator.",
+      "leave_application": "Submit leave applications to the class advisor or HoD within 3 days of returning from leave with supporting documents."
+    },
+    "examination": {
+      "pattern": {
+        "semester_system": "Two semesters per year: Odd (July-November) and Even (December-April/May). Each semester has Internal Assessments (IA) + End Semester Exams (ESE).",
+        "annual_system": "Annual exams held at the end of the academic year (common in Arts/Science colleges).",
+        "cbcs": "Choice Based Credit System (CBCS): Students earn credits for each course; minimum credits required to graduate.",
+        "semester_credit_hours": "Most UG programs require 160-180 total credits; PG programs 60-80 credits."
+      },
+      "internal_assessment": {
+        "components": ["Class tests / Cycle tests (2-3 per semester)", "Assignments and projects", "Lab practicals and viva", "Attendance component (5-10 marks)", "Seminars / presentations"],
+        "weightage": "Internal: 20-40% | External (End Sem): 60-80%",
+        "minimum_pass": "Students must score minimum marks in both internal and external to pass."
+      },
+      "grading_systems": {
+        "10_point_cgpa": {
+          "used_by": "Most technical universities (affiliated with VTU, Anna University, JNTU, RGPV, etc.) and central universities",
+          "scale": {"O (Outstanding)": "10", "A+ (Excellent)": "9", "A (Very Good)": "8", "B+ (Good)": "7", "B (Above Average)": "6", "C (Average)": "5", "P (Pass)": "4", "F (Fail)": "0"},
+          "cgpa_formula": "CGPA = Sum(Grade Points × Credit Hours) / Total Credit Hours"
+        },
+        "percentage_system": {
+          "used_by": "Traditional universities, Arts/Science/Commerce colleges, Medical colleges",
+          "pass_mark": "Minimum 35-40% in each subject to pass; 50% for distinction"
+        }
+      },
+      "supplementary_exams": "Students who fail in one or more subjects can appear for supplementary/re-examination held after the main exam results. Usually conducted 1-2 times a year.",
+      "re_evaluation": "Students can apply for re-evaluation/re-totalling of answer scripts on payment of fees within the specified time after result declaration.",
+      "result_declaration": "Results are declared on the official university website or student portal, typically 30-45 days after exams end."
+    },
+    "grading_distinctions": {
+      "first_class_distinction": "75% and above (percentage system) or CGPA 7.5+",
+      "first_class": "60-74% or CGPA 6.0-7.49",
+      "second_class": "50-59% or CGPA 5.0-5.99",
+      "pass_class": "40-49% or CGPA 4.0-4.99",
+      "fail": "Below 40% or CGPA below 4.0"
+    },
+    "academic_calendar_structure": {
+      "odd_semester": {
+        "start": "Late July / First week of August",
+        "internal_exams": "September - October",
+        "end_semester_exams": "November - December",
+        "results": "January"
+      },
+      "even_semester": {
+        "start": "First week of January",
+        "internal_exams": "February - March",
+        "end_semester_exams": "April - May",
+        "results": "June - July"
+      },
+      "summer_break": "May - July (varies by college)",
+      "winter_break": "December 24 - January 1 (approx)"
+    },
+    "course_registration": {
+      "process": "Students register for courses at the beginning of each semester through online portals (ERP/SLMS/etc.)",
+      "credit_load": "Minimum 14 credits and maximum 28 credits per semester typically.",
+      "electives": "Core courses are mandatory; students choose electives from available options based on interests and career goals.",
+      "late_registration": "Late registration fees apply after the deadline. Contact academic office for help."
+    },
+    "backlog_policy": {
+      "definition": "A 'backlog' or 'arrear' means a failed subject that needs to be cleared.",
+      "clearance": "Backlogs must be cleared within the maximum time limit (usually program duration + 2-3 years).",
+      "impact_on_placement": "Many companies require students to be 'arrear-free' at the time of placement. Check company-specific criteria.",
+      "lateral_entry": "Diploma holders can join B.Tech in 2nd year (lateral entry), giving credit for completed diploma courses."
+    }
+  },
+  "admission_processes": {
+    "engineering": {
+      "national_level": "JEE Main (for NITs, IIITs, CFTIs) and JEE Advanced (for IITs). Conducted by NTA and IIT respectively.",
+      "state_level": "Each state has its own entrance: TNEA (Tamil Nadu), MHT-CET (Maharashtra), KCET (Karnataka), AP EAMCET, TS EAMCET, WBJEE (West Bengal), OJEE (Odisha), etc.",
+      "management_quota": "15-20% seats in private colleges filled through management quota (direct admission based on merit + donation).",
+      "nri_quota": "Some private colleges reserve seats for NRI students.",
+      "documents_required": ["10th marksheet", "12th marksheet", "Transfer Certificate (TC)", "Migration Certificate", "Caste/Category certificate (if applicable)", "Domicile certificate", "Passport size photographs", "Income certificate (for scholarship)", "Medical fitness certificate", "Aadhar card"],
+      "counselling": "State-level counselling conducted by JoSAA/CSAB (national) or state counselling boards for seat allotment."
+    },
+    "management_mba": {
+      "national": "CAT (IIMs), XAT (XLRI), MAT, CMAT, ATMA",
+      "international": "GMAT for international B-schools",
+      "state_level": "MAH-CET (Maharashtra), TANCET (Tamil Nadu), ICET (AP/TS), KMAT (Karnataka)",
+      "process": "Written test → Group Discussion (GD) → Personal Interview (PI) → Final merit list"
+    },
+    "medical": {
+      "exam": "NEET-UG (for MBBS, BDS, BAMS, BHMS, BVSc) — conducted by NTA",
+      "pg_exam": "NEET-PG (for MD, MS, MDS)",
+      "counselling": "MCC conducts national counselling; state medical councils conduct state counselling."
+    },
+    "law": {
+      "national": "CLAT (Common Law Admission Test) for NLUs",
+      "other": "AILET (NLU Delhi), LSAT India, state law entrance exams"
+    },
+    "arts_science_commerce": {
+      "process": "Most colleges admit based on Class 12 merit (percentage). Some have entrance exams.",
+      "du_example": "Delhi University uses CUET (Common University Entrance Test) for UG admissions.",
+      "cuet": "CUET (Common University Entrance Test) by NTA increasingly used by central universities for UG admissions."
+    }
+  },
+  "scholarships": {
+    "central_government": [
+      {
+        "name": "National Scholarship Portal (NSP) Scholarships",
+        "categories": ["Pre-Matric", "Post-Matric"],
+        "eligibility": "SC/ST/OBC/Minority/EWS students with income below specified limit",
+        "application": "scholarships.gov.in",
+        "deadline": "Usually October-November each year"
+      },
+      {
+        "name": "Central Sector Scheme (CSS)",
+        "eligibility": "Top 20 percentile in Class 12 board, family income below Rs. 8 lakh/year",
+        "amount": "Rs. 12,000/year (college) and Rs. 20,000/year (professional degree)",
+        "application": "scholarships.gov.in"
+      },
+      {
+        "name": "AICTE Pragati & Saksham Scholarships",
+        "eligibility": "Pragati: Girl students in AICTE-approved institutions; Saksham: Differently-abled students",
+        "amount": "Rs. 50,000 per year + Rs. 2,000 incidentals",
+        "application": "AICTE portal"
+      },
+      {
+        "name": "PM Yasasvi Scholarship",
+        "eligibility": "OBC, EBC, and DNT students with family income below Rs. 2.5 lakh/year",
+        "exam": "Through PM-YASASVI exam (earlier NTA)"
+      }
+    ],
+    "state_government": "Each state has its own scholarship schemes for domicile students. Check state social welfare department websites.",
+    "institution_scholarships": "Merit-based scholarships, sports scholarships, cultural achievement scholarships offered by individual colleges.",
+    "private_scholarships": ["Tata Scholarship (Cornell)", "Infosys Foundation", "HDFC Bank Scholarship", "Buddy4Study portal", "Vidyasaarathi", "Swami Vivekananda Scholarship (West Bengal)"],
+    "iit_jee_fee_waiver": "Students with family income below Rs. 1 lakh/year get full fee waiver at IITs/NITs. Below Rs. 5 lakh get partial waiver."
+  },
+  "documents_certificates": {
+    "bonafide_certificate": {
+      "purpose": "Proof that you are a bonafide student of the institution. Required for bank loans, internship applications, railway concession, etc.",
+      "how_to_get": "Apply at the college office / student affairs office with your ID card. Usually issued within 2-3 working days.",
+      "required_documents": ["Application form (available at college office)", "College ID card", "Small fee (Rs. 20-50 at most colleges)"]
+    },
+    "migration_certificate": {
+      "purpose": "Required when a student migrates from one university to another.",
+      "how_to_get": "Apply at the university registrar's office after completing or leaving the program. Submit No Objection Certificate from current institution."
+    },
+    "character_certificate": {
+      "purpose": "Certifies good character/conduct during study. Needed for employment, higher education abroad.",
+      "how_to_get": "Apply to the Principal/Dean with application form. Takes 3-5 days."
+    },
+    "transcript": {
+      "purpose": "Official record of academic performance. Required for foreign university applications.",
+      "how_to_get": "Apply at the controller of examinations office or registrar's office. Fees apply. Official transcripts sent directly to institutions."
+    },
+    "tc_leaving_certificate": {
+      "purpose": "Transfer Certificate (TC) is issued when a student leaves the institution permanently.",
+      "process": "Clear all dues (fees, library, hostel). Apply at principal's office with a request letter. Get No Dues certificate from all departments."
+    }
+  },
+  "fee_structure_general": {
+    "government_colleges": {
+      "tuition_fee": "Rs. 5,000 – Rs. 30,000 per year for most government engineering/arts colleges",
+      "hostel": "Rs. 10,000 – Rs. 40,000 per year",
+      "other_fees": "Development fee, exam fee, library fee, sports fee, lab fee"
+    },
+    "private_colleges": {
+      "tuition_fee": "Rs. 50,000 – Rs. 3,00,000+ per year depending on college and program",
+      "iim_mba": "Rs. 20-25 lakh for full 2-year MBA program",
+      "iit_btech": "Rs. 2-2.5 lakh per year"
+    },
+    "fee_payment": {
+      "modes": ["Online portal (net banking, UPI, credit/debit card)", "College cash counter", "DD (Demand Draft) in favour of institution"],
+      "late_fine": "Late fee payment attracts penalty of Rs. 5-50 per day depending on institution.",
+      "installments": "Some colleges allow fee payment in 2-3 installments per semester. Check with accounts section."
+    }
+  }
+}
