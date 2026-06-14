@@ -22,6 +22,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# ── Cloud-aware API key loader ────────────────────────────────────────────────
+# Streamlit Cloud injects secrets via st.secrets (not .env).
+# Push them into os.environ so all downstream libraries (LangChain, google-genai)
+# can find them with os.getenv() as normal.
+try:
+    if "GOOGLE_API_KEY" in st.secrets:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+except Exception:
+    pass  # st.secrets not available locally — .env is used instead
+
 # ── Path setup ────────────────────────────────────────────────────────────────
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
