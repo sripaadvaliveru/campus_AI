@@ -37,7 +37,7 @@ def _flatten_json(obj: Any, prefix: str = "") -> List[str]:
     return chunks
 
 
-def _chunk_text(text: str, chunk_size: int = 800, overlap: int = 100) -> List[str]:
+def _chunk_text(text: str, chunk_size: int = 600, overlap: int = 100) -> List[str]:
     """Split a long text into overlapping chunks."""
     if len(text) <= chunk_size:
         return [text]
@@ -61,7 +61,7 @@ def load_json_file(filepath: Path) -> List[Dict[str, Any]]:
         # Group chunks into larger meaningful blocks
         block = ""
         for chunk in flat_chunks:
-            if len(block) + len(chunk) < 800:
+            if len(block) + len(chunk) < 600:
                 block += "\n" + chunk
             else:
                 if block.strip():
@@ -259,8 +259,8 @@ def load_all_data() -> List[Dict[str, Any]]:
             try:
                 with open(txt_file, "r", encoding="utf-8") as f:
                     content = f.read()
-                # Split content into 800 character chunks with 100 character overlap
-                chunks = _chunk_text(content, chunk_size=800, overlap=100)
+                # Split content into 600 character chunks with 100 character overlap
+                chunks = _chunk_text(content, chunk_size=600, overlap=100)
                 for chunk in chunks:
                     all_docs.append({
                         "text": chunk.strip(),

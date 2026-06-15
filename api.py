@@ -111,7 +111,7 @@ def root():
 @app.get("/health", response_model=HealthResponse, tags=["General"])
 def health():
     """Check system status — API key, vector store, model."""
-    api_key = os.getenv("GOOGLE_API_KEY", "")
+    api_key = os.getenv("GROQ_API_KEY", "")
     api_key_set = bool(api_key and "your_" not in api_key)
 
     try:
@@ -124,7 +124,7 @@ def health():
         status="ok" if api_key_set else "degraded",
         api_key_set=api_key_set,
         vector_store_ready=vs_ready,
-        model=os.getenv("GEMINI_MODEL", "gemini-2.0-flash"),
+        model=os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
         timestamp=datetime.now().isoformat(),
     )
 
@@ -141,7 +141,7 @@ def chat(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
-    api_key = os.getenv("GOOGLE_API_KEY", "")
+    api_key = os.getenv("GROQ_API_KEY", "")
     if not api_key or "your_" in api_key:
         raise HTTPException(status_code=503, detail="API key not configured")
 

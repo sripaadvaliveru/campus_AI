@@ -27,8 +27,8 @@ load_dotenv()
 # Push them into os.environ so all downstream libraries (LangChain, google-genai)
 # can find them with os.getenv() as normal.
 try:
-    if "GOOGLE_API_KEY" in st.secrets:
-        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+    if "GROQ_API_KEY" in st.secrets:
+        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 except Exception:
     pass  # st.secrets not available locally — .env is used instead
 
@@ -846,8 +846,8 @@ def send_message(user_input: str):
         return
 
     # Check API key
-    if not os.getenv("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY") == "your_new_gemini_key_here":
-        st.error("⚠️ **Gemini API Key not configured!** Please add your `GOOGLE_API_KEY` to the `.env` file and restart.")
+    if not os.getenv("GROQ_API_KEY") or os.getenv("GROQ_API_KEY") == "your_new_groq_key_here":
+        st.error("⚠️ **Groq API Key not configured!** Please add your `GROQ_API_KEY` to the `.env` file and restart.")
         return
 
     # Add user message
@@ -914,7 +914,7 @@ def send_message(user_input: str):
         response = (
             "🔧 **System Error**: I'm having trouble connecting right now.\n\n"
             "Please check:\n"
-            "1. Your `GOOGLE_API_KEY` is valid in `.env`\n"
+            "1. Your `GROQ_API_KEY` is valid in `.env`\n"
             "2. The vector store is initialized (`python initialize.py`)\n"
             "3. All dependencies are installed (`pip install -r requirements.txt`)"
         )
@@ -1076,15 +1076,15 @@ with st.sidebar:
     st.markdown("<hr style='margin:0.75rem 0'>", unsafe_allow_html=True)
 
     # System status
-    api_key = os.getenv("GOOGLE_API_KEY", "")
-    api_ok = bool(api_key and api_key != "your_new_gemini_key_here")
+    api_key = os.getenv("GROQ_API_KEY", "")
+    api_ok = bool(api_key and api_key != "your_new_groq_key_here")
     try:
         vs_ready = check_vector_store()
     except Exception:
         vs_ready = False
 
     status_color = "#10b981" if api_ok else "#ef4444"
-    status_text = "Gemini Online" if api_ok else "Gemini Offline"
+    status_text = "Groq Online" if api_ok else "Groq Offline"
     status_emoji = "🟢" if api_ok else "🔴"
     
     st.markdown(f"""

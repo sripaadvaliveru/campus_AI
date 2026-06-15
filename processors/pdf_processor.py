@@ -27,7 +27,7 @@ def extract_text_from_pdf(filepath: Path) -> List[Dict[str, Any]]:
                 page_texts.append((page_num + 1, text))
                 full_text += text + "\n"
 
-            # Create chunks of ~800 chars with overlap
+            # Create chunks of ~600 chars with overlap
             chunks = _chunk_text_with_metadata(page_texts, filepath.name)
             documents.extend(chunks)
 
@@ -44,7 +44,7 @@ def extract_text_from_pdf(filepath: Path) -> List[Dict[str, Any]]:
 def _chunk_text_with_metadata(
     page_texts: List[tuple],
     source_name: str,
-    chunk_size: int = 800,
+    chunk_size: int = 600,
     overlap: int = 100
 ) -> List[Dict[str, Any]]:
     """Create overlapping text chunks from page-level text, preserving page metadata."""

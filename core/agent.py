@@ -12,7 +12,7 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
 MAX_HISTORY  = int(os.getenv("MAX_HISTORY", "10"))
 MAX_RETRIES  = 3
 BASE_DELAY   = 5
@@ -39,22 +39,24 @@ Guidelines:
 - Use bullet points and bold text for clarity.
 - Be friendly and empathetic — like a helpful senior student.
 - For institution-specific queries, advise checking the college's official website.
+
 """
 
 
 def create_agent(tools: Optional[list] = None):
     """Create a LangGraph ReAct agent with Gemini and campus tools."""
     from langgraph.prebuilt import create_react_agent
-    from langchain_google_genai import ChatGoogleGenerativeAI
+    from langchain_groq import ChatGroq
 
     if tools is None:
         from core.tools import get_all_tools
         tools = get_all_tools()
 
-    llm = ChatGoogleGenerativeAI(
-        model=GEMINI_MODEL,
-        google_api_key=os.getenv("GOOGLE_API_KEY"),
-        temperature=0.3,
+    llm = ChatGroq(
+        model="llama-3.1-8b-instant",
+        api_key=os.getenv("GROQ_API_KEY"),
+        temperature=0.0,
+        request_timeout=30,   # fail fast instead of hanging forever
     )
 
     # Support both old ('prompt') and new ('state_modifier') LangGraph API
@@ -229,23 +231,39 @@ class CampusChatbot:
             err_str = str(last_error)
             if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
                 response = (
-                    "⚠️ **API Quota Reached** — The Gemini API daily limit has been hit.\n\n"
+                    "⚠️ **API Quota Reached** — The API daily limit has been hit.\n\n"
                     "**How to fix:**\n"
-                    "1. Wait a few minutes and try again (limits reset hourly)\n"
-                    "2. Or wait until midnight IST for daily quota reset\n"
-                    "3. Consider upgrading to a paid Google AI Studio plan\n\n"
-                    "_The free tier allows ~1,500 requests/day on gemini-2.0-flash._"
+                    "1. Wait a few minutes and try again (limits reset frequently)\n"
+                    "2. Check your AI provider's dashboard for quota limits.\n"
                 )
             elif "503" in err_str or "UNAVAILABLE" in err_str:
                 response = (
-                    "⚠️ **Gemini API Temporarily Unavailable** — High demand on Google's servers.\n\n"
-                    "Please wait 30 seconds and try again."
+                    "⚠️ **Service Unavailable** — The AI service is currently overloaded.\n"
+                    "Please wait a moment and try again."
                 )
+            elif "tool_use_failed" in err_str and "failed_generation" in err_str:
+                import re
+                match = re.search(r"'failed_generation': '(\{.*?\})'", err_str)
+                if match:
+                    try:
+                        import json
+                        raw_json = match.group(1).replace("\\\"", "\"").replace("\\'", "'")
+                        args = json.loads(raw_json)
+                        if "institution" in args and "topic" in args:
+                            from core.tools import InstitutionDataTool
+                            fallback_res = InstitutionDataTool()._run(institution=args["institution"], topic=args["topic"])
+                        elif "query" in args:
+                            from core.tools import CampusKnowledgeTool
+                            fallback_res = CampusKnowledgeTool()._run(query=args["query"])
+                        else:
+                            fallback_res = f"Data could not be formatted properly. Raw arguments: {args}"
+                        
+                        response = f"*(Note: The AI experienced a tool formatting glitch, so I fetched the data manually for you.)*\n\n{fallback_res}"
+                        tool_used = "manual_fallback"
+                    except Exception as parse_e:
+                        response = f"⚠️ **Tool Formatting Error** — The AI failed to format the tool request properly, and the fallback parser also failed. Please rephrase your question."
             else:
-                response = (
-                    f"⚠️ **Error**: {err_str[:300]}\n\n"
-                    "Please check your API key in `.env` and try again."
-                )
+                response = f"⚠️ **Error**: {err_str[:200]}\n\nPlease check your API key in `.env` and try again."
             tool_used = "error"
 
         response_time_ms = int((time.time() - start_time) * 1000)

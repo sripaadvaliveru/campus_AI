@@ -49,7 +49,7 @@ class CampusKnowledgeTool(BaseTool):
             vs = get_vector_store()
             if not vs.is_ready:
                 return "Knowledge base not yet initialized. Please run initialize.py first."
-            context = vs.get_relevant_context(query, top_k=8)
+            context = vs.get_relevant_context(query, top_k=3)
             return f"Relevant campus information:\n\n{context}"
         except Exception as e:
             logger.error(f"CampusKnowledgeTool error: {e}")
