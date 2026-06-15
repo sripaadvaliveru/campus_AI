@@ -2086,7 +2086,7 @@ if st.session_state.page == "📈 Insights":
     <div style="text-align:center;padding:1.25rem;color:var(--text-secondary);font-size:0.85rem;
                 background:var(--bg-surface);border:2px solid var(--border)">
         ⚡ Avg Response: <strong style="color:var(--accent)">{int(avg_rt)}ms</strong> &nbsp;·&nbsp;
-        🤖 Model: <strong style="color:var(--accent)">gemini-2.0-flash</strong> &nbsp;·&nbsp;
+        🤖 Model: <strong style="color:var(--accent)">llama-3.1-8b-instant</strong> &nbsp;·&nbsp;
         💾 Session: <strong style="color:var(--accent);font-family:'JetBrains Mono',monospace">{st.session_state.session_id[:8]}...</strong>
     </div>
     """, unsafe_allow_html=True)
