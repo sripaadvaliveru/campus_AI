@@ -46,15 +46,15 @@ Guidelines:
 def create_agent(tools: Optional[list] = None):
     """Create a LangGraph ReAct agent with Gemini and campus tools."""
     from langgraph.prebuilt import create_react_agent
-    from langchain_groq import ChatGroq
+    from langchain_openai import ChatOpenAI
 
     if tools is None:
         from core.tools import get_all_tools
         tools = get_all_tools()
 
-    llm = ChatGroq(
-        model="llama-3.1-8b-instant",
-        api_key=os.getenv("GROQ_API_KEY"),
+    llm = ChatOpenAI(
+        model="gpt-4o-mini",
+        api_key=os.getenv("OPENAI_API_KEY"),
         temperature=0.0,
         request_timeout=30,   # fail fast instead of hanging forever
     )
@@ -241,27 +241,6 @@ class CampusChatbot:
                     "⚠️ **Service Unavailable** — The AI service is currently overloaded.\n"
                     "Please wait a moment and try again."
                 )
-            elif "tool_use_failed" in err_str and "failed_generation" in err_str:
-                import re
-                match = re.search(r"'failed_generation': '(\{.*?\})'", err_str)
-                if match:
-                    try:
-                        import json
-                        raw_json = match.group(1).replace("\\\"", "\"").replace("\\'", "'")
-                        args = json.loads(raw_json)
-                        if "institution" in args and "topic" in args:
-                            from core.tools import InstitutionDataTool
-                            fallback_res = InstitutionDataTool()._run(institution=args["institution"], topic=args["topic"])
-                        elif "query" in args:
-                            from core.tools import CampusKnowledgeTool
-                            fallback_res = CampusKnowledgeTool()._run(query=args["query"])
-                        else:
-                            fallback_res = f"Data could not be formatted properly. Raw arguments: {args}"
-                        
-                        response = f"*(Note: The AI experienced a tool formatting glitch, so I fetched the data manually for you.)*\n\n{fallback_res}"
-                        tool_used = "manual_fallback"
-                    except Exception as parse_e:
-                        response = f"⚠️ **Tool Formatting Error** — The AI failed to format the tool request properly, and the fallback parser also failed. Please rephrase your question."
             else:
                 response = f"⚠️ **Error**: {err_str[:200]}\n\nPlease check your API key in `.env` and try again."
             tool_used = "error"

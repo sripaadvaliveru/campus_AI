@@ -128,8 +128,8 @@ def root():
 @app.get("/health", response_model=HealthResponse, tags=["General"])
 def health():
     """System health — API key status, vector store, model name."""
-    api_key = os.getenv("GROQ_API_KEY", "")
-    api_key_set = bool(api_key and "your_" not in api_key)
+    api_key = os.getenv("OPENAI_API_KEY", "")
+    api_key_set = bool(api_key and api_key != "your_openai_api_key_here")
 
     try:
         from core.embeddings import get_vector_store
@@ -141,7 +141,7 @@ def health():
         status="ok" if api_key_set else "degraded",
         api_key_set=api_key_set,
         vector_store_ready=vs_ready,
-        model=os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
+        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
         timestamp=datetime.now().isoformat(),
     )
 
@@ -158,9 +158,9 @@ def chat(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
-    api_key = os.getenv("GROQ_API_KEY", "")
-    if not api_key or "your_" in api_key:
-        raise HTTPException(status_code=503, detail="API key not configured. Add GROQ_API_KEY to .env")
+    api_key = os.getenv("OPENAI_API_KEY", "")
+    if not api_key or api_key == "your_openai_api_key_here":
+        raise HTTPException(status_code=503, detail="API key not configured. Add OPENAI_API_KEY to .env")
 
     college = COLLEGE_MAP.get(req.college_id or "general", {})
     if req.college_id and req.college_id != "general" and college:

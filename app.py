@@ -27,8 +27,8 @@ load_dotenv()
 # Push them into os.environ so all downstream libraries (LangChain, google-genai)
 # can find them with os.getenv() as normal.
 try:
-    if "GROQ_API_KEY" in st.secrets:
-        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+    if "OPENAI_API_KEY" in st.secrets:
+        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 except Exception:
     pass  # st.secrets not available locally — .env is used instead
 
@@ -846,8 +846,8 @@ def send_message(user_input: str):
         return
 
     # Check API key
-    if not os.getenv("GROQ_API_KEY") or os.getenv("GROQ_API_KEY") == "your_new_groq_key_here":
-        st.error("⚠️ **Groq API Key not configured!** Please add your `GROQ_API_KEY` to the `.env` file and restart.")
+    if not os.getenv("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") == "your_openai_api_key_here":
+        st.error("⚠️ **OpenAI API Key not configured!** Please add your `OPENAI_API_KEY` to the `.env` file and restart.")
         return
 
     # Add user message
@@ -914,8 +914,8 @@ def send_message(user_input: str):
         response = (
             "🔧 **System Error**: I'm having trouble connecting right now.\n\n"
             "Please check:\n"
-            "1. Your `GROQ_API_KEY` is valid in `.env`\n"
-            "2. The vector store is initialized (`python initialize.py`)\n"
+            "1. Your `OPENAI_API_KEY` is valid in `.env`\n"
+            "2. Vector store is initialized (`python initialize.py`)\n"
             "3. All dependencies are installed (`pip install -r requirements.txt`)"
         )
         tool_used = ""
@@ -2086,7 +2086,7 @@ if st.session_state.page == "📈 Insights":
     <div style="text-align:center;padding:1.25rem;color:var(--text-secondary);font-size:0.85rem;
                 background:var(--bg-surface);border:2px solid var(--border)">
         ⚡ Avg Response: <strong style="color:var(--accent)">{int(avg_rt)}ms</strong> &nbsp;·&nbsp;
-        🤖 Model: <strong style="color:var(--accent)">llama-3.1-8b-instant</strong> &nbsp;·&nbsp;
+        🤖 Model: <strong style="color:var(--accent)">gpt-4o-mini</strong> &nbsp;·&nbsp;
         💾 Session: <strong style="color:var(--accent);font-family:'JetBrains Mono',monospace">{st.session_state.session_id[:8]}...</strong>
     </div>
     """, unsafe_allow_html=True)

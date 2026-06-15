@@ -51,18 +51,18 @@ def check_env() -> bool:
             import shutil
             shutil.copy(env_example, env_path)
             print("[OK] Created .env from .env.example")
-            print("[!!] Please add your GROQ_API_KEY to .env and re-run.\n")
+            print("[!!] Please add your OPENAI_API_KEY to .env and re-run.\n")
         else:
-            print("[ERR] .env file not found. Create it with your GROQ_API_KEY.")
+            print("[ERR] .env file not found. Create it with your OPENAI_API_KEY.")
         return False
 
     load_dotenv(env_path)
-    api_key = os.getenv("GROQ_API_KEY", "")
+    api_key = os.getenv("OPENAI_API_KEY", "")
 
-    if not api_key or api_key == "your_groq_api_key_here":
-        print("[!!] GROQ_API_KEY is not set in .env")
-        print("     Get a free key at: https://console.groq.com/keys")
-        print("     Then add:  GROQ_API_KEY=your_key_here  to .env\n")
+    if not api_key or api_key == "your_openai_api_key_here":
+        print("[!!] OPENAI_API_KEY is not set in .env")
+        print("     Get a key at: https://platform.openai.com/api-keys")
+        print("     Then add:  OPENAI_API_KEY=your_key_here  to .env\n")
         return False
 
     masked = api_key[:8] + "*" * max(0, len(api_key) - 8)
@@ -267,8 +267,8 @@ def main():
     print_summary(len(documents), success)
 
     if not env_ok:
-        print("[!!] REMINDER: Add your GROQ_API_KEY to .env before running the app!")
-        print("     Get a free key at: https://console.groq.com/keys\n")
+        print("[!!] REMINDER: Add your OPENAI_API_KEY to .env before running the app!")
+        print("     Get a key at: https://platform.openai.com/api-keys\n")
 
     return 0 if success else 1
 

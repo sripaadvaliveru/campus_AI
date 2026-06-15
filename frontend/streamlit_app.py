@@ -186,7 +186,7 @@ with st.sidebar:
     health = api_get("/health")
     api_ok = health.get("api_key_set", False) if health else False
     vs_ready = health.get("vector_store_ready", False) if health else False
-    model = health.get("model", "llama-3.1-8b-instant") if health else "unknown"
+    model = health.get("model", "gpt-4o-mini") if health else "unknown"
 
     st.markdown(f"""
     <div style="padding:0 0.25rem">
