@@ -1076,15 +1076,15 @@ with st.sidebar:
     st.markdown("<hr style='margin:0.75rem 0'>", unsafe_allow_html=True)
 
     # System status
-    api_key = os.getenv("GROQ_API_KEY", "")
-    api_ok = bool(api_key and api_key != "your_new_groq_key_here")
+    api_key = os.getenv("OPENAI_API_KEY", "")
+    api_ok = bool(api_key and api_key != "your_openai_api_key_here")
     try:
         vs_ready = check_vector_store()
     except Exception:
         vs_ready = False
 
     status_color = "#10b981" if api_ok else "#ef4444"
-    status_text = "Groq Online" if api_ok else "Groq Offline"
+    status_text = "OpenAI Online" if api_ok else "OpenAI Offline"
     status_emoji = "🟢" if api_ok else "🔴"
     
     st.markdown(f"""
