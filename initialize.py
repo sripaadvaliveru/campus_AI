@@ -41,7 +41,7 @@ def print_banner():
 
 
 def check_env() -> bool:
-    """Check .env file and API key."""
+    """Check .env file and API key (OpenAI or Google Gemini)."""
     from dotenv import load_dotenv
     env_path    = ROOT / ".env"
     env_example = ROOT / ".env.example"
@@ -51,23 +51,32 @@ def check_env() -> bool:
             import shutil
             shutil.copy(env_example, env_path)
             print("[OK] Created .env from .env.example")
-            print("[!!] Please add your OPENAI_API_KEY to .env and re-run.\n")
+            print("[!!] Please add your API key (GOOGLE_API_KEY or OPENAI_API_KEY) to .env and re-run.\n")
         else:
-            print("[ERR] .env file not found. Create it with your OPENAI_API_KEY.")
+            print("[ERR] .env file not found.")
         return False
 
     load_dotenv(env_path)
-    api_key = os.getenv("OPENAI_API_KEY", "")
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+    google_key = os.getenv("GOOGLE_API_KEY", "").strip()
 
-    if not api_key or api_key == "your_openai_api_key_here":
-        print("[!!] OPENAI_API_KEY is not set in .env")
-        print("     Get a key at: https://platform.openai.com/api-keys")
-        print("     Then add:  OPENAI_API_KEY=your_key_here  to .env\n")
+    openai_ok = openai_key and openai_key != "your_openai_api_key_here" and openai_key != "your_openai_key_here"
+    google_ok = google_key and google_key != "your_google_gemini_api_key_here" and google_key != "your_actual_key_here"
+
+    if not openai_ok and not google_ok:
+        print("[!!] No valid API key found in .env")
+        print("     Please configure either GOOGLE_API_KEY (Gemini) or OPENAI_API_KEY (OpenAI) in your .env file.\n")
         return False
 
-    masked = api_key[:8] + "*" * max(0, len(api_key) - 8)
-    print(f"[OK] API Key found: {masked}")
+    if google_ok:
+        masked = google_key[:8] + "*" * max(0, len(google_key) - 8)
+        print(f"[OK] Gemini API Key found: {masked}")
+    if openai_ok:
+        masked = openai_key[:8] + "*" * max(0, len(openai_key) - 8)
+        print(f"[OK] OpenAI API Key found: {masked}")
+        
     return True
+
 
 
 def check_dependencies() -> bool:
@@ -149,8 +158,23 @@ def load_all_documents() -> list:
     else:
         print("   [4] No PDF handbooks found (add PDFs to data/handbooks/ later)")
 
+    # 5. Live Website Scraping (optional)
+    college_urls = os.getenv("COLLEGE_URLS", "").strip()
+    if college_urls:
+        urls = [u.strip() for u in college_urls.split(",") if u.strip()]
+        if urls:
+            print(f"   [5] Scraping {len(urls)} live website URL(s)...")
+            try:
+                from processors.web_scraper import scrape_multiple_urls
+                scraped_docs = scrape_multiple_urls(urls)
+                all_docs.extend(scraped_docs)
+                print(f"       -> {len(scraped_docs)} scraped web chunks")
+            except Exception as e:
+                print(f"       [ERR] Web scraping failed: {e}")
+
     print(f"\nTotal: {len(all_docs)} documents loaded from all sources")
     return all_docs
+
 
 
 def build_vector_store(documents: list) -> bool:
@@ -267,8 +291,10 @@ def main():
     print_summary(len(documents), success)
 
     if not env_ok:
-        print("[!!] REMINDER: Add your OPENAI_API_KEY to .env before running the app!")
-        print("     Get a key at: https://platform.openai.com/api-keys\n")
+        print("[!!] REMINDER: Add your GOOGLE_API_KEY or OPENAI_API_KEY to .env before running the app!")
+        print("     Get a Gemini key at: https://aistudio.google.com/app/apikey")
+        print("     Get an OpenAI key at: https://platform.openai.com/api-keys\n")
+
 
     return 0 if success else 1
 

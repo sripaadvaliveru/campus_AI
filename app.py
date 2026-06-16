@@ -29,6 +29,8 @@ load_dotenv()
 try:
     if "OPENAI_API_KEY" in st.secrets:
         os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    if "GOOGLE_API_KEY" in st.secrets:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 except Exception:
     pass  # st.secrets not available locally — .env is used instead
 
@@ -275,6 +277,23 @@ def load_css():
       border-radius: 2px !important;
       background: linear-gradient(90deg, rgba(0, 82, 255, 0.25), rgba(77, 124, 255, 0.15)) !important;
       z-index: -1;
+    }
+
+    /* Voice mic custom animations */
+    @keyframes micbounce {
+      0% { transform: scaleY(0.2); }
+      100% { transform: scaleY(1.0); }
+    }
+    @keyframes micpulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .listeningactive {
+      animation: micpulse 1.5s infinite !important;
+      background: rgba(239, 68, 68, 0.15) !important;
+      border-color: rgba(239, 68, 68, 0.5) !important;
+      color: #EF4444 !important;
     }
     </style>
     """
@@ -635,12 +654,18 @@ load_css()
 # ── Database & Chatbot Initialization ─────────────────────────────────────────
 @st.cache_resource(show_spinner=False)
 def get_database():
+    import importlib
+    import core.database
+    importlib.reload(core.database)
     from core.database import initialize_database
     initialize_database()
     return True
 
 @st.cache_resource(show_spinner=False)
 def get_chatbot():
+    import importlib
+    import core.agent
+    importlib.reload(core.agent)
     from core.agent import CampusChatbot
     bot = CampusChatbot()
     return bot
@@ -846,9 +871,14 @@ def send_message(user_input: str):
         return
 
     # Check API key
-    if not os.getenv("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") == "your_openai_api_key_here":
-        st.error("⚠️ **OpenAI API Key not configured!** Please add your `OPENAI_API_KEY` to the `.env` file and restart.")
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+    google_key = os.getenv("GOOGLE_API_KEY", "")
+    openai_ok = bool(openai_key and openai_key != "your_openai_api_key_here")
+    google_ok = bool(google_key and google_key != "your_google_gemini_api_key_here")
+    if not openai_ok and not google_ok:
+        st.error("⚠️ **API Key not configured!** Please add your `GOOGLE_API_KEY` (Gemini) or `OPENAI_API_KEY` (OpenAI) to the `.env` file and restart.")
         return
+
 
     # Add user message
     timestamp = datetime.now().strftime("%H:%M")
@@ -873,7 +903,7 @@ def send_message(user_input: str):
     else:
         contextual_input = user_input
 
-    # Get chatbot response — show typing indicator while waiting
+    # Get chatbot response — show typing indicator initially, then stream response
     typing_placeholder = st.empty()
     typing_placeholder.markdown(f"""
         <div class="message bot">
@@ -885,46 +915,68 @@ def send_message(user_input: str):
             </div>
         </div>""", unsafe_allow_html=True)
 
+    response = ""
+    tool_used = ""
+    resp_time_ms = 0
+    query_id = None
+
     try:
         chatbot = get_chatbot()
-        response, tool_used, resp_time_ms = chatbot.chat(
-            contextual_input,
-            session_id=st.session_state.session_id
-        )
+        
+        # Stream response chunks in real-time
+        for event in chatbot.stream_chat(contextual_input, session_id=st.session_state.session_id):
+            if event["type"] == "tool":
+                tool_used = event["name"]
+            elif event["type"] == "content":
+                response += event["text"]
+                # Clear typing indicator and show partial text
+                typing_placeholder.markdown(f"""
+                <div class="message bot">
+                    <div class="message-avatar">{get_college_icon_html("🎓")}</div>
+                    <div style="width:100%">
+                        <div class="message-bubble">{response}</div>
+                    </div>
+                </div>""", unsafe_allow_html=True)
+            elif event["type"] == "error":
+                response = event["text"]
+                tool_used = "error"
+            elif event["type"] == "time":
+                resp_time_ms = event["ms"]
+                response = event["full_text"]
 
         # Log to database
-        query_id = None
-        try:
-            from core.agent import categorize_query
-            from core.database import log_query
-            category = categorize_query(user_input)
-            query_id = log_query(
-                session_id=st.session_state.session_id,
-                user_query=user_input,
-                bot_response=response,
-                tool_used=tool_used,
-                category=category,
-                response_time_ms=resp_time_ms
-            )
-        except Exception as e:
-            logger.error(f"DB logging error: {e}")
+        if response and not response.startswith("🔧") and tool_used != "error":
+            try:
+                from core.agent import categorize_query
+                from core.database import log_query
+                category = categorize_query(user_input)
+                query_id = log_query(
+                    session_id=st.session_state.session_id,
+                    user_query=user_input,
+                    bot_response=response,
+                    tool_used=tool_used,
+                    category=category,
+                    response_time_ms=resp_time_ms
+                )
+            except Exception as e:
+                logger.error(f"DB logging error: {e}")
 
     except Exception as e:
-        logger.error(f"Chatbot error: {e}")
+        import traceback
+        logger.error(f"Chatbot error: {e}\n{traceback.format_exc()}")
         response = (
             "🔧 **System Error**: I'm having trouble connecting right now.\n\n"
+            f"**Error Details**: `{str(e)}`\n\n"
             "Please check:\n"
-            "1. Your `OPENAI_API_KEY` is valid in `.env`\n"
+            "1. Your `GOOGLE_API_KEY` or `OPENAI_API_KEY` is valid in `.env`\n"
             "2. Vector store is initialized (`python initialize.py`)\n"
             "3. All dependencies are installed (`pip install -r requirements.txt`)"
         )
-        tool_used = ""
-        query_id = None
+        tool_used = "error"
         resp_time_ms = 0
 
-    # Clear the typing indicator
+    # Clear placeholder after final state is stored
     typing_placeholder.empty()
-
 
     # Add bot response
     st.session_state.messages.append({
@@ -1044,6 +1096,7 @@ with st.sidebar:
             st.session_state.selected_college = None
             st.session_state.messages = []
             st.session_state.feedback_given = set()
+            st.session_state.page = "🏠 Overview"
             try:
                 get_chatbot().clear_history()
             except Exception:
@@ -1076,15 +1129,28 @@ with st.sidebar:
     st.markdown("<hr style='margin:0.75rem 0'>", unsafe_allow_html=True)
 
     # System status
-    api_key = os.getenv("OPENAI_API_KEY", "")
-    api_ok = bool(api_key and api_key != "your_openai_api_key_here")
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+    google_key = os.getenv("GOOGLE_API_KEY", "")
+    openai_ok = bool(openai_key and openai_key != "your_openai_api_key_here")
+    google_ok = bool(google_key and google_key != "your_google_gemini_api_key_here")
+    
+    provider = os.getenv("LLM_PROVIDER", "").lower().strip()
+    if not provider:
+        provider = "gemini" if google_ok else "openai"
+        
+    api_ok = openai_ok or google_ok
     try:
         vs_ready = check_vector_store()
     except Exception:
         vs_ready = False
 
     status_color = "#10b981" if api_ok else "#ef4444"
-    status_text = "OpenAI Online" if api_ok else "OpenAI Offline"
+    if provider == "gemini" and google_ok:
+        status_text = "Gemini Online"
+    elif openai_ok:
+        status_text = "OpenAI Online"
+    else:
+        status_text = "System Offline"
     status_emoji = "🟢" if api_ok else "🔴"
     
     st.markdown(f"""
@@ -1290,6 +1356,7 @@ if st.session_state.page == "🏠 Overview":
                     </div>
                     <div style="font-size: 0.9rem; line-height: 1.55; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.25rem;">
                         <div style="font-weight: 600; color: var(--text-primary);">🏆 {c.get('ranking', 'N/A')}</div>
+                        <div style="font-weight: 500; color: var(--text-primary);">📍 {c.get('location', 'N/A')}</div>
                         <div>👥 {c.get('students', 'N/A')}</div>
                         <div style="font-weight: 500; color: var(--accent);">💼 {c.get('placement', 'N/A')}</div>
                     </div>
@@ -1331,14 +1398,154 @@ if st.session_state.page == "⚖️ Compare":
     c1 = next(c for c in COLLEGES if c["name"] == comp_id1)
     c2 = next(c for c in COLLEGES if c["name"] == comp_id2)
 
+    def load_detailed_data(college_id: str) -> dict:
+        try:
+            hyd_dir = DATA_DIR / "hyderabad"
+            file_map = {
+                "iith": ("iith.json", None),
+                "iiith": ("iiith.json", None),
+                "nalsar": ("other_institutions.json", "NALSAR_University_of_Law"),
+                "nims": ("other_institutions.json", "NIMS_Medical_Sciences"),
+                "hcu": ("other_institutions.json", "University_of_Hyderabad_HCU"),
+                "osmania": ("other_institutions.json", "Osmania_University_CBCS"),
+                "bits_hyd": ("other_institutions.json", "BITS_Pilani_Hyderabad"),
+            }
+            if college_id not in file_map:
+                return {}
+            filename, inner_key = file_map[college_id]
+            filepath = hyd_dir / filename
+            if not filepath.exists():
+                return {}
+            with open(filepath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if inner_key:
+                return data.get(inner_key, {})
+            return data
+        except Exception:
+            return {}
+
+    def get_fees_str(college_id: str, data: dict) -> str:
+        if college_id == "iith":
+            return "Rs. 1,68,993 (1st Sem Gen/OBC Total)"
+        elif college_id == "iiith":
+            return "Rs. 2,50,000 (1st Sem Tuition)"
+        elif college_id == "nalsar":
+            return "Rs. 3,17,000 (1st Year Gen Total)"
+        elif college_id == "nims":
+            return "Rs. 37,050 to 1,07,000 / year (varies)"
+        elif college_id == "hcu":
+            return "Rs. 3,850 (Hostel Admission)"
+        elif college_id == "bits_hyd":
+            return "Rs. 2.45 Lakhs / sem Tuition (approx)"
+        return "Varies — See Handbook"
+
+    def get_hostel_policy(college_id: str, data: dict) -> str:
+        if college_id == "iith":
+            return "On-campus housing available (Rs. 18,000/sem + dining)"
+        elif college_id == "iiith":
+            return "Mandatory residency. Palash/OBH/Bakul/Parijaat blocks"
+        elif college_id == "hcu":
+            return "Strict 50km radius Twin-Cities exclusion rule"
+        elif college_id == "bits_hyd":
+            return "Fully residential self-contained campus township"
+        return "Accommodation options available"
+
+    def extract_placement_packages(college_id: str, detailed_data: dict, college_info: dict) -> tuple:
+        highest = None
+        average = None
+        if college_id == "iiith" and "placements" in detailed_data:
+            p25 = detailed_data["placements"].get("2025", {})
+            highest = p25.get("highest_salary_LPA")
+            average = p25.get("average_salary_LPA")
+        elif college_id == "iith" and "placements_2024" in detailed_data:
+            p24 = detailed_data["placements_2024"]
+            highest = p24.get("highest_domestic_package_LPA")
+            average = 21.28
+        if highest is None or average is None:
+            placement_str = college_info.get("placement", "")
+            import re
+            highest_match = re.search(r'(?:₹|Rs\.?\s*)(\d+(?:\.\d+)?)\s*(?:L|Cr|Crore)?\s*Highest', placement_str, re.IGNORECASE)
+            if highest_match:
+                val = float(highest_match.group(1))
+                if "Cr" in placement_str or "Crore" in placement_str:
+                    val *= 100.0
+                highest = val
+            avg_match = re.search(r'(?:₹|Rs\.?\s*)(\d+(?:\.\d+)?)\s*(?:L)?\s*Avg', placement_str, re.IGNORECASE)
+            if avg_match:
+                average = float(avg_match.group(1))
+        return highest, average
+
     if c1 and c2:
+        d1 = load_detailed_data(c1["id"])
+        d2 = load_detailed_data(c2["id"])
+
         comp_data = {
-            "Comparison Category": ["Short Name", "Type", "Location", "NIRF Ranking", "Student Count", "Placement CTC / Highlights"],
-            c1["name"]: [c1["short"], c1["type"], c1["location"], c1.get("ranking", "N/A"), c1.get("students", "N/A"), c1.get("placement", "N/A")],
-            c2["name"]: [c2["short"], c2["type"], c2["location"], c2.get("ranking", "N/A"), c2.get("students", "N/A"), c2.get("placement", "N/A")]
+            "Comparison Category": [
+                "Short Name", 
+                "Type", 
+                "Location", 
+                "NIRF Ranking", 
+                "Student Count", 
+                "Tuition / Hostel Fees", 
+                "Hostel Policies & Curfews", 
+                "Placement Records"
+            ],
+            c1["name"]: [
+                c1["short"], 
+                c1["type"], 
+                c1["location"], 
+                c1.get("ranking", "N/A"), 
+                c1.get("students", "N/A"),
+                get_fees_str(c1["id"], d1),
+                get_hostel_policy(c1["id"], d1),
+                c1.get("placement", "N/A")
+            ],
+            c2["name"]: [
+                c2["short"], 
+                c2["type"], 
+                c2["location"], 
+                c2.get("ranking", "N/A"), 
+                c2.get("students", "N/A"),
+                get_fees_str(c2["id"], d2),
+                get_hostel_policy(c2["id"], d2),
+                c2.get("placement", "N/A")
+            ]
         }
         df_comp = pd.DataFrame(comp_data)
         st.dataframe(df_comp, use_container_width=True, hide_index=True)
+
+        # Plotly placement comparison
+        h1, a1 = extract_placement_packages(c1["id"], d1, c1)
+        h2, a2 = extract_placement_packages(c2["id"], d2, c2)
+        
+        categories = []
+        highest_packages = []
+        avg_packages = []
+        
+        if h1 or a1:
+            categories.append(c1["short"])
+            highest_packages.append(h1 or 0)
+            avg_packages.append(a1 or 0)
+        if h2 or a2:
+            categories.append(c2["short"])
+            highest_packages.append(h2 or 0)
+            avg_packages.append(a2 or 0)
+            
+        if len(categories) > 0:
+            st.markdown("### 📊 Placement Package Comparison (LPA)")
+            fig = go.Figure(data=[
+                go.Bar(name='Highest Package', x=categories, y=highest_packages, marker_color='#0052FF'),
+                go.Bar(name='Average Package', x=categories, y=avg_packages, marker_color='#39c5b9')
+            ])
+            fig.update_layout(
+                barmode='group',
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(color='white' if st.session_state.get("dark_mode", True) else 'black'),
+                yaxis=dict(title='Package in LPA (Lakhs Per Annum)', gridcolor='rgba(128,128,128,0.2)'),
+                xaxis=dict(gridcolor='rgba(128,128,128,0.2)')
+            )
+            st.plotly_chart(fig, use_container_width=True)
 
 
 # ==============================================================================
@@ -1393,6 +1600,12 @@ if st.session_state.page == "💬 Chat":
 
     if st.session_state.selected_college != "general":
         tags_html = " ".join([f'<span class="college-tag">{t}</span>' for t in active_c.get('tags', [])])
+        
+        # Build Google Maps URL for directions
+        import urllib.parse
+        loc_query = f"{active_c.get('name')}, {active_c.get('location')}" if active_c.get('location') != "Pan-India" else active_c.get('name')
+        maps_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote_plus(loc_query)}"
+        
         st.markdown(f"""
         <div class="active-college-info" style="background:var(--bg-surface);border:1px solid var(--border);padding:1.25rem;border-radius:8px;margin-bottom:1.5rem;font-size:0.88rem;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;flex-wrap:wrap;gap:0.5rem;">
@@ -1402,8 +1615,13 @@ if st.session_state.page == "💬 Chat":
             <div style="color:var(--text-secondary);line-height:1.5;margin-bottom:0.75rem;">
                 {active_c.get('desc')}
             </div>
-            <div style="display:flex;gap:0.35rem;flex-wrap:wrap;">
-                {tags_html}
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem;">
+                <div style="display:flex;gap:0.35rem;flex-wrap:wrap;">
+                    {tags_html}
+                </div>
+                <a href="{maps_url}" target="_blank" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; padding:0.35rem 0.75rem; background:rgba(0,82,255,0.08); border:1px solid rgba(0,82,255,0.25); border-radius:6px; color:#0052FF; font-weight:600; font-size:0.78rem; transition: background 0.2s;">
+                    🗺️ Get Directions on Maps
+                </a>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1435,101 +1653,411 @@ if st.session_state.page == "💬 Chat":
     }
     suggestions = college_suggestions.get(st.session_state.selected_college, college_suggestions["general"])
 
-    if not st.session_state.messages:
+    # Determine college color theme and shadow
+    college_color = active_c.get('color', '#0052FF')
+    def hex_to_rgb(hex_str):
+        hex_str = hex_str.lstrip('#')
+        if len(hex_str) == 3:
+            hex_str = ''.join([c*2 for c in hex_str])
+        return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+    try:
+        r_c, g_c, b_c = hex_to_rgb(college_color)
+    except Exception:
+        r_c, g_c, b_c = 0, 82, 255
+
+    st.markdown(f"""
+    <style>
+    [data-testid="stVerticalBlockBorderWrapper"] {{
+        background-color: var(--bg-surface) !important;
+        border: 2px solid {college_color} !important;
+        border-radius: 16px !important;
+        padding: 2rem !important;
+        box-shadow: 0 10px 30px rgba({r_c}, {g_c}, {b_c}, 0.1) !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 2.5rem !important;
+    }}
+    </style>
+    """.replace('\n', ' '), unsafe_allow_html=True)
+
+    with st.container(border=True):
+        if not st.session_state.messages:
+            st.markdown(f"""
+            <div style="font-size:0.75rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-top:0.5rem;margin-bottom:0.75rem;">
+                🔥 MOST ASKED ABOUT {active_c.get('short','').upper()}
+            </div>
+            """, unsafe_allow_html=True)
+
+            cols = st.columns(4)
+            for i, sug in enumerate(suggestions):
+                # Strip leading emoji+space safely to get clean query text
+                parts = sug.split(" ", 1)
+                query_text = parts[1].strip() if len(parts) > 1 else sug
+                display_label = query_text.upper()
+                if cols[i % 4].button(display_label, key=f"sug_{i}", use_container_width=True):
+                    send_message(query_text)
+                    st.rerun()
+
+            st.divider()
+
+        # Welcome / empty state
+        if not st.session_state.messages:
+            st.markdown(f"""
+            <div class="empty-state">
+                <span class="empty-state-icon">{active_c.get('icon','👋')}</span>
+                <div class="empty-state-title">Ready to help with {active_c.get('short', 'your college')}!</div>
+                <div class="empty-state-desc">
+                    Ask me about <strong>fees, placements, admissions, hostel rules, scholarships,
+                    bus routes, clubs</strong> or anything else about
+                    <strong>{active_c.get('name','')}</strong>.
+                    I'll retrieve exact data from the knowledge base.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Chat messages
+        chat_area = st.container()
+        with chat_area:
+            for idx, msg in enumerate(st.session_state.messages):
+                render_message(msg, idx)
+            # Auto-scroll to the bottom after rendering messages
+            if st.session_state.messages:
+                st.markdown(
+                    '<div id="chat-bottom"></div>'
+                    '<script>document.getElementById("chat-bottom").scrollIntoView({behavior:"smooth"});</script>',
+                    unsafe_allow_html=True
+                )
+
+        # Quick Actions Row
         st.markdown(f"""
-        <div style="font-size:0.75rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-top:1.5rem;margin-bottom:0.75rem;">
-            🔥 MOST ASKED ABOUT {active_c.get('short','').upper()}
+        <div style="font-size:0.65rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.12em;margin-top:1.5rem;margin-bottom:0.6rem; font-family:'JetBrains Mono',monospace">
+            ⚡ Quick Actions
         </div>
         """, unsafe_allow_html=True)
-
-        cols = st.columns(4)
-        for i, sug in enumerate(suggestions):
-            # Strip leading emoji+space safely to get clean query text
-            parts = sug.split(" ", 1)
-            query_text = parts[1].strip() if len(parts) > 1 else sug
-            display_label = query_text.upper()
-            if cols[i % 4].button(display_label, key=f"sug_{i}", use_container_width=True):
+        
+        qa_cols = st.columns(5)
+        actions = [
+            ("💼 Placements", "What are the latest placement records, highest package, average package and top recruiters?"),
+            ("🏠 Hostel", "Tell me about the hostel rooms, facilities, mess fees and hostel rules."),
+            ("🎓 Scholarships", "What scholarships, fee waivers and financial aid options are available?"),
+            ("📋 Cutoffs", "What are the cutoff ranks and admission eligibility criteria?"),
+            ("📞 Faculty", "Show me the faculty directory, department HODs and office contact details.")
+        ]
+        for col_idx, (label, query_text) in enumerate(actions):
+            if qa_cols[col_idx].button(label, key=f"qa_{col_idx}", use_container_width=True):
                 send_message(query_text)
                 st.rerun()
 
-        st.divider()
+        st.markdown("<div style='margin-bottom:0.75rem'></div>", unsafe_allow_html=True)
 
-    # Welcome / empty state
-    if not st.session_state.messages:
-        st.markdown(f"""
-        <div class="empty-state">
-            <span class="empty-state-icon">{active_c.get('icon','👋')}</span>
-            <div class="empty-state-title">Ready to help with {active_c.get('short', 'your college')}!</div>
-            <div class="empty-state-desc">
-                Ask me about <strong>fees, placements, admissions, hostel rules, scholarships,
-                bus routes, clubs</strong> or anything else about
-                <strong>{active_c.get('name','')}</strong>.
-                I'll retrieve exact data from the knowledge base.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # Input area — single unified input with Enter-to-submit via form
+        with st.form(key="chat_form", clear_on_submit=True):
+            col_input, col_mic, col_send = st.columns([5.2, 0.6, 1.2])
+            with col_input:
+                user_input = st.text_input(
+                    "Message",
+                    placeholder="Type your question here (e.g. library timings, placement statistics)...",
+                    label_visibility="collapsed",
+                    key="chat_input"
+                )
+            with col_mic:
+                # Client-side Voice-to-Text Speech Recognition button
+                mic_html = f"""
+                <button id="voicemicbtn" type="button" style="
+                    width: 100%;
+                    height: 42px;
+                    background: rgba({r_c}, {g_c}, {b_c}, 0.08);
+                    border: 1px solid rgba({r_c}, {g_c}, {b_c}, 0.25);
+                    border-radius: 8px;
+                    color: {college_color};
+                    font-size: 1.25rem;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s ease;
+                    position: relative;
+                    overflow: hidden;
+                " title="Speak your question">
+                    <span id="micicon">🎤</span>
+                    <div id="micwavecontainer" style="display: none; align-items: center; justify-content: center; gap: 3px; height: 16px;">
+                        <div style="width: 3px; height: 100%; background-color: #EF4444; border-radius: 1px; animation: micbounce 0.8s ease-in-out infinite alternate;"></div>
+                        <div style="width: 3px; height: 100%; background-color: #EF4444; border-radius: 1px; animation: micbounce 0.5s ease-in-out infinite alternate; animation-delay: 0.15s;"></div>
+                        <div style="width: 3px; height: 100%; background-color: #EF4444; border-radius: 1px; animation: micbounce 0.7s ease-in-out infinite alternate; animation-delay: 0.3s;"></div>
+                        <div style="width: 3px; height: 100%; background-color: #EF4444; border-radius: 1px; animation: micbounce 0.6s ease-in-out infinite alternate; animation-delay: 0.05s;"></div>
+                    </div>
+                </button>
+                <script>
+                (function() {{
+                    const btn = document.getElementById("voicemicbtn");
+                    const icon = document.getElementById("micicon");
+                    const wave = document.getElementById("micwavecontainer");
+                    if (!btn) return;
+                    
+                    let recognition = null;
+                    let islistening = false;
+                    
+                    btn.addEventListener("click", () => {{
+                        if (islistening) {{
+                            if (recognition) {{
+                                recognition.stop();
+                            }}
+                            return;
+                        }}
+                        
+                        let SpeechRecognition = null;
+                        let doc = document;
+                        try {{
+                            const parentWin = window.parent;
+                            if (parentWin && parentWin.document) {{
+                                doc = parentWin.document;
+                                SpeechRecognition = parentWin.SpeechRecognition || parentWin.webkitSpeechRecognition;
+                            }}
+                        }} catch (e) {{
+                            console.warn("CORS restriction:", e);
+                        }}
+                        
+                        if (!SpeechRecognition) {{
+                            SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                        }}
+                        
+                        if (!SpeechRecognition) {{
+                            alert("Web Speech API is not supported in this browser. Please use Google Chrome, Microsoft Edge, or Apple Safari.");
+                            return;
+                        }}
+                        
+                        try {{
+                            recognition = new SpeechRecognition();
+                            recognition.lang = "en-IN";
+                            recognition.interimResults = true;
+                            recognition.continuous = false;
+                            
+                            islistening = true;
+                            btn.classList.add("listeningactive");
+                            icon.style.display = "none";
+                            wave.style.display = "flex";
+                            
+                            const container = doc.getElementsByClassName("stTextInput").item(0) || document.getElementsByClassName("stTextInput").item(0);
+                            const input = container ? container.getElementsByTagName("input").item(0) : null;
+                            
+                            const updateValue = (val) => {{
+                                if (!input) return;
+                                let setter = null;
+                                try {{
+                                    if (window.parent && window.parent.HTMLInputElement) {{
+                                        setter = Object.getOwnPropertyDescriptor(window.parent.HTMLInputElement.prototype, "value").set;
+                                    }}
+                                }} catch (err) {{}}
+                                if (!setter) {{
+                                    try {{
+                                        setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+                                    }} catch (err) {{}}
+                                }}
+                                if (setter) {{
+                                    setter.call(input, val);
+                                }} else {{
+                                    input.value = val;
+                                }}
+                                input.dispatchEvent(new Event("input", {{ bubbles: true }}));
+                            }};
+                            
+                            recognition.onresult = (event) => {{
+                                let text = "";
+                                for (let i = 0; i < event.results.length; ++i) {{
+                                    text += event.results.item(i).item(0).transcript;
+                                }}
+                                updateValue(text);
+                            }};
+                            
+                            recognition.onend = () => {{
+                                resetState();
+                            }};
+                            
+                            recognition.onerror = (event) => {{
+                                console.error("Speech recognition error:", event.error);
+                                let msg = "Speech recognition error: " + event.error;
+                                if (event.error === "not-allowed") {{
+                                    msg = "🎤 Microphone access is blocked! Please click the camera/microphone icon in your browser's address bar to allow permissions for this website.";
+                                }} else if (event.error === "no-speech") {{
+                                    msg = "🎤 No speech detected. Please speak clearly into your microphone.";
+                                }}
+                                alert(msg);
+                                resetState();
+                            }};
+                            
+                            recognition.start();
+                        }} catch (e) {{
+                            console.error("Failed to start Speech Recognition:", e);
+                            resetState();
+                        }}
+                    }});
+                    
+                    function resetState() {{
+                        islistening = false;
+                        btn.classList.remove("listeningactive");
+                        icon.style.display = "inline";
+                        wave.style.display = "none";
+                        recognition = null;
+                    }}
+                }})();
+                </script>
+                """
+                import textwrap
+                st.markdown(textwrap.dedent(mic_html).strip().replace('\n', ' '), unsafe_allow_html=True)
+            with col_send:
+                send_btn = st.form_submit_button("Send 🚀", use_container_width=True)
 
+            if send_btn and user_input and user_input.strip():
+                send_message(user_input.strip())
+                st.rerun()
 
-
-
-    # Chat messages
-    chat_area = st.container()
-    with chat_area:
-        for idx, msg in enumerate(st.session_state.messages):
-            render_message(msg, idx)
-        # Auto-scroll to the bottom after rendering messages
+        # Response stats
         if st.session_state.messages:
-            st.markdown(
-                '<div id="chat-bottom"></div>'
-                '<script>document.getElementById("chat-bottom").scrollIntoView({behavior:"smooth"});</script>',
-                unsafe_allow_html=True
-            )
+            bot_msgs = [m for m in st.session_state.messages if m["role"] == "assistant"]
+            if bot_msgs:
+                avg_time = sum(m.get("response_time_ms", 0) for m in bot_msgs) / len(bot_msgs)
+                st.caption(f"💬 {len(bot_msgs)} responses | ⚡ Avg: {avg_time:.0f}ms")
 
-    # Quick Actions Row
-    st.markdown(f"""
-    <div style="font-size:0.65rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.12em;margin-top:1.5rem;margin-bottom:0.6rem; font-family:'JetBrains Mono',monospace">
-        ⚡ Quick Actions
+    # Location & Directions Finder
+    if st.session_state.selected_college != "general":
+        import urllib.parse
+        loc_query = f"{active_c.get('name')}, {active_c.get('location')}"
+        maps_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote_plus(loc_query)}"
+        
+        # Determine college color theme
+        college_color = active_c.get('color', '#0052FF')
+        def hex_to_rgb(hex_str):
+            hex_str = hex_str.lstrip('#')
+            if len(hex_str) == 3:
+                hex_str = ''.join([c*2 for c in hex_str])
+            return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+        try:
+            r, g, b = hex_to_rgb(college_color)
+        except Exception:
+            r, g, b = 0, 82, 255
+            
+        # Section label
+        st.markdown("<h3 style='font-family:\"Calistoga\",serif;font-weight:400;margin-top:2.5rem;margin-bottom:1rem;color:var(--text-primary);'>📍 Campus Location & Directions</h3>", unsafe_allow_html=True)
+
+        location_html = f"""<style>
+.location-directions-card {{
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    text-decoration: none !important;
+}}
+.location-directions-card:hover {{
+    transform: translateY(-3px);
+    border-color: {college_color};
+    box-shadow: 0 12px 30px rgba({r}, {g}, {b}, 0.12);
+}}
+@keyframes radar {{
+    0% {{ transform: scale(0.2); opacity: 0.8; }}
+    100% {{ transform: scale(1.8); opacity: 0; }}
+}}
+.radar-ring {{
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 1.5px solid {college_color};
+    border-radius: 50%;
+    animation: radar 2s infinite;
+}}
+</style>
+<a href="{maps_url}" target="_blank" style="text-decoration: none; color: inherit;">
+    <div class="location-directions-card">
+        <!-- Map Visual Mockup -->
+        <div style="
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, rgba({r}, {g}, {b}, 0.15) 0%, rgba({r}, {g}, {b}, 0) 70%), 
+                        linear-gradient(45deg, var(--border) 25%, transparent 25%),
+                        linear-gradient(-45deg, var(--border) 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, var(--border) 75%),
+                        linear-gradient(-45deg, transparent 75%, var(--border) 75%);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 0, 5px -5px, 0px 5px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        ">
+            <!-- Pulsing Pin Icon -->
+            <div style="
+                width: 14px;
+                height: 14px;
+                background: {college_color};
+                border: 2.5px solid var(--bg-surface);
+                border-radius: 50%;
+                box-shadow: 0 0 10px {college_color};
+                position: relative;
+                z-index: 2;
+            "></div>
+            <div class="radar-ring"></div>
+        </div>
+        
+        <!-- Location details -->
+        <div style="flex-grow: 1;">
+            <div style="
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.7rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                color: {college_color};
+                margin-bottom: 0.25rem;
+            ">📍 Location & Route Finder</div>
+            <div style="
+                font-family: 'Calistoga', Georgia, serif;
+                font-size: 1.25rem;
+                color: var(--text-primary);
+                margin-bottom: 0.25rem;
+                line-height: 1.2;
+            ">{active_c.get('name')}</div>
+            <div style="
+                font-size: 0.88rem;
+                color: var(--text-secondary);
+                font-family: 'Inter', sans-serif;
+            ">Campus Address: {active_c.get('location')}</div>
+        </div>
+        
+        <!-- CTA Button -->
+        <div style="
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: {college_color};
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.82rem;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 12px rgba({r}, {g}, {b}, 0.3);
+            flex-shrink: 0;
+        ">
+            🧭 Directions
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </div>
     </div>
-    """, unsafe_allow_html=True)
-    
-    qa_cols = st.columns(5)
-    actions = [
-        ("💼 Placements", "What are the latest placement records, highest package, average package and top recruiters?"),
-        ("🏠 Hostel", "Tell me about the hostel rooms, facilities, mess fees and hostel rules."),
-        ("🎓 Scholarships", "What scholarships, fee waivers and financial aid options are available?"),
-        ("📋 Cutoffs", "What are the cutoff ranks and admission eligibility criteria?"),
-        ("📞 Faculty", "Show me the faculty directory, department HODs and office contact details.")
-    ]
-    for col_idx, (label, query_text) in enumerate(actions):
-        if qa_cols[col_idx].button(label, key=f"qa_{col_idx}", use_container_width=True):
-            send_message(query_text)
-            st.rerun()
+</a>"""
+        st.markdown(location_html.replace('\n', ' '), unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-bottom:0.75rem'></div>", unsafe_allow_html=True)
-
-    # Input area — single unified input with Enter-to-submit via form
-    with st.form(key="chat_form", clear_on_submit=True):
-        col_input, col_send = st.columns([6, 1])
-        with col_input:
-            user_input = st.text_input(
-                "Message",
-                placeholder="Type your question here (e.g. library timings, placement statistics)...",
-                label_visibility="collapsed",
-                key="chat_input"
-            )
-        with col_send:
-            send_btn = st.form_submit_button("Send 🚀", use_container_width=True)
-
-        if send_btn and user_input and user_input.strip():
-            send_message(user_input.strip())
-            st.rerun()
-
-    # Response stats
-    if st.session_state.messages:
-        bot_msgs = [m for m in st.session_state.messages if m["role"] == "assistant"]
-        if bot_msgs:
-            avg_time = sum(m.get("response_time_ms", 0) for m in bot_msgs) / len(bot_msgs)
-            st.caption(f"💬 {len(bot_msgs)} responses | ⚡ Avg: {avg_time:.0f}ms")
 
 
 # ══════════════════════════════════════════════════════════════════════════════

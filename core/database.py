@@ -208,3 +208,54 @@ def get_popular_queries(limit: int = 10) -> List[Dict[str, Any]]:
     rows = [dict(row) for row in cursor.fetchall()]
     conn.close()
     return rows
+
+
+def get_cached_response(query: str) -> Optional[str]:
+    """Retrieve cached response if it exists, and increment hit count."""
+    import hashlib
+    clean_query = query.strip().lower()
+    query_hash = hashlib.sha256(clean_query.encode("utf-8")).hexdigest()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            SELECT response, hit_count FROM cached_responses WHERE query_hash = ?
+        """, (query_hash,))
+        row = cursor.fetchone()
+        if row:
+            response = row["response"]
+            hit_count = (row["hit_count"] or 0) + 1
+            cursor.execute("""
+                UPDATE cached_responses SET hit_count = ? WHERE query_hash = ?
+            """, (hit_count, query_hash))
+            conn.commit()
+            return response
+        return None
+    except Exception as e:
+        logger.error(f"Error reading cache: {e}")
+        return None
+    finally:
+        conn.close()
+
+
+def set_cached_response(query: str, response: str) -> None:
+    """Store a response in the cache."""
+    import hashlib
+    clean_query = query.strip().lower()
+    query_hash = hashlib.sha256(clean_query.encode("utf-8")).hexdigest()
+    timestamp = datetime.now().isoformat()
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            INSERT OR REPLACE INTO cached_responses (query_hash, query, response, created_at)
+            VALUES (?, ?, ?, ?)
+        """, (query_hash, query, response, timestamp))
+        conn.commit()
+    except Exception as e:
+        logger.error(f"Error writing to cache: {e}")
+    finally:
+        conn.close()
+

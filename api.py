@@ -111,8 +111,11 @@ def root():
 @app.get("/health", response_model=HealthResponse, tags=["General"])
 def health():
     """Check system status — API key, vector store, model."""
-    api_key = os.getenv("OPENAI_API_KEY", "")
-    api_key_set = bool(api_key and api_key != "your_openai_api_key_here")
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+    google_key = os.getenv("GOOGLE_API_KEY", "")
+    openai_ok = bool(openai_key and openai_key != "your_openai_api_key_here")
+    google_ok = bool(google_key and google_key != "your_google_gemini_api_key_here")
+    api_key_set = openai_ok or google_ok
 
     try:
         from core.embeddings import get_vector_store
@@ -120,11 +123,16 @@ def health():
     except Exception:
         vs_ready = False
 
+    provider = os.getenv("LLM_PROVIDER", "").lower().strip()
+    if not provider:
+        provider = "gemini" if google_ok else "openai"
+    model = os.getenv("GEMINI_MODEL", "gemini-1.5-flash") if provider == "gemini" else os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
     return HealthResponse(
         status="ok" if api_key_set else "degraded",
         api_key_set=api_key_set,
         vector_store_ready=vs_ready,
-        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        model=model,
         timestamp=datetime.now().isoformat(),
     )
 
@@ -141,9 +149,13 @@ def chat(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
-    api_key = os.getenv("OPENAI_API_KEY", "")
-    if not api_key or api_key == "your_openai_api_key_here":
-        raise HTTPException(status_code=503, detail="API key not configured. Add OPENAI_API_KEY to .env")
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+    google_key = os.getenv("GOOGLE_API_KEY", "")
+    openai_ok = bool(openai_key and openai_key != "your_openai_api_key_here")
+    google_ok = bool(google_key and google_key != "your_google_gemini_api_key_here")
+
+    if not openai_ok and not google_ok:
+        raise HTTPException(status_code=503, detail="API key not configured. Add GOOGLE_API_KEY or OPENAI_API_KEY to .env")
 
     # Build college-aware query
     college = COLLEGE_MAP.get(req.college_id or "general", {})
@@ -161,6 +173,23 @@ def chat(req: ChatRequest):
         response, tool_used, response_time_ms = bot.chat(
             contextual, session_id=req.session_id or "default"
         )
+        
+        # Log query to database
+        try:
+            from core.agent import categorize_query
+            from core.database import log_query
+            category = categorize_query(req.message)
+            log_query(
+                session_id=req.session_id or "default",
+                user_query=req.message,
+                bot_response=response,
+                tool_used=tool_used,
+                category=category,
+                response_time_ms=response_time_ms
+            )
+        except Exception as db_err:
+            logger.error(f"Failed to log API query to database: {db_err}")
+            
     except Exception as e:
         logger.error(f"Chat error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -173,6 +202,7 @@ def chat(req: ChatRequest):
         session_id=req.session_id or "default",
         timestamp=datetime.now().isoformat(),
     )
+
 
 
 @app.get("/colleges", tags=["Data"])
