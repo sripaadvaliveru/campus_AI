@@ -1918,7 +1918,8 @@ if st.session_state.page == "💬 Chat":
                 st.caption(f"💬 {len(bot_msgs)} responses | ⚡ Avg: {avg_time:.0f}ms")
 
     # Location & Directions Finder
-    if st.session_state.selected_college != "general":
+    selected_c_id = st.session_state.get("selected_college")
+    if selected_c_id and selected_c_id != "general":
         import urllib.parse
         loc_query = f"{active_c.get('name')}, {active_c.get('location')}"
         maps_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote_plus(loc_query)}"
@@ -2056,7 +2057,12 @@ if st.session_state.page == "💬 Chat":
         </div>
     </div>
 </a>"""
-        st.markdown(location_html.replace('\n', ' '), unsafe_allow_html=True)
+        import textwrap
+        st.markdown(textwrap.dedent(location_html).strip().replace('\n', ' '), unsafe_allow_html=True)
+    else:
+        # Section label
+        st.markdown("<h3 style='font-family:\"Calistoga\",serif;font-weight:400;margin-top:2.5rem;margin-bottom:1rem;color:var(--text-primary);'>📍 Campus Location & Directions</h3>", unsafe_allow_html=True)
+        st.info("🏫 **No College Selected**: Please select a specific college from the **Overview** page to view campus location details and calculate maps directions.")
 
 
 
