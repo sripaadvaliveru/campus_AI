@@ -1598,7 +1598,8 @@ if st.session_state.page == "💬 Chat":
 </div>
 """, unsafe_allow_html=True)
 
-    if st.session_state.selected_college != "general":
+    active_college_id = st.session_state.get("selected_college")
+    if active_college_id and active_college_id != "general":
         tags_html = " ".join([f'<span class="college-tag">{t}</span>' for t in active_c.get('tags', [])])
         
         # Build Google Maps URL for directions
@@ -1606,7 +1607,7 @@ if st.session_state.page == "💬 Chat":
         loc_query = f"{active_c.get('name')}, {active_c.get('location')}" if active_c.get('location') != "Pan-India" else active_c.get('name')
         maps_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote_plus(loc_query)}"
         
-        st.markdown(f"""
+        college_info_html = f"""
         <div class="active-college-info" style="background:var(--bg-surface);border:1px solid var(--border);padding:1.25rem;border-radius:8px;margin-bottom:1.5rem;font-size:0.88rem;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;flex-wrap:wrap;gap:0.5rem;">
                 <span style="font-weight:600;color:var(--text-primary);">📍 Location: <span style="font-weight:normal;color:var(--text-secondary);">{active_c.get('location')}</span></span>
@@ -1624,7 +1625,9 @@ if st.session_state.page == "💬 Chat":
                 </a>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        import textwrap
+        st.markdown(textwrap.dedent(college_info_html).strip().replace('\n', ' '), unsafe_allow_html=True)
 
 
     # College-specific quick suggestion chips
