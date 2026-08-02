@@ -1,6 +1,6 @@
 """
-backend/main.py — FastAPI backend for CampusAI
-Run: uvicorn backend.main:app --reload --port 8000
+backend/main.py — FastAPI backend for CampusAI (CANONICAL)
+This is the primary backend. Run: uvicorn backend.main:app --reload --port 8000
 """
 
 import os
@@ -104,6 +104,12 @@ class HealthResponse(BaseModel):
     vector_store_ready: bool
     model: str
     timestamp: str
+
+class FeedbackRequest(BaseModel):
+    message_id: Optional[str] = None
+    rating: int
+    session_id: Optional[str] = "default"
+    feedback_text: Optional[str] = ""
 
 # ── Routes ────────────────────────────────────────────────────────────────────
 
@@ -271,3 +277,26 @@ def get_analytics():
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Analytics error: {e}")
+
+
+@app.post("/feedback", tags=["Analytics"])
+def submit_feedback(req: FeedbackRequest):
+    """Log thumbs up/down feedback for the latest query in a session."""
+    if req.rating not in (1, -1):
+        raise HTTPException(status_code=422, detail="rating must be 1 (up) or -1 (down)")
+
+    from core.database import get_connection, log_feedback
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id FROM query_history WHERE session_id = ? ORDER BY timestamp DESC LIMIT 1",
+        (req.session_id or "default",),
+    )
+    row = cursor.fetchone()
+    conn.close()
+
+    query_id = dict(row)["id"] if row else None
+    if query_id is not None:
+        log_feedback(query_id, req.rating, req.feedback_text or "")
+
+    return {"status": "ok", "logged": query_id is not None, "query_id": query_id}

@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
 ![LangChain](https://img.shields.io/badge/LangChain-0.2+-green?logo=langchain)
-![Gemini](https://img.shields.io/badge/Google%20Gemini-1.5%20Flash-orange?logo=google)
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-black?logo=openai)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.32+-red?logo=streamlit)
 ![FAISS](https://img.shields.io/badge/FAISS-Vector%20Search-purple)
 
@@ -14,7 +14,7 @@
 
 | Feature | Description |
 |---------|-------------|
-| 💬 **AI Chat** | Conversational Q&A powered by Google Gemini 1.5 Flash |
+| 💬 **AI Chat** | Conversational Q&A powered by OpenAI GPT-4o mini |
 | 🔍 **Semantic Search** | FAISS + sentence-transformers for accurate retrieval |
 | 📅 **Events Calendar** | Academic calendar with filterable events and deadlines |
 | 📞 **Contact Directory** | Searchable faculty/staff directory with department filters |
@@ -35,8 +35,8 @@
 └──────────────────────┬──────────────────────────────────────┘
                        │
 ┌──────────────────────▼──────────────────────────────────────┐
-│          LangChain ReAct Agent (core/agent.py)               │
-│          Google Gemini 1.5 Flash  +  5 Custom Tools          │
+│           LangGraph ReAct Agent (core/agent.py)              │
+│          OpenAI GPT-4o mini  +  5 Custom Tools               │
 └──┬────────────┬──────────────┬──────────────┬───────────────┘
    │            │              │              │
 ┌──▼──┐  ┌─────▼───┐  ┌──────▼──┐  ┌───────▼────┐  ┌──────────┐
@@ -55,7 +55,7 @@
 
 ### Prerequisites
 - Python 3.10 or higher
-- Free Google Gemini API key → [Get it here](https://aistudio.google.com/app/apikey)
+- OpenAI API key → [Get it here](https://platform.openai.com/api-keys)
 
 ### 1. Clone / Download the project
 ```bash
@@ -85,8 +85,8 @@ pip install -r requirements.txt
 copy .env.example .env      # Windows
 cp .env.example .env        # Linux/Mac
 
-# Open .env and add your Gemini API key:
-# GOOGLE_API_KEY=your_actual_key_here
+# Open .env and add your OpenAI API key:
+# OPENAI_API_KEY=your_actual_key_here
 ```
 
 ### 5. Initialize the knowledge base
@@ -105,6 +105,18 @@ streamlit run app.py
 ```
 Open **http://localhost:8501** in your browser. 🎉
 
+### Alternative: FastAPI backend + React frontend
+```bash
+# Terminal 1 — FastAPI backend
+uvicorn backend.main:app --reload --port 8000
+
+# Terminal 2 — React dev server (proxies /api -> localhost:8000)
+cd frontend-react
+npm install
+npm run dev
+```
+Open **http://localhost:5173**.
+
 ---
 
 ## 📁 Project Structure
@@ -118,10 +130,19 @@ campus-chatbot/
 ├── .env                      # Your config (not committed)
 │
 ├── core/
-│   ├── agent.py              # LangChain ReAct agent with Gemini
+│   ├── agent.py              # LangGraph ReAct agent (OpenAI)
 │   ├── tools.py              # 5 custom LangChain tools
 │   ├── embeddings.py         # FAISS vector store manager
 │   └── database.py           # SQLite logging & analytics
+│
+├── backend/
+│   └── main.py               # FastAPI REST API (uvicorn backend.main:app --port 8000)
+│
+├── frontend/
+│   └── streamlit_app.py      # Thin Streamlit client for the FastAPI backend
+│
+├── frontend-react/
+│   └── src/                  # React + Vite frontend (npm run dev)
 │
 ├── processors/
 │   ├── data_loader.py        # JSON + CSV data loader
@@ -225,8 +246,8 @@ Key settings in `.env`:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `GOOGLE_API_KEY` | — | **Required.** Your Gemini API key |
-| `GEMINI_MODEL` | `gemini-1.5-flash` | Gemini model to use |
+| `OPENAI_API_KEY` | — | **Required.** Your OpenAI API key |
+| `OPENAI_MODEL` | `gpt-4o-mini` | OpenAI model to use |
 | `EMBEDDING_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` | Local embedding model |
 | `MAX_HISTORY` | `10` | Chat turns to keep in context |
 | `VECTOR_STORE_PATH` | `./vector_store` | FAISS index location |
@@ -268,7 +289,7 @@ for score, doc in results:
 3. Connect your GitHub repo
 4. Set **Secrets** in Streamlit Cloud:
    ```toml
-   GOOGLE_API_KEY = "your_key_here"
+   OPENAI_API_KEY = "your_key_here"
    ```
 5. Set main file: `app.py`
 
@@ -280,7 +301,7 @@ for score, doc in results:
 
 Built as part of the **Interactive Campus Info Chatbot AI Agent Development Project**
 - Track: A (Essential) with premium enhancements
-- Tech Stack: Python + LangChain + Gemini + FAISS + Streamlit
+- Tech Stack: Python + LangGraph + OpenAI + FAISS + Streamlit
 
 ---
 

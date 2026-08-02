@@ -75,7 +75,8 @@ def check_dependencies() -> bool:
     required = {
         "streamlit":            "streamlit",
         "langchain":            "langchain",
-        "langchain_google_genai": "langchain-google-genai",
+        "langchain_openai":     "langchain-openai",
+        "langgraph":            "langgraph",
         "langchain_community":  "langchain-community",
         "langchain_core":       "langchain-core",
         "faiss":                "faiss-cpu",
@@ -85,6 +86,7 @@ def check_dependencies() -> bool:
         "pandas":               "pandas",
         "plotly":               "plotly",
         "dotenv":               "python-dotenv",
+        "httpx":                "httpx",
     }
 
     missing = []
@@ -104,7 +106,7 @@ def check_dependencies() -> bool:
 
 
 def load_all_documents() -> list:
-    """Load and process all campus data sources."""
+    """Load and process all campus data sources (no duplicates)."""
     from processors.data_loader import load_all_data
     from processors.contact_processor import process_contacts
     from processors.calendar_processor import process_calendar
@@ -115,9 +117,11 @@ def load_all_documents() -> list:
 
     print("\nLoading campus data sources...")
 
-    # 1. JSON data files
+    # 1. JSON data files + Hyderabad institution data (contacts/calendar
+    #    excluded here — they are processed separately below, which avoids
+    #    double-indexing the same content).
     print("   [1] Loading campus JSON data files...")
-    json_docs = load_all_data()
+    json_docs = load_all_data(include_contacts=False, include_calendar=False)
     all_docs.extend(json_docs)
     print(f"       -> {len(json_docs)} chunks from JSON files")
 

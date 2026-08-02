@@ -7,6 +7,7 @@ import os
 import sys
 import json
 import csv
+import html
 import logging
 import time
 import uuid
@@ -300,7 +301,6 @@ COLLEGES = [
         "ranking": "Top 100 Overall",
         "students": "100k+ Active",
         "placement": "Multi-sector",
-        "verified": True,
     },
     {
         "id": "iith",
@@ -315,7 +315,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #8",
         "students": "4,200+ Students",
         "placement": "₹90L Highest Package",
-        "verified": True,
     },
     {
         "id": "iiith",
@@ -330,7 +329,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #55",
         "students": "2,100+ Students",
         "placement": "₹1.28Cr Highest / ₹33.96L Avg",
-        "verified": True,
     },
     {
         "id": "nalsar",
@@ -345,7 +343,6 @@ COLLEGES = [
         "ranking": "NIRF Law #3",
         "students": "1,200+ Students",
         "placement": "₹22L Avg Package",
-        "verified": True,
     },
     {
         "id": "nims",
@@ -360,7 +357,6 @@ COLLEGES = [
         "ranking": "NIRF Medical #13",
         "students": "1,800+ Students",
         "placement": "Clinical Residencies",
-        "verified": True,
     },
     {
         "id": "hcu",
@@ -375,7 +371,6 @@ COLLEGES = [
         "ranking": "NIRF University #10",
         "students": "6,500+ Students",
         "placement": "Public R&D Placements",
-        "verified": True,
     },
     {
         "id": "osmania",
@@ -390,7 +385,6 @@ COLLEGES = [
         "ranking": "NIRF University #36",
         "students": "15,000+ Students",
         "placement": "IT & Core Recruiters",
-        "verified": True,
     },
     {
         "id": "bits_hyd",
@@ -405,7 +399,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #25",
         "students": "3,500+ Students",
         "placement": "₹60.75L Highest / ₹30L Avg CSE",
-        "verified": True,
     },
     {
         "id": "isb_hyd",
@@ -420,7 +413,6 @@ COLLEGES = [
         "ranking": "FT Global MBA #31",
         "students": "900+ Students",
         "placement": "₹1.56 Crore Highest Package",
-        "verified": True,
     },
     {
         "id": "imt_hyd",
@@ -435,7 +427,6 @@ COLLEGES = [
         "ranking": "NIRF Mgmt #84",
         "students": "480+ Students",
         "placement": "₹25.0L Highest Package",
-        "verified": True,
     },
     {
         "id": "ibs_hyd",
@@ -450,7 +441,6 @@ COLLEGES = [
         "ranking": "NIRF Mgmt #40",
         "students": "2,400+ Students",
         "placement": "₹21.0L Highest / ₹9.82L Avg",
-        "verified": True,
     },
     {
         "id": "omc",
@@ -465,7 +455,6 @@ COLLEGES = [
         "ranking": "NIRF Medical #25",
         "students": "1,250+ Students",
         "placement": "Clinicals in 10 teaching hospitals",
-        "verified": True,
     },
     {
         "id": "nizam",
@@ -480,7 +469,6 @@ COLLEGES = [
         "ranking": "Arts Band 51-100",
         "students": "2,200+ Students",
         "placement": "TASK Placements cell",
-        "verified": True,
     },
     {
         "id": "st_francis",
@@ -495,7 +483,6 @@ COLLEGES = [
         "ranking": "NAAC A++ Grade",
         "students": "3,000+ Students",
         "placement": "₹7.60L PG Avg Package",
-        "verified": True,
     },
     {
         "id": "jntuh",
@@ -510,7 +497,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #83",
         "students": "8,000+ Students",
         "placement": "₹6.00L Avg Package",
-        "verified": True,
     },
     {
         "id": "cbit",
@@ -525,7 +511,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #151",
         "students": "5,400+ Students",
         "placement": "₹54.0L Highest / ₹6.50L Avg",
-        "verified": True,
     },
     {
         "id": "griet",
@@ -540,7 +525,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #165",
         "students": "4,500+ Students",
         "placement": "₹51.60L Highest / ₹9.27L Avg",
-        "verified": True,
     },
     {
         "id": "vnr_vjiet",
@@ -555,7 +539,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #101",
         "students": "6,000+ Students",
         "placement": "₹48.00L Highest / ₹6.00L Avg",
-        "verified": True,
     },
     {
         "id": "vardhaman",
@@ -570,7 +553,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #143",
         "students": "3,800+ Students",
         "placement": "₹6.25L Median Package",
-        "verified": True,
     },
     {
         "id": "anurag",
@@ -585,7 +567,6 @@ COLLEGES = [
         "ranking": "NIRF Eng #150",
         "students": "5,000+ Students",
         "placement": "₹5.20L Avg Package",
-        "verified": True,
     },
     {
         "id": "iare",
@@ -601,6 +582,11 @@ COLLEGES = [
 ]
 
 COLLEGE_MAP = {c["id"]: c for c in COLLEGES}
+
+# Colleges whose data is actually indexed in the vector store / structured tools.
+# Everything else is answered from general model knowledge and should not be
+# shown with a "verified" badge.
+INDEXED_COLLEGE_IDS = {"general", "iith", "iiith", "nalsar", "nims", "hcu", "osmania", "bits_hyd", "omc"}
 
 
 def init_session_state():
@@ -668,6 +654,11 @@ except Exception as e:
     logger.error(f"DB init failed: {e}")
 
 # ── Helper Functions ──────────────────────────────────────────────────────────
+
+def _sanitize_html(text: str) -> str:
+    """Escape HTML entities to prevent XSS when rendering with unsafe_allow_html=True."""
+    return html.escape(str(text))
+
 
 def get_college_icon_html(icon_emoji: str, size: int = 22, color: str = "var(--accent)") -> str:
     """Helper to convert emoji to a high-fidelity outline SVG icon for premium rendering."""
@@ -797,22 +788,23 @@ def render_message(msg: dict, idx: int):
     timestamp = msg.get("timestamp", "")
     tool = msg.get("tool_used", "")
 
+    safe_content = _sanitize_html(content)
     if role == "user":
         st.markdown(f"""
         <div class="message user">
             <div class="message-avatar">👤</div>
             <div>
-                <div class="message-bubble">{content}</div>
+                <div class="message-bubble">{safe_content}</div>
                 <div class="message-meta" style="text-align:right">{timestamp}</div>
             </div>
         </div>""", unsafe_allow_html=True)
     else:
-        tool_badge = f'<span class="event-badge badge-academic" style="margin-left:0.5rem">{tool}</span>' if tool else ""
+        tool_badge = f'<span class="event-badge badge-academic" style="margin-left:0.5rem">{html.escape(tool)}</span>' if tool else ""
         st.markdown(f"""
         <div class="message bot">
             <div class="message-avatar">{get_college_icon_html("🎓")}</div>
             <div style="width:100%">
-                <div class="message-bubble">{content}</div>
+                <div class="message-bubble">{safe_content}</div>
                 <div class="message-meta">{timestamp} {tool_badge}</div>
             </div>
         </div>""", unsafe_allow_html=True)
@@ -1024,7 +1016,7 @@ with st.sidebar:
                 font-weight:600;
                 margin-top:0.15rem;
                 font-family:'Inter',sans-serif;
-            ">Verified College Intelligence</div>
+            ">College Intelligence</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -1045,7 +1037,7 @@ with st.sidebar:
             st.session_state.messages = []
             st.session_state.feedback_given = set()
             try:
-                get_chatbot().clear_history()
+                get_chatbot().clear_history(st.session_state.session_id)
             except Exception:
                 pass
             st.rerun()
@@ -1130,7 +1122,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.feedback_given = set()
         try:
-            get_chatbot().clear_history()
+            get_chatbot().clear_history(st.session_state.session_id)
         except Exception:
             pass
         st.rerun()
@@ -1177,7 +1169,7 @@ if st.session_state.page == "🏠 Overview":
             font-size:0.68rem;font-weight:600;
             text-transform:uppercase;letter-spacing:0.15em;
             color:#60a5fa;
-        ">CampusAI — Verified Intelligence</span>
+        ">CampusAI — Campus Knowledge Assistant</span>
     </div>
     <div style="
         font-size:2.5rem;font-weight:400;
@@ -1193,12 +1185,11 @@ if st.session_state.page == "🏠 Overview":
             -webkit-background-clip:text;
             -webkit-text-fill-color:transparent;
             color:transparent;
-        ">verified college data</span>.
+        ">curated campus data</span>.
     </div>
     <div style="color:#94A3B8;font-size:1.0rem;line-height:1.65;max-width:800px;font-family:'Inter',sans-serif;">
-        Unlike general-purpose models (like ChatGPT) which hallucinate and use outdated data, CampusAI
-        retrieves answers directly from official college reports, NIRF submittals, and handbooks with strict
-        source citations.
+        CampusAI answers from curated campus reports, NIRF submittals, and handbooks with source citations,
+        and is transparent about which institutions are actually indexed in its knowledge base.
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1234,7 +1225,7 @@ if st.session_state.page == "🏠 Overview":
         <div style="background:var(--bg-surface);border:1px solid var(--border);padding:1.5rem;border-radius:12px;height:100%;">
             <div style="font-weight:600;font-size:1rem;color:var(--accent);margin-bottom:0.5rem;">🔒 Why Trust CampusAI?</div>
             <p style="margin:0;font-size:0.85rem;color:var(--text-secondary);line-height:1.5;">
-                All answer retrieval parameters are restricted to <strong>official documents only</strong>: university handbooks, NIRF statistics, placement reports, fee structures, and verified brochures. Every response appends exact filename citations for accountability.
+                Answers are retrieved from the <strong>indexed corpus</strong> — university handbooks, NIRF statistics, placement reports, fee structures, and brochures — with filename citations where available. Institutions without indexed data are labelled "General Knowledge" so you know when the model is not citing a source.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1262,7 +1253,7 @@ if st.session_state.page == "🏠 Overview":
         <span class="section-label-dot"></span>
         <span class="section-label-text">Directory</span>
     </div>
-    <h2 style="font-family:'Calistoga',serif !important; font-weight:400; font-size:1.85rem; margin-top:0.25rem; margin-bottom:1.5rem; color:var(--text-primary);">Browse Verified College Intelligence</h2>
+    <h2 style="font-family:'Calistoga',serif !important; font-weight:400; font-size:1.85rem; margin-top:0.25rem; margin-bottom:1.5rem; color:var(--text-primary);">Browse College Directory</h2>
     """, unsafe_allow_html=True)
 
     # College cards — 3 columns
@@ -1271,7 +1262,11 @@ if st.session_state.page == "🏠 Overview":
         cols = st.columns(3)
         for i, c in enumerate(row_colleges):
             with cols[i]:
-                verified_badge = '<span style="font-size:0.6rem;font-weight:600;color:#10b981;background:rgba(16,185,129,0.08);padding:0.15rem 0.45rem;border-radius:4px;border:1px solid rgba(16,185,129,0.15);">✓ VERIFIED SOURCE</span>'
+                is_verified = c["id"] in INDEXED_COLLEGE_IDS
+                if is_verified:
+                    verified_badge = '<span style="font-size:0.6rem;font-weight:600;color:#10b981;background:rgba(16,185,129,0.08);padding:0.15rem 0.45rem;border-radius:4px;border:1px solid rgba(16,185,129,0.15);">✓ VERIFIED SOURCE</span>'
+                else:
+                    verified_badge = '<span style="font-size:0.6rem;font-weight:600;color:#f59e0b;background:rgba(245,158,11,0.08);padding:0.15rem 0.45rem;border-radius:4px;border:1px solid rgba(245,158,11,0.2);">! GENERAL KNOWLEDGE — NOT IN KB</span>'
                 logo_html = get_college_logo_html(c['id'], size=36)
                 icon_html = get_college_icon_html(c['icon'], size=20)
                 
@@ -1382,9 +1377,9 @@ if st.session_state.page == "💬 Chat":
         <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.15em;color:#60a5fa;">Active Node</span>
     </div>
     <div style="font-size:1.85rem;font-weight:400;font-family:'Calistoga',Georgia,serif;color:#FFFFFF;margin:0 0 0.5rem 0;letter-spacing:-0.01em;">{active_c.get('name','CampusAI')}</div>
-    <div style="color:#94A3B8;margin:0 0 1.1rem 0;font-family:'Inter',sans-serif;font-size:0.92rem;">Query statistics, admissions, placement logs, and calendar schedules directly from the verified database.</div>
+    <div style="color:#94A3B8;margin:0 0 1.1rem 0;font-family:'Inter',sans-serif;font-size:0.92rem;">Query statistics, admissions, placement logs, and calendar schedules directly from the app's local database.</div>
     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-        <span style="display:inline-flex;align-items:center;padding:0.2rem 0.55rem;background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);border-radius:4px;font-size:0.68rem;font-weight:500;text-transform:uppercase;font-family:'JetBrains Mono',monospace;">🤖 GEMINI 2.0 FLASH</span>
+        <span style="display:inline-flex;align-items:center;padding:0.2rem 0.55rem;background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);border-radius:4px;font-size:0.68rem;font-weight:500;text-transform:uppercase;font-family:'JetBrains Mono',monospace;">🤖 GPT-4o mini</span>
         <span style="display:inline-flex;align-items:center;padding:0.2rem 0.55rem;background:rgba(0,82,255,0.15);color:#60a5fa;border:1px solid rgba(0,82,255,0.3);border-radius:4px;font-size:0.68rem;font-weight:500;text-transform:uppercase;font-family:'JetBrains Mono',monospace;">📚 {get_vector_store_docs_count()} KNOWLEDGE CHUNKS</span>
         <span style="display:inline-flex;align-items:center;padding:0.2rem 0.55rem;background:#10b981;color:#ffffff;border:1px solid #10b981;border-radius:4px;font-size:0.68rem;font-weight:500;text-transform:uppercase;font-family:'JetBrains Mono',monospace;">⚡ REAL-TIME RAG</span>
     </div>
@@ -1581,25 +1576,25 @@ if st.session_state.page == "📊 Dashboard":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown('<div class="section-title">🔥 Live Student Trends & Inquiries</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">💡 Common Questions Students Ask</div>', unsafe_allow_html=True)
 
     col_dash1, col_dash2 = st.columns(2)
     with col_dash1:
         st.markdown(f"""
         <div class="contact-card" style="margin-bottom:1.5rem; border-left: 3px solid var(--accent);">
-            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">🔥 Trending College Nodes This Week</div>
+            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">🏛️ Example Topics by College</div>
             <div style="font-size:0.9rem;line-height:1.6;color:var(--text-secondary);">
-                1. <strong>IIT Hyderabad</strong> — 42% increase in placement eligibility inquiries.<br>
-                2. <strong>BITS Hyderabad</strong> — High volume of hostel facilities queries.<br>
+                1. <strong>IIT Hyderabad</strong> — placement eligibility & packages.<br>
+                2. <strong>BITS Hyderabad</strong> — hostel facilities queries.<br>
                 3. <strong>NALSAR Law</strong> — CLAT cutoff searches ahead of counseling.
             </div>
         </div>
         <div class="contact-card" style="margin-bottom:1.5rem; border-left: 3px solid var(--accent);">
-            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">💎 Most Popular Scholarships</div>
+            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">💎 Example: Popular Scholarships</div>
             <div style="font-size:0.9rem;line-height:1.6;color:var(--text-secondary);">
                 • <strong>MCM Scholarship</strong> (IIT Hyderabad) — Full tuition waivers.<br>
                 • <strong>Ishan Uday Scheme</strong> (NALSAR) — UGC North-East scheme.<br>
-                • <strong>EWS PGDM Concessions</strong> (IMT) — 95% waiver query peak.
+                • <strong>EWS PGDM Concessions</strong> (IMT) — 95% waiver.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1607,16 +1602,16 @@ if st.session_state.page == "📊 Dashboard":
     with col_dash2:
         st.markdown("""
         <div class="contact-card" style="margin-bottom:1.5rem; border-left: 3px solid var(--accent-sec);">
-            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">📊 Query Volume by Category</div>
+            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">📊 Illustrative Topic Mix (Not Live Analytics)</div>
             <div style="font-size:0.9rem;line-height:1.6;color:var(--text-secondary);">
-                📈 <strong>Placement Packages</strong> — 40% of all inquiries.<br>
-                📋 <strong>Admissions & Eligibility</strong> — 25% query load.<br>
-                🏠 <strong>Hostels & Mess rules</strong> — 20% active volume.<br>
-                🤝 <strong>Student Clubs & NSS</strong> — 15% curiosity rate.
+                📈 <strong>Placement Packages</strong> — commonly asked.<br>
+                📋 <strong>Admissions & Eligibility</strong> — frequently asked.<br>
+                🏠 <strong>Hostels & Mess rules</strong> — actively asked.<br>
+                🤝 <strong>Student Clubs & NSS</strong> — occasionally asked.
             </div>
         </div>
         <div class="contact-card" style="margin-bottom:1.5rem; border-left: 3px solid var(--accent-sec);">
-            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">🎯 Top Student Search Inquiries</div>
+            <div style="font-weight:600;font-size:1.1rem;color:var(--text-primary);margin-bottom:0.75rem;">🎯 Sample Questions You Can Ask</div>
             <div style="font-size:0.9rem;line-height:1.6;color:var(--text-secondary);">
                 • "What is the highest package at IIIT-H?"<br>
                 • "How is attendance calculated in Osmania?"<br>

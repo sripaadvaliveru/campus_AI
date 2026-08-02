@@ -1,5 +1,5 @@
 """
-agent.py -- LangGraph ReAct agent powered by Google Gemini.
+agent.py -- LangGraph ReAct agent powered by OpenAI GPT-4o-mini.
 Uses LangGraph prebuilt create_react_agent (LangChain compatible).
 """
 
@@ -12,7 +12,6 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
 MAX_HISTORY  = int(os.getenv("MAX_HISTORY", "10"))
 MAX_RETRIES  = 3
 BASE_DELAY   = 5
@@ -44,7 +43,7 @@ Guidelines:
 
 
 def create_agent(tools: Optional[list] = None):
-    """Create a LangGraph ReAct agent with Gemini and campus tools."""
+    """Create a LangGraph ReAct agent with OpenAI and campus tools."""
     from langgraph.prebuilt import create_react_agent
     from langchain_openai import ChatOpenAI
 
@@ -78,7 +77,7 @@ def create_agent(tools: Optional[list] = None):
 
 def _extract_text(content) -> str:
     """
-    Gemini 2.5 Flash returns content as either:
+    OpenAI returns content as either:
       - A plain string, or
       - A list of dicts: [{'type': 'text', 'text': '...', 'extras': {...}}, ...]
     This helper normalises both into a plain string.
@@ -102,11 +101,15 @@ class CampusChatbot:
     def __init__(self):
         self._agent = None
         self._tools = None
-        self.conversation_history: List[Dict[str, str]] = []
+        self._histories: Dict[str, List[Dict[str, str]]] = {}
+
+    def _history(self, session_id: str) -> List[Dict[str, str]]:
+        """Return (and lazily create) the conversation history for a session."""
+        return self._histories.setdefault(session_id, [])
 
     def _ensure_initialized(self):
         if self._agent is None:
-            logger.info("Initializing CampusAI agent (LangGraph + Gemini)...")
+            logger.info("Initializing CampusAI agent (LangGraph + GPT-4o-mini)...")
             from core.tools import get_all_tools
             self._tools = get_all_tools()
             self._agent = create_agent(self._tools)
@@ -120,9 +123,11 @@ class CampusChatbot:
         self._ensure_initialized()
         start_time = time.time()
 
+        conversation_history = self._history(session_id)
+
         # Build LangGraph message list (includes history)
         messages = []
-        for msg in self.conversation_history[-6:]:
+        for msg in conversation_history[-6:]:
             if msg["role"] == "user":
                 messages.append(HumanMessage(content=msg["content"]))
             else:
@@ -168,7 +173,7 @@ class CampusChatbot:
                     "procedures.json": "Administrative Procedures Manual",
                     "college_types.json": "UGC College Classification Guidelines",
                     "directory.csv": "Verified Faculty & Staff Directory",
-                    "academic_calendar.json": "Official Academic Calendar 2025-26"
+                    "academic_calendar.json": "Official Academic Calendar 2026-27"
                 }
 
                 for msg in all_messages:
@@ -187,7 +192,7 @@ class CampusChatbot:
                         # Fallback for structured tools
                         t_name = getattr(msg, "name", "")
                         if t_name == "get_campus_events":
-                            sources.add("Official Academic Calendar 2025-26")
+                            sources.add("Official Academic Calendar 2026-27")
                         elif t_name == "search_contacts":
                             sources.add("Verified Faculty & Staff Directory")
                         elif t_name == "get_facility_info":
@@ -210,12 +215,15 @@ class CampusChatbot:
                 last_error = e
                 err_str = str(e)
 
-                # Detect quota / overload errors and retry
+                # Detect quota / overload errors and retry.
+                # "insufficient_quota" is permanent — don't sleep 35s retrying it.
                 is_retryable = (
-                    "429" in err_str or
-                    "RESOURCE_EXHAUSTED" in err_str or
-                    "503" in err_str or
-                    "UNAVAILABLE" in err_str
+                    "insufficient_quota" not in err_str and (
+                        "429" in err_str or
+                        "RESOURCE_EXHAUSTED" in err_str or
+                        "503" in err_str or
+                        "UNAVAILABLE" in err_str
+                    )
                 )
 
                 if is_retryable and attempt < MAX_RETRIES - 1:
@@ -247,16 +255,16 @@ class CampusChatbot:
 
         response_time_ms = int((time.time() - start_time) * 1000)
 
-        # Update history
-        self.conversation_history.append({"role": "user",      "content": user_message})
-        self.conversation_history.append({"role": "assistant",  "content": response})
-        if len(self.conversation_history) > MAX_HISTORY * 2:
-            self.conversation_history = self.conversation_history[-(MAX_HISTORY * 2):]
+        # Update history (per-session, so users never bleed into each other)
+        conversation_history.append({"role": "user",      "content": user_message})
+        conversation_history.append({"role": "assistant",  "content": response})
+        if len(conversation_history) > MAX_HISTORY * 2:
+            conversation_history[:] = conversation_history[-(MAX_HISTORY * 2):]
 
         return response, tool_used, response_time_ms
 
-    def clear_history(self):
-        self.conversation_history = []
+    def clear_history(self, session_id: str = "default"):
+        self._histories[session_id] = []
 
     @property
     def is_ready(self) -> bool:

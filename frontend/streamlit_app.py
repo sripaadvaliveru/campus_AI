@@ -2,11 +2,17 @@
 frontend/streamlit_app.py — Streamlit UI for CampusAI
 Communicates with the FastAPI backend at http://localhost:8000
 Run: streamlit run frontend/streamlit_app.py
+
+NOTE: This is a SECONDARY frontend. The primary app is `app.py` at the project root,
+which runs as a self-contained Streamlit app with the chatbot built in.
+Use this file only if you want a thin Streamlit UI that communicates with the
+FastAPI backend separately (uvicorn backend.main:app --port 8000).
 """
 
 import os
 import sys
 import json
+import html
 import logging
 import time
 import uuid
@@ -193,7 +199,7 @@ with st.sidebar:
         <div style="font-size:0.62rem;font-weight:700;color:rgba(255,255,255,0.3);
                     text-transform:uppercase;letter-spacing:0.14em;margin-bottom:0.5rem">System Status</div>
         <div class="stat-row">
-            <span class="stat-label">🧠 Gemini AI</span>
+            <span class="stat-label">🧠 GPT-4o mini</span>
             <span class="stat-value" style="color:{'#4ade80' if api_ok else '#f87171'}">{'● Online' if api_ok else '● Offline'}</span>
         </div>
         <div class="stat-row">
@@ -288,8 +294,8 @@ elif st.session_state.page == "💬 Chat":
         <h1>{active_c.get('icon','🎓')} {active_c.get('name','CampusAI')}</h1>
         <p>Ask me anything — fees, admissions, placements, facilities, clubs &amp; more.</p>
         <div style="display:flex;gap:0.6rem;margin-top:0.8rem;flex-wrap:wrap">
-            <span style="background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:20px;padding:0.2rem 0.8rem;font-size:0.72rem;color:#4f46e5;font-weight:600">🤖 Gemini 1.5 Flash</span>
-            <span style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:20px;padding:0.2rem 0.8rem;font-size:0.72rem;color:#15803d;font-weight:600">📚 389 Knowledge Docs</span>
+            <span style="background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:20px;padding:0.2rem 0.8rem;font-size:0.72rem;color:#4f46e5;font-weight:600">🤖 GPT-4o mini</span>
+            <span style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:20px;padding:0.2rem 0.8rem;font-size:0.72rem;color:#15803d;font-weight:600">📚 Curated Knowledge Base</span>
             <span style="background:#ecfeff;border:1.5px solid #a5f3fc;border-radius:20px;padding:0.2rem 0.8rem;font-size:0.72rem;color:#0e7490;font-weight:600">⚡ FastAPI Backend</span>
         </div>
     </div>
@@ -339,17 +345,17 @@ elif st.session_state.page == "💬 Chat":
             st.markdown(f"""
             <div class="message user">
                 <div class="message-avatar">👤</div>
-                <div><div class="message-bubble">{content}</div>
-                <div class="message-meta" style="text-align:right">{ts}</div></div>
+                <div><div class="message-bubble">{html.escape(content)}</div>
+                <div class="message-meta" style="text-align:right">{html.escape(ts)}</div></div>
             </div>""", unsafe_allow_html=True)
         else:
-            tool_badge = f'<span class="event-badge badge-academic" style="margin-left:0.5rem">{tool}</span>' if tool else ""
+            tool_badge = f'<span class="event-badge badge-academic" style="margin-left:0.5rem">{html.escape(tool)}</span>' if tool else ""
             st.markdown(f"""
             <div class="message bot">
                 <div class="message-avatar">🎓</div>
                 <div style="width:100%">
-                    <div class="message-bubble">{content}</div>
-                    <div class="message-meta">{ts} {tool_badge}</div>
+                    <div class="message-bubble">{html.escape(content)}</div>
+                    <div class="message-meta">{html.escape(ts)} {tool_badge}</div>
                 </div>
             </div>""", unsafe_allow_html=True)
 

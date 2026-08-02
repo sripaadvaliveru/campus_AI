@@ -213,8 +213,13 @@ def load_events_calendar(filepath: Path) -> List[Dict[str, Any]]:
     return documents
 
 
-def load_all_data() -> List[Dict[str, Any]]:
-    """Load all campus data files and return combined list of documents."""
+def load_all_data(include_contacts: bool = True, include_calendar: bool = True) -> List[Dict[str, Any]]:
+    """Load all campus data files and return combined list of documents.
+
+    Contacts and calendar are also produced by the richer processors in
+    contact_processor.py / calendar_processor.py, so they can be excluded
+    here to avoid double-indexing the same data.
+    """
     all_docs = []
 
     # Load JSON data files
@@ -234,14 +239,16 @@ def load_all_data() -> List[Dict[str, Any]]:
             logger.warning(f"File not found: {json_file}")
 
     # Load contacts
-    contacts_file = DATA_DIR / "contacts" / "directory.csv"
-    if contacts_file.exists():
-        all_docs.extend(load_csv_contacts(contacts_file))
+    if include_contacts:
+        contacts_file = DATA_DIR / "contacts" / "directory.csv"
+        if contacts_file.exists():
+            all_docs.extend(load_csv_contacts(contacts_file))
 
     # Load events calendar
-    calendar_file = DATA_DIR / "events" / "academic_calendar.json"
-    if calendar_file.exists():
-        all_docs.extend(load_events_calendar(calendar_file))
+    if include_calendar:
+        calendar_file = DATA_DIR / "events" / "academic_calendar.json"
+        if calendar_file.exists():
+            all_docs.extend(load_events_calendar(calendar_file))
 
     # Load Hyderabad-specific institution data (IITH, IIITH, NALSAR, HCU, OU, BITS, NIRF)
     hyderabad_dir = DATA_DIR / "hyderabad"
