@@ -1,11 +1,11 @@
 """
-agent.py -- LangGraph ReAct agent powered by OpenAI GPT-4o-mini.
+agent.py -- LangGraph ReAct agent (OpenAI GPT-4o-mini or Google Gemini).
 Uses LangGraph prebuilt create_react_agent (LangChain compatible).
 """
 
 import os
 import logging
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Any
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -41,22 +41,63 @@ Guidelines:
 
 """
 
+SOURCE_NAME_MAP = {
+    "iiith.json": "IIIT Hyderabad Placement Report & Admissions Brochure 2025",
+    "iith.json": "IIT Hyderabad Placement Report & Student Handbook 2025",
+    "strategic_report.md": "IIIT-H Academic & Strategic Report",
+    "other_institutions.json": "NALSAR & NIMS Institutional Placement Records 2025",
+    "nirf_rankings.json": "NIRF Submission 2025",
+    "facilities.json": "Campus Infrastructure & Facilities Guide",
+    "general_info.json": "Universal Academic Regulations Guide",
+    "clubs_activities.json": "Student Clubs & Activity Charter",
+    "procedures.json": "Administrative Procedures Manual",
+    "college_types.json": "UGC College Classification Guidelines",
+    "directory.csv": "Verified Faculty & Staff Directory",
+    "academic_calendar.json": "Official Academic Calendar 2026-27",
+}
 
-def create_agent(tools: Optional[list] = None):
-    """Create a LangGraph ReAct agent with OpenAI and campus tools."""
+
+def create_llm_and_agent(tools: Optional[list] = None) -> Tuple[Any, Any]:
+    """Create the LLM instance and the LangGraph agent."""
     from langgraph.prebuilt import create_react_agent
-    from langchain_openai import ChatOpenAI
 
     if tools is None:
         from core.tools import get_all_tools
         tools = get_all_tools()
 
-    llm = ChatOpenAI(
-        model="gpt-4o-mini",
-        api_key=os.getenv("OPENAI_API_KEY"),
-        temperature=0.0,
-        request_timeout=30,   # fail fast instead of hanging forever
-    )
+    # Determine provider
+    provider = os.getenv("LLM_PROVIDER", "").lower().strip()
+    google_key = os.getenv("GOOGLE_API_KEY", "").strip()
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+
+    # Determine default provider if not configured
+    if not provider:
+        if openai_key and openai_key != "your_openai_api_key_here":
+            provider = "openai"
+        elif google_key and google_key != "your_google_gemini_api_key_here":
+            provider = "gemini"
+        else:
+            provider = "openai"  # Fallback default
+
+    if provider == "openai":
+        from langchain_openai import ChatOpenAI
+        logger.info("Initializing Agent with OpenAI (gpt-4o-mini)")
+        llm = ChatOpenAI(
+            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            api_key=openai_key,
+            temperature=0.0,
+            request_timeout=15,   # fail fast instead of hanging forever
+        )
+    else:
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        model_name = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
+        logger.info(f"Initializing Agent with Google GenAI ({model_name})")
+        llm = ChatGoogleGenerativeAI(
+            model=model_name,
+            google_api_key=google_key,
+            temperature=0.0,
+            request_timeout=15,
+        )
 
     # Support both old ('prompt') and new ('state_modifier') LangGraph API
     try:
@@ -72,14 +113,20 @@ def create_agent(tools: Optional[list] = None):
             prompt=SYSTEM_PROMPT,
         )
 
+    return llm, agent
+
+
+def create_agent(tools: Optional[list] = None):
+    """Create a LangGraph ReAct agent (for backward compatibility)."""
+    llm, agent = create_llm_and_agent(tools)
     return agent
 
 
 def _extract_text(content) -> str:
     """
-    OpenAI returns content as either:
+    LLM providers return content as either:
       - A plain string, or
-      - A list of dicts: [{'type': 'text', 'text': '...', 'extras': {...}}, ...]
+      - A list of dicts: [{'type': 'text', 'text': '...', ...}, ...]
     This helper normalises both into a plain string.
     """
     if isinstance(content, str):
@@ -95,11 +142,24 @@ def _extract_text(content) -> str:
     return str(content)
 
 
+def _retryable_error(err_str: str) -> bool:
+    """Permanent 'insufficient_quota' 429s should fail fast, not sleep."""
+    if "insufficient_quota" in err_str:
+        return False
+    return (
+        "429" in err_str or
+        "RESOURCE_EXHAUSTED" in err_str or
+        "503" in err_str or
+        "UNAVAILABLE" in err_str
+    )
+
+
 class CampusChatbot:
-    """High-level chatbot wrapper with conversation history."""
+    """High-level chatbot wrapper with per-session conversation history."""
 
     def __init__(self):
         self._agent = None
+        self._llm = None
         self._tools = None
         self._histories: Dict[str, List[Dict[str, str]]] = {}
 
@@ -109,25 +169,106 @@ class CampusChatbot:
 
     def _ensure_initialized(self):
         if self._agent is None:
-            logger.info("Initializing CampusAI agent (LangGraph + GPT-4o-mini)...")
+            logger.info("Initializing CampusAI agent (LangGraph)...")
             from core.tools import get_all_tools
             self._tools = get_all_tools()
-            self._agent = create_agent(self._tools)
+            self._llm, self._agent = create_llm_and_agent(self._tools)
             logger.info("CampusAI agent ready.")
 
-    def chat(self, user_message: str, session_id: str = "default") -> Tuple[str, str, int]:
-        """Process a user message. Returns (response, tool_used, response_time_ms)."""
+    def _direct_rag_chat(self, user_message: str, history: List[Dict[str, str]]) -> Tuple[str, str]:
+        """Runs RAG in a single LLM call for ultra-low latency."""
+        import re
+        from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+
+        context = ""
+        sources = set()
+        tool_used = "direct_rag"
+
+        # Simple keywords classification
+        query_lower = user_message.lower()
+
+        # Check contact directory keywords
+        if any(w in query_lower for w in ["contact", "phone", "email", "number", "faculty", "professor", "hod", "dean", "warden", "office", "directory"]):
+            from core.tools import ContactDirectoryTool
+            try:
+                tool = ContactDirectoryTool()
+                context = tool._run(user_message)
+                sources.add("Verified Faculty & Staff Directory")
+                tool_used = "search_contacts"
+            except Exception as e:
+                logger.error(f"Direct contact lookup error: {e}")
+
+        # Check calendar keywords
+        elif any(w in query_lower for w in ["event", "calendar", "date", "holiday", "exam", "fest", "schedule", "admission date", "deadline"]):
+            from core.tools import EventCalendarTool
+            try:
+                tool = EventCalendarTool()
+                context = tool._run(user_message)
+                sources.add("Official Academic Calendar 2026-27")
+                tool_used = "get_campus_events"
+            except Exception as e:
+                logger.error(f"Direct calendar lookup error: {e}")
+
+        # Default: Fall back to semantic vector store search
+        if not context:
+            try:
+                from core.embeddings import get_vector_store
+                vs = get_vector_store()
+                if vs.is_ready:
+                    # Search matching chunks
+                    context = vs.get_relevant_context(user_message, top_k=3)
+
+                    # Extract sources from context string
+                    found = re.findall(r'\[Source:\s*([^\]]+)\]', context)
+                    for f in found:
+                        clean_name = f.strip().lower()
+                        if clean_name in SOURCE_NAME_MAP:
+                            sources.add(SOURCE_NAME_MAP[clean_name])
+                        else:
+                            sources.add(f.strip().replace('.pdf', '').replace('.txt', '').replace('.json', '').replace('.csv', '').replace('.md', '').replace('_', ' ').replace('-', ' ').title())
+                    tool_used = "campus_knowledge_search"
+            except Exception as e:
+                logger.error(f"Direct vector store lookup error: {e}")
+
+        # Build Message list
+        messages = [
+            SystemMessage(content=SYSTEM_PROMPT),
+        ]
+        if context:
+            messages.append(SystemMessage(content=f"Use this retrieved verified information to answer the question:\n{context}"))
+
+        # Append conversation history
+        for msg in history[-4:]:
+            if msg["role"] == "user":
+                messages.append(HumanMessage(content=msg["content"]))
+            else:
+                messages.append(AIMessage(content=msg["content"]))
+
+        # Append latest user message
+        messages.append(HumanMessage(content=user_message))
+
+        # Invoke LLM
+        res = self._llm.invoke(messages)
+        response = _extract_text(res.content)
+
+        # Clean up any LLM-generated sources sections first
+        response = re.sub(r'\n+(?:\*\*|)?Sources?(?:\*\*|)?:\s*.*$', '', response, flags=re.IGNORECASE | re.DOTALL)
+
+        # Append formatted verified sources list
+        if sources:
+            sources_list = "\n".join(f"• {s}" for s in sorted(sources))
+            response += f"\n\nSource:\n{sources_list}"
+
+        return response, tool_used
+
+    def _agent_chat(self, user_message: str, history: List[Dict[str, str]]) -> Tuple[str, str]:
+        """Fallback multi-step ReAct agent loop with fails-fast retries."""
         import time
+        import re
         from langchain_core.messages import HumanMessage, AIMessage
 
-        self._ensure_initialized()
-        start_time = time.time()
-
-        conversation_history = self._history(session_id)
-
-        # Build LangGraph message list (includes history)
         messages = []
-        for msg in conversation_history[-6:]:
+        for msg in history[-6:]:
             if msg["role"] == "user":
                 messages.append(HumanMessage(content=msg["content"]))
             else:
@@ -158,24 +299,6 @@ class CampusChatbot:
 
                 # Algorithmic source citation extraction
                 sources = set()
-                import re
-                
-                # Mapping of raw files to premium verified publication names
-                SOURCE_NAME_MAP = {
-                    "iiith.json": "IIIT Hyderabad Placement Report & Admissions Brochure 2025",
-                    "iith.json": "IIT Hyderabad Placement Report & Student Handbook 2025",
-                    "strategic_report.md": "IIIT-H Academic & Strategic Report",
-                    "other_institutions.json": "NALSAR & NIMS Institutional Placement Records 2025",
-                    "nirf_rankings.json": "NIRF Submission 2025",
-                    "facilities.json": "Campus Infrastructure & Facilities Guide",
-                    "general_info.json": "Universal Academic Regulations Guide",
-                    "clubs_activities.json": "Student Clubs & Activity Charter",
-                    "procedures.json": "Administrative Procedures Manual",
-                    "college_types.json": "UGC College Classification Guidelines",
-                    "directory.csv": "Verified Faculty & Staff Directory",
-                    "academic_calendar.json": "Official Academic Calendar 2026-27"
-                }
-
                 for msg in all_messages:
                     if msg.__class__.__name__ == "ToolMessage" and msg.content:
                         content_str = str(msg.content)
@@ -183,12 +306,11 @@ class CampusChatbot:
                         for f in found:
                             clean_name = f.strip().lower()
                             if clean_name in SOURCE_NAME_MAP:
-                                clean_name = SOURCE_NAME_MAP[clean_name]
+                                sources.add(SOURCE_NAME_MAP[clean_name])
                             else:
-                                # Fallback cleaning if not mapped
                                 clean_name = f.strip().replace('.pdf', '').replace('.txt', '').replace('.json', '').replace('.csv', '').replace('.md', '').replace('_', ' ').replace('-', ' ').title()
-                            sources.add(clean_name)
-                        
+                                sources.add(clean_name)
+
                         # Fallback for structured tools
                         t_name = getattr(msg, "name", "")
                         if t_name == "get_campus_events":
@@ -202,7 +324,7 @@ class CampusChatbot:
 
                 # Clean up any LLM-generated sources sections first
                 response = re.sub(r'\n+(?:\*\*|)?Sources?(?:\*\*|)?:\s*.*$', '', response, flags=re.IGNORECASE | re.DOTALL)
-                
+
                 # Append formatted verified sources list
                 if sources:
                     sources_list = "\n".join(f"• {s}" for s in sorted(sources))
@@ -216,17 +338,8 @@ class CampusChatbot:
                 err_str = str(e)
 
                 # Detect quota / overload errors and retry.
-                # "insufficient_quota" is permanent — don't sleep 35s retrying it.
-                is_retryable = (
-                    "insufficient_quota" not in err_str and (
-                        "429" in err_str or
-                        "RESOURCE_EXHAUSTED" in err_str or
-                        "503" in err_str or
-                        "UNAVAILABLE" in err_str
-                    )
-                )
-
-                if is_retryable and attempt < MAX_RETRIES - 1:
+                # "insufficient_quota" is permanent — don't sleep retrying it.
+                if _retryable_error(err_str) and attempt < MAX_RETRIES - 1:
                     wait_sec = BASE_DELAY * (2 ** attempt)  # 5s, 10s, 20s
                     logger.warning(f"API error (attempt {attempt+1}/{MAX_RETRIES}): {err_str[:80]} — retrying in {wait_sec}s")
                     time.sleep(wait_sec)
@@ -253,15 +366,196 @@ class CampusChatbot:
                 response = f"⚠️ **Error**: {err_str[:200]}\n\nPlease check your API key in `.env` and try again."
             tool_used = "error"
 
+        return response, tool_used
+
+    def chat(self, user_message: str, session_id: str = "default") -> Tuple[str, str, int]:
+        """Process a user message. Returns (response, tool_used, response_time_ms)."""
+        import time
+
+        start_time = time.time()
+        history = self._history(session_id)
+
+        # Check cache first
+        try:
+            from core.database import get_cached_response
+            cached = get_cached_response(user_message)
+            if cached:
+                logger.info(f"Cache hit for: {user_message[:50]}...")
+                # Update per-session history
+                history.append({"role": "user", "content": user_message})
+                history.append({"role": "assistant", "content": cached})
+                if len(history) > MAX_HISTORY * 2:
+                    history[:] = history[-(MAX_HISTORY * 2):]
+                return cached, "cache", int((time.time() - start_time) * 1000)
+        except Exception as e:
+            logger.error(f"Error checking cache: {e}")
+
+        self._ensure_initialized()
+
+        response = ""
+        tool_used = ""
+
+        # ── Step 1: Try single-step RAG path (takes ~1.2s) ──
+        try:
+            response, tool_used = self._direct_rag_chat(user_message, history)
+        except Exception as e:
+            logger.warning(f"Direct RAG path failed, falling back to agent loop: {e}")
+            response = ""
+
+        # ── Step 2: Fallback to multi-step agent loop if direct path failed ──
+        if not response:
+            response, tool_used = self._agent_chat(user_message, history)
+
         response_time_ms = int((time.time() - start_time) * 1000)
 
-        # Update history (per-session, so users never bleed into each other)
-        conversation_history.append({"role": "user",      "content": user_message})
-        conversation_history.append({"role": "assistant",  "content": response})
-        if len(conversation_history) > MAX_HISTORY * 2:
-            conversation_history[:] = conversation_history[-(MAX_HISTORY * 2):]
+        # Save to cache if successful
+        if response and not response.startswith("⚠️") and tool_used != "error":
+            try:
+                from core.database import set_cached_response
+                set_cached_response(user_message, response)
+            except Exception as e:
+                logger.error(f"Error writing to cache: {e}")
+
+        # Update per-session history
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": response})
+        if len(history) > MAX_HISTORY * 2:
+            history[:] = history[-(MAX_HISTORY * 2):]
 
         return response, tool_used, response_time_ms
+
+    def stream_chat(self, user_message: str, session_id: str = "default"):
+        """
+        Generator method that yields chunks of the chatbot's response in real-time.
+        Saves the final response to history and cache when generation completes.
+        """
+        import time
+        import re
+        from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+
+        start_time = time.time()
+        history = self._history(session_id)
+
+        # Check cache first
+        try:
+            from core.database import get_cached_response
+            cached = get_cached_response(user_message)
+            if cached:
+                yield {"type": "tool", "name": "cache"}
+                # Yield in small chunks to simulate typing
+                words = cached.split(" ")
+                for i, word in enumerate(words):
+                    yield {"type": "content", "text": word + (" " if i < len(words) - 1 else "")}
+                    time.sleep(0.01)
+                # Update per-session history
+                history.append({"role": "user", "content": user_message})
+                history.append({"role": "assistant", "content": cached})
+                if len(history) > MAX_HISTORY * 2:
+                    history[:] = history[-(MAX_HISTORY * 2):]
+                yield {"type": "time", "ms": int((time.time() - start_time) * 1000), "full_text": cached}
+                return
+        except Exception as e:
+            logger.error(f"Error checking cache: {e}")
+
+        self._ensure_initialized()
+
+        context = ""
+        sources = set()
+        tool_used = "direct_rag"
+        query_lower = user_message.lower()
+
+        # Check contact directory keywords
+        if any(w in query_lower for w in ["contact", "phone", "email", "number", "faculty", "professor", "hod", "dean", "warden", "office", "directory"]):
+            from core.tools import ContactDirectoryTool
+            try:
+                tool = ContactDirectoryTool()
+                context = tool._run(user_message)
+                sources.add("Verified Faculty & Staff Directory")
+                tool_used = "search_contacts"
+            except Exception as e:
+                logger.error(f"Direct contact lookup error: {e}")
+        # Check calendar keywords
+        elif any(w in query_lower for w in ["event", "calendar", "date", "holiday", "exam", "fest", "schedule", "admission date", "deadline"]):
+            from core.tools import EventCalendarTool
+            try:
+                tool = EventCalendarTool()
+                context = tool._run(user_message)
+                sources.add("Official Academic Calendar 2026-27")
+                tool_used = "get_campus_events"
+            except Exception as e:
+                logger.error(f"Direct calendar lookup error: {e}")
+        # Default: Fall back to semantic vector store search
+        if not context:
+            try:
+                from core.embeddings import get_vector_store
+                vs = get_vector_store()
+                if vs.is_ready:
+                    context = vs.get_relevant_context(user_message, top_k=3)
+                    found = re.findall(r'\[Source:\s*([^\]]+)\]', context)
+                    for f in found:
+                        clean_name = f.strip().lower()
+                        if clean_name in SOURCE_NAME_MAP:
+                            sources.add(SOURCE_NAME_MAP[clean_name])
+                        else:
+                            sources.add(f.strip().replace('.pdf', '').replace('.txt', '').replace('.json', '').replace('.csv', '').replace('.md', '').replace('_', ' ').replace('-', ' ').title())
+                    tool_used = "campus_knowledge_search"
+            except Exception as e:
+                logger.error(f"Direct vector store lookup error: {e}")
+
+        yield {"type": "tool", "name": tool_used}
+
+        messages = [
+            SystemMessage(content=SYSTEM_PROMPT),
+        ]
+        if context:
+            messages.append(SystemMessage(content=f"Use this retrieved verified information to answer the question:\n{context}"))
+        for msg in history[-4:]:
+            if msg["role"] == "user":
+                messages.append(HumanMessage(content=msg["content"]))
+            else:
+                messages.append(AIMessage(content=msg["content"]))
+        messages.append(HumanMessage(content=user_message))
+
+        full_response = ""
+        try:
+            for chunk in self._llm.stream(messages):
+                text_chunk = _extract_text(chunk.content)
+                if text_chunk:
+                    full_response += text_chunk
+                    yield {"type": "content", "text": text_chunk}
+        except Exception as e:
+            logger.error(f"Streaming error: {e}")
+            try:
+                res = self._llm.invoke(messages)
+                full_response = _extract_text(res.content)
+                yield {"type": "content", "text": full_response}
+            except Exception as e2:
+                yield {"type": "error", "text": f"Error: {e2}"}
+                return
+
+        full_response = re.sub(r'\n+(?:\*\*|)?Sources?(?:\*\*|)?:\s*.*$', '', full_response, flags=re.IGNORECASE | re.DOTALL)
+
+        if sources:
+            sources_list = "\n".join(f"• {s}" for s in sorted(sources))
+            sources_suffix = f"\n\nSource:\n{sources_list}"
+            full_response += sources_suffix
+            yield {"type": "content", "text": sources_suffix}
+
+        if full_response and not full_response.startswith("⚠️"):
+            try:
+                from core.database import set_cached_response
+                set_cached_response(user_message, full_response)
+            except Exception as e:
+                logger.error(f"Error writing to cache: {e}")
+
+        # Update per-session history
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": full_response})
+        if len(history) > MAX_HISTORY * 2:
+            history[:] = history[-(MAX_HISTORY * 2):]
+
+        resp_time_ms = int((time.time() - start_time) * 1000)
+        yield {"type": "time", "ms": resp_time_ms, "full_text": full_response}
 
     def clear_history(self, session_id: str = "default"):
         self._histories[session_id] = []

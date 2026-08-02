@@ -51,18 +51,39 @@ section[data-testid="stSidebar"] {
   z-index: 1; 
 }
 
-/* Hide Streamlit default Chrome completely */
+/* Hide Streamlit default Chrome while keeping sidebar toggle button functional */
 #MainMenu, footer,
 [data-testid="stToolbar"],
 [data-testid="stDecoration"],
-[data-testid="stStatusWidget"],
-[data-testid="stHeader"],
-[data-testid="stAppViewBlockContainer"] > div:first-child { 
+[data-testid="stStatusWidget"] { 
   display: none !important; 
 }
 
-[data-testid="stAppViewBlockContainer"] { padding-top: 0 !important; }
-[data-testid="stMainBlockContainer"] { padding-top: 1rem !important; }
+/* Make stHeader transparent so it doesn't take space, but keep sidebar expand/collapse toggle accessible */
+header[data-testid="stHeader"] {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
+}
+
+header[data-testid="stHeader"] * {
+  pointer-events: auto !important;
+}
+
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapseButton"],
+button[title*="sidebar"],
+button[aria-label*="sidebar"] {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: var(--text-primary) !important;
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  z-index: 100000 !important;
+}
 
 [data-testid="block-container"] {
   padding: 2rem 4vw !important;
