@@ -4,25 +4,23 @@ This is the primary backend. Run: uvicorn backend.main:app --reload --port 8000
 """
 
 import os
-import csv
-import json
 import logging
 import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from dotenv import load_dotenv
 
 # ── Path setup ────────────────────────────────────────────────────────────────
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
-load_dotenv(ROOT / ".env")
 
-DATA_DIR = ROOT / "data"
+# ── Shared config (single source of truth) ────────────────────────────────────
+from core.config import COLLEGES, COLLEGE_MAP, DATA_DIR, is_openai_configured
+from core.data_loader import load_contacts, load_events
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -41,32 +39,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# ── College registry ──────────────────────────────────────────────────────────
-COLLEGES = [
-    {"id": "general",  "name": "General (All Indian Colleges)",              "short": "General",  "icon": "🇮🇳", "type": "Universal",                        "location": "Pan-India",             "color": "#4f8ef7"},
-    {"id": "iith",     "name": "IIT Hyderabad (IITH)",                       "short": "IITH",     "icon": "🔬", "type": "Central Government Institute",      "location": "Kandi, Hyderabad",      "color": "#f0883e"},
-    {"id": "iiith",    "name": "IIIT Hyderabad (IIITH)",                     "short": "IIITH",    "icon": "💻", "type": "Autonomous Deemed University (PPP)", "location": "Gachibowli, Hyderabad", "color": "#39c5b9"},
-    {"id": "nalsar",   "name": "NALSAR University of Law",                   "short": "NALSAR",   "icon": "⚖️", "type": "National Law University",           "location": "Hyderabad",             "color": "#7c5cbf"},
-    {"id": "nims",     "name": "NIMS — Nizam's Institute of Medical Sciences","short": "NIMS",     "icon": "🏥", "type": "Autonomous Medical University",     "location": "Hyderabad",             "color": "#3fb950"},
-    {"id": "hcu",      "name": "University of Hyderabad (HCU)",              "short": "HCU",      "icon": "🎓", "type": "Central University",               "location": "Gachibowli, Hyderabad", "color": "#d29922"},
-    {"id": "osmania",  "name": "Osmania University",                         "short": "OU",       "icon": "📜", "type": "State University",                  "location": "Hyderabad",             "color": "#e3b341"},
-    {"id": "bits_hyd", "name": "BITS Pilani — Hyderabad Campus",             "short": "BITS Hyd", "icon": "🏛️", "type": "Private Deemed University",        "location": "Shameerpet, Hyderabad", "color": "#58a6ff"},
-    {"id": "isb_hyd",   "name": "Indian School of Business (ISB) Hyderabad", "short": "ISB Hyd", "icon": "💼", "type": "Private Business School", "location": "Gachibowli, Hyderabad", "color": "#7c5cbf"},
-    {"id": "imt_hyd",   "name": "IMT Hyderabad", "short": "IMT Hyd", "icon": "📈", "type": "Private Business School", "location": "Shamshabad, Hyderabad", "color": "#f0883e"},
-    {"id": "ibs_hyd",   "name": "ICFAI Business School (IBS) Hyderabad", "short": "IBS Hyd", "icon": "📊", "type": "Private Business School", "location": "Donthanapally, Hyderabad", "color": "#39c5b9"},
-    {"id": "omc",       "name": "Osmania Medical College (OMC)", "short": "OMC", "icon": "🩺", "type": "Government Medical College", "location": "Koti, Hyderabad", "color": "#3fb950"},
-    {"id": "nizam",     "name": "Nizam College Hyderabad", "short": "Nizam", "icon": "🏛️", "type": "Constituent College of Osmania University", "location": "Basheerbagh, Hyderabad", "color": "#d29922"},
-    {"id": "st_francis","name": "St. Francis College for Women", "short": "St. Francis", "icon": "👩‍🎓", "type": "Autonomous Minority College", "location": "Begumpet, Hyderabad", "color": "#4f8ef7"},
-    {"id": "jntuh",     "name": "JNTU Hyderabad (JNTUH)", "short": "JNTUH", "icon": "⚙️", "type": "State University", "location": "Kukatpally, Hyderabad", "color": "#e3b341"},
-    {"id": "cbit",      "name": "Chaitanya Bharathi Institute of Technology (CBIT)", "short": "CBIT", "icon": "🏫", "type": "Autonomous Private Institute", "location": "Gandipet, Hyderabad", "color": "#4f8ef7"},
-    {"id": "griet",     "name": "Gokaraju Rangaraju Institute (GRIET)", "short": "GRIET", "icon": "📐", "type": "Autonomous Private Institute", "location": "Bachupally, Hyderabad", "color": "#f0883e"},
-    {"id": "vnr_vjiet", "name": "VNR VJIET", "short": "VNR VJIET", "icon": "🧪", "type": "Autonomous Private Institute", "location": "Bachupally, Hyderabad", "color": "#39c5b9"},
-    {"id": "vardhaman", "name": "Vardhaman College of Engineering", "short": "Vardhaman", "icon": "🔬", "type": "Autonomous Private Institute", "location": "Shamshabad, Hyderabad", "color": "#3fb950"},
-    {"id": "anurag",    "name": "Anurag University", "short": "Anurag", "icon": "🛰️", "type": "Private University", "location": "Venkatapur, Hyderabad", "color": "#7c5cbf"},
-    {"id": "iare",      "name": "Institute of Aeronautical Engineering (IARE)", "short": "IARE", "icon": "✈️", "type": "Autonomous Private Institute", "location": "Dundigal, Hyderabad", "color": "#58a6ff"},
-]
-COLLEGE_MAP = {c["id"]: c for c in COLLEGES}
 
 # ── Chatbot singleton ─────────────────────────────────────────────────────────
 _chatbot = None
@@ -215,11 +187,9 @@ def get_contacts(
     limit: int = Query(50, ge=1, le=200, description="Max results to return"),
 ):
     """Search the faculty and staff contact directory."""
-    try:
-        with open(DATA_DIR / "contacts" / "directory.csv", encoding="utf-8") as f:
-            contacts = list(csv.DictReader(f))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Could not load contacts: {e}")
+    contacts = load_contacts()
+    if not contacts:
+        raise HTTPException(status_code=500, detail="Could not load contacts")
 
     if search:
         s = search.lower()
@@ -240,18 +210,9 @@ def get_events(
     upcoming: bool = Query(False, description="Only show upcoming events"),
 ):
     """Get academic calendar events with optional filters."""
-    try:
-        with open(DATA_DIR / "events" / "academic_calendar.json", encoding="utf-8") as f:
-            data = json.load(f)
-        events = []
-        for sem_key in ["odd_semester", "even_semester"]:
-            sem = data.get(sem_key, {})
-            for ev in sem.get("events", []):
-                ev["semester"] = sem.get("name", "")
-                events.append(ev)
-        events = sorted(events, key=lambda x: x.get("date", ""))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Could not load events: {e}")
+    events = load_events()
+    if not events:
+        raise HTTPException(status_code=500, detail="Could not load events")
 
     today = datetime.today().date().isoformat()
     if category:

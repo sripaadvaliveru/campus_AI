@@ -7,14 +7,13 @@ import json
 import logging
 from datetime import datetime, date
 from typing import Optional, List, Dict, Any
-from pathlib import Path
 
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 
-logger = logging.getLogger(__name__)
+from core.config import DATA_DIR, INDEXED_COLLEGE_IDS
 
-DATA_DIR = Path(__file__).parent.parent / "data"
+logger = logging.getLogger(__name__)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
