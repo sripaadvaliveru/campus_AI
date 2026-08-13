@@ -5,7 +5,6 @@ Extracted from app.py lines 2232-2357.
 
 import json
 from datetime import datetime, date
-from itertools import groupby
 
 import streamlit as st
 from core.config import COLLEGE_MAP, DATA_DIR

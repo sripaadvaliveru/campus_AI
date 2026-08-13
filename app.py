@@ -24,8 +24,8 @@ try:
         os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
     if "GOOGLE_API_KEY" in st.secrets:
         os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
-except Exception:
-    pass
+except Exception as e:
+    logging.getLogger(__name__).debug(f"Streamlit secrets not available: {e}")
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")

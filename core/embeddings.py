@@ -4,19 +4,13 @@ Builds, saves, and loads the campus knowledge vector index.
 """
 
 import logging
-import os
 import pickle
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 
-from dotenv import load_dotenv
-
-load_dotenv()
+from core.config import VECTOR_STORE_PATH, EMBEDDING_MODEL
 
 logger = logging.getLogger(__name__)
-
-VECTOR_STORE_PATH = Path(os.getenv("VECTOR_STORE_PATH", "./vector_store"))
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 
 
 class CampusVectorStore:

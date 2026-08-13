@@ -95,11 +95,13 @@ def _send_message(user_input: str):
                 tool_used = event["name"]
             elif event["type"] == "content":
                 response += event["text"]
+                import html as html_mod
+                safe_response = html_mod.escape(response)
                 typing_placeholder.markdown(f"""
                 <div class="message bot">
                     <div class="message-avatar">{get_college_icon_html("\U0001f393")}</div>
                     <div style="width:100%">
-                        <div class="message-bubble">{response}</div>
+                        <div class="message-bubble">{safe_response}</div>
                     </div>
                 </div>""", unsafe_allow_html=True)
             elif event["type"] == "error":
@@ -346,10 +348,11 @@ def render():
         c_names = [c["name"] for c in COLLEGE_MAP.values()]
         selected_name = st.selectbox("Quick Select Institution Node", ["-- Select Institution --"] + c_names)
         if selected_name != "-- Select Institution --":
-            selected_c = next(c for c in COLLEGE_MAP.values() if c["name"] == selected_name)
-            st.session_state.selected_college = selected_c["id"]
-            st.session_state.messages = []
-            st.rerun()
+            selected_c = next((c for c in COLLEGE_MAP.values() if c["name"] == selected_name), None)
+            if selected_c:
+                st.session_state.selected_college = selected_c["id"]
+                st.session_state.messages = []
+                st.rerun()
 
         st.markdown("<div style='margin-top:1.5rem;'></div>", unsafe_allow_html=True)
         if st.button("Browse All Colleges in Overview \U0001f3db", use_container_width=True):

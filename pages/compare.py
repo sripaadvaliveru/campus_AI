@@ -40,6 +40,20 @@ def _load_detailed_data(college_id: str) -> dict:
 
 
 def _get_fees_str(college_id: str, data: dict) -> str:
+    # Try to extract from detailed data first
+    if data:
+        fees = data.get("fees") or data.get("fee_structure") or data.get("tuition_fees")
+        if isinstance(fees, dict):
+            parts = []
+            for k, v in fees.items():
+                if v:
+                    parts.append(f"{k}: {v}")
+            if parts:
+                return " | ".join(parts)
+        elif isinstance(fees, str) and fees:
+            return fees
+
+    # Fallback to hardcoded map
     fees_map = {
         "iith":     "Rs. 1,68,993 (1st Sem Gen/OBC Total)",
         "iiith":    "Rs. 2,50,000 (1st Sem Tuition)",
@@ -105,8 +119,8 @@ def render():
     with col_sel2:
         comp_id2 = st.selectbox("Select College 2", [c["name"] for c in COLLEGES], index=2, key="comp_2")
 
-    c1 = next(c for c in COLLEGES if c["name"] == comp_id1)
-    c2 = next(c for c in COLLEGES if c["name"] == comp_id2)
+    c1 = next((c for c in COLLEGES if c["name"] == comp_id1), None)
+    c2 = next((c for c in COLLEGES if c["name"] == comp_id2), None)
 
     if c1 and c2:
         d1 = _load_detailed_data(c1["id"])
@@ -161,7 +175,7 @@ def render():
                 barmode="group",
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="white" if st.session_state.get("dark_mode", True) else "black"),
+                font=dict(color="white" if st.session_state.get("dark_mode", False) else "black"),
                 yaxis=dict(title="Package in LPA (Lakhs Per Annum)", gridcolor="rgba(128,128,128,0.2)"),
                 xaxis=dict(gridcolor="rgba(128,128,128,0.2)"),
             )

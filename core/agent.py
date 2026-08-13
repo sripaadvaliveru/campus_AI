@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 MAX_HISTORY  = int(os.getenv("MAX_HISTORY", "10"))
 MAX_RETRIES  = 3
-BASE_DELAY   = 5
+BASE_DELAY   = 2
+MAX_WAIT     = 8
 
 SYSTEM_PROMPT = """You are CampusAI, a knowledgeable and friendly Universal Campus Information Assistant for Indian colleges and universities.
 
@@ -129,6 +130,8 @@ def _extract_text(content) -> str:
       - A list of dicts: [{'type': 'text', 'text': '...', ...}, ...]
     This helper normalises both into a plain string.
     """
+    if content is None:
+        return ""
     if isinstance(content, str):
         return content
     if isinstance(content, list):
@@ -340,7 +343,7 @@ class CampusChatbot:
                 # Detect quota / overload errors and retry.
                 # "insufficient_quota" is permanent — don't sleep retrying it.
                 if _retryable_error(err_str) and attempt < MAX_RETRIES - 1:
-                    wait_sec = BASE_DELAY * (2 ** attempt)  # 5s, 10s, 20s
+                    wait_sec = min(BASE_DELAY * (2 ** attempt), MAX_WAIT)  # 2s, 4s, 8s max
                     logger.warning(f"API error (attempt {attempt+1}/{MAX_RETRIES}): {err_str[:80]} — retrying in {wait_sec}s")
                     time.sleep(wait_sec)
                     continue

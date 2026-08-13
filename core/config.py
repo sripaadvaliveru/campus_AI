@@ -343,6 +343,9 @@ COLLEGES = [
         "color": "#58a6ff",
         "desc": "Autonomous engineering college, admissions via TS EAMCET, average package of \u20b97.00 LPA for CSE, highest package of \u20b960.00 LPA.",
         "tags": ["TS EAMCET", "Dundigal", "Aeronautical", "Placements"],
+        "ranking": "NIRF Eng #151-200",
+        "students": "3,000+ Students",
+        "placement": "\u20b97.00L Avg Package",
     },
 ]
 
