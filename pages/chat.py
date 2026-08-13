@@ -155,9 +155,11 @@ def _send_message(user_input: str):
 
 
 def _get_chatbot():
-    """Lazy-load chatbot."""
-    from core.agent import CampusChatbot
-    return CampusChatbot()
+    """Lazy-load chatbot, cached in session state so conversation history persists."""
+    if "chatbot" not in st.session_state or st.session_state.chatbot is None:
+        from core.agent import CampusChatbot
+        st.session_state.chatbot = CampusChatbot()
+    return st.session_state.chatbot
 
 
 def _give_feedback(query_id: Optional[int], rating: int, msg_idx: int):

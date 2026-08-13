@@ -136,11 +136,9 @@ with st.sidebar:
             st.session_state.messages = []
             st.session_state.feedback_given = set()
             st.session_state.page = "\U0001f3e0 Overview"
-            try:
-                from core.agent import CampusChatbot
-                CampusChatbot().clear_history(st.session_state.session_id)
-            except Exception:
-                pass
+            if st.session_state.get("chatbot") is not None:
+                st.session_state.chatbot.clear_history(st.session_state.session_id)
+                st.session_state.chatbot = None
             st.rerun()
         st.markdown("<div style='margin-bottom:0.5rem'></div>", unsafe_allow_html=True)
 
@@ -241,11 +239,9 @@ with st.sidebar:
     if st.button("\U0001f5d1\ufe0f Clear Conversation", use_container_width=True):
         st.session_state.messages = []
         st.session_state.feedback_given = set()
-        try:
-            from core.agent import CampusChatbot
-            CampusChatbot().clear_history(st.session_state.session_id)
-        except Exception:
-            pass
+        if st.session_state.get("chatbot") is not None:
+            st.session_state.chatbot.clear_history(st.session_state.session_id)
+            st.session_state.chatbot = None
         st.rerun()
 
 
