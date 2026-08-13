@@ -6,9 +6,6 @@ Uses LangGraph prebuilt create_react_agent (LangChain compatible).
 import os
 import logging
 from typing import List, Dict, Tuple, Optional, Any
-from dotenv import load_dotenv
-
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -115,12 +112,6 @@ def create_llm_and_agent(tools: Optional[list] = None) -> Tuple[Any, Any]:
         )
 
     return llm, agent
-
-
-def create_agent(tools: Optional[list] = None):
-    """Create a LangGraph ReAct agent (for backward compatibility)."""
-    llm, agent = create_llm_and_agent(tools)
-    return agent
 
 
 def _extract_text(content) -> str:

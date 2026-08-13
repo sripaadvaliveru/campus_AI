@@ -5,7 +5,6 @@ Extracted from app.py to keep page modules clean.
 
 import html
 import streamlit as st
-from core.config import COLLEGE_MAP
 
 
 # ── SVG Icon Map ──────────────────────────────────────────────────────────────
@@ -124,11 +123,6 @@ def get_college_logo_html(college_id: str, size: int = 32, border_radius: str = 
         f'background:{bg};border:1px solid {color}33;color:{color};border-radius:{border_radius};">'
         f'{label}</div>'
     ).strip()
-
-
-def get_button_emoji(icon_emoji: str) -> str:
-    """Return a broadly-supported emoji for native buttons."""
-    return "\U0001f3eb" if icon_emoji == "\U0001f393" else icon_emoji
 
 
 # ── Chat Message Rendering ────────────────────────────────────────────────────

@@ -3,7 +3,6 @@ chat.py — Chat page with message history, suggestions, and voice input.
 Extracted from app.py lines 1549-2063.
 """
 
-import os
 import html
 import textwrap
 import streamlit as st
@@ -11,7 +10,6 @@ from datetime import datetime
 from typing import Optional
 
 from core.config import COLLEGE_MAP, is_any_api_configured
-from core.data_loader import load_contacts, load_events
 from ui.components import get_college_icon_html, get_college_logo_html, safe_hex_to_rgb, render_message
 
 

@@ -282,34 +282,3 @@ def load_all_data(include_contacts: bool = True, include_calendar: bool = True) 
 
     logger.info(f"Total documents loaded: {len(all_docs)}")
     return all_docs
-
-
-
-def get_raw_contacts() -> List[Dict[str, str]]:
-    """Return raw contact rows as dicts for the contact search tool."""
-    contacts = []
-    filepath = DATA_DIR / "contacts" / "directory.csv"
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            contacts = list(reader)
-    except Exception as e:
-        logger.error(f"Error reading contacts: {e}")
-    return contacts
-
-
-def get_raw_events() -> List[Dict[str, str]]:
-    """Return raw event list for the events tool."""
-    events = []
-    filepath = DATA_DIR / "events" / "academic_calendar.json"
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        for sem_key in ["odd_semester", "even_semester"]:
-            sem = data.get(sem_key, {})
-            for ev in sem.get("events", []):
-                ev["semester"] = sem.get("name", "")
-                events.append(ev)
-    except Exception as e:
-        logger.error(f"Error reading events: {e}")
-    return events

@@ -24,6 +24,10 @@ env/
 # vector_store/
 # campus.db
 
+# Node.js
+frontend-react/node_modules/
+frontend-react/dist/
+
 
 # Streamlit config (allow config.toml but ignore secrets and cache)
 .streamlit/*

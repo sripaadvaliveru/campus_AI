@@ -40,14 +40,3 @@ def load_events() -> List[Dict[str, Any]]:
     except Exception as e:
         logger.error(f"Error loading events: {e}")
         return []
-
-
-def load_calendar_raw() -> Dict[str, Any]:
-    """Load the raw calendar JSON (includes deadlines etc.)."""
-    try:
-        cal_file = DATA_DIR / "events" / "academic_calendar.json"
-        with open(cal_file, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.error(f"Error loading calendar: {e}")
-        return {}

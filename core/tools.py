@@ -5,13 +5,13 @@ Each tool serves a distinct campus information domain.
 
 import json
 import logging
-from datetime import datetime, date
+from datetime import date
 from typing import Optional, List, Dict, Any
 
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 
-from core.config import DATA_DIR, INDEXED_COLLEGE_IDS
+from core.config import DATA_DIR
 
 logger = logging.getLogger(__name__)
 

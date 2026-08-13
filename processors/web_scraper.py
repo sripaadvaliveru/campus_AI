@@ -6,7 +6,7 @@ Uses BeautifulSoup. Respects robots.txt and rate limits.
 import logging
 import time
 from typing import List, Dict, Any, Optional
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
@@ -90,12 +90,3 @@ def _chunk_text(text: str, chunk_size: int = 800, overlap: int = 100) -> List[st
         chunks.append(text[start:end])
         start += chunk_size - overlap
     return chunks
-
-
-# Pre-defined public college website URLs for demo scraping
-SAMPLE_COLLEGE_URLS = [
-    # These are public educational resource URLs (not private college systems)
-    "https://www.ugc.gov.in/",
-    "https://www.aicte-india.org/",
-    "https://www.nirfindia.org/",
-]

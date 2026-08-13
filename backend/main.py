@@ -19,7 +19,7 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 # ── Shared config (single source of truth) ────────────────────────────────────
-from core.config import COLLEGES, COLLEGE_MAP, DATA_DIR, is_openai_configured
+from core.config import COLLEGES, COLLEGE_MAP, DATA_DIR
 from core.data_loader import load_contacts, load_events
 
 logging.basicConfig(level=logging.INFO)
