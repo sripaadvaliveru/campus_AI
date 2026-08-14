@@ -38,6 +38,11 @@ export default {
           'blue-light': '#DBEAFE',
           'blue-50': '#EFF6FF',
         },
+        dashboard: 'hsl(var(--dashboard))',
+        chat: 'hsl(var(--chat))',
+        events: 'hsl(var(--events))',
+        directory: 'hsl(var(--directory))',
+        analytics: 'hsl(var(--analytics))',
       },
       fontFamily: {
         sans: ['Geist', 'Inter', 'system-ui', 'sans-serif'],

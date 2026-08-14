@@ -5,7 +5,7 @@ import {
   Shield, Globe, Cpu, Activity,
   FlaskConical, Scale, Stethoscope, Building2, Wheat, ChevronRight
 } from 'lucide-react';
-import { DoodleBanner } from './ui/DoodleBanner';
+import { DoodleHero } from './ui/doodles/DoodleHero';
 import {
   AnimatedCounter, ShimmerButton, Badge, Card, ScrollReveal, ProgressBar, BlueprintStat, spring
 } from './ui/Primitives';
@@ -77,10 +77,8 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
     <div className="space-y-12 pb-12">
 
       {/* ── Hero Section ─────────────────────────────── */}
-      <section className="relative rounded-2xl overflow-hidden bg-white border border-slate-100">
-        <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
-          <DoodleBanner />
-        </div>
+      <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-violet-50 border border-indigo-100/60">
+        <DoodleHero />
 
         <div className="relative z-10 max-w-3xl pt-12 pb-10 px-6 md:px-10">
           <motion.div
@@ -98,7 +96,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...spring.crisp, delay: 0.1 }}
-            className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3"
+            className="font-display text-4xl md:text-5xl font-bold leading-tight tracking-tight mb-3 gradient-text bg-gradient-to-r from-indigo-600 to-violet-600"
           >
             Your campus, simplified.
           </motion.h1>
@@ -119,7 +117,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
             transition={{ duration: 0.4, delay: 0.3 }}
             className="flex flex-wrap gap-3"
           >
-            <ShimmerButton size="lg" onClick={() => setActiveTab('chat')}>
+            <ShimmerButton size="lg" variant="accent" onClick={() => setActiveTab('chat')}>
               Start Chatting
               <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </ShimmerButton>
@@ -158,7 +156,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         <section id="all-colleges" className="space-y-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Campus Contexts</h2>
+              <h2 className="font-display text-xl font-semibold text-slate-900 tracking-tight">Campus Contexts</h2>
               <p className="text-xs text-slate-500 mt-0.5">Select a college to focus your AI responses</p>
             </div>
             <BlueprintStat label="DOCS" value="5.2k" />
@@ -218,7 +216,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       <ScrollReveal>
         <section className="space-y-5">
           <div>
-            <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Academic Coverage</h2>
+            <h2 className="font-display text-xl font-semibold text-slate-900 tracking-tight">Academic Coverage</h2>
             <p className="text-xs text-slate-500 mt-0.5">Knowledge depth across Indian regulatory domains</p>
           </div>
 
@@ -247,7 +245,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       {/* ── Features ─────────────────────────────────── */}
       <ScrollReveal>
         <section className="space-y-5">
-          <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Technology</h2>
+          <h2 className="font-display text-xl font-semibold text-slate-900 tracking-tight">Technology</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {getFeatures(modelName).map((f, i) => {
               const Icon = f.icon;

@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sidebar } from './components/Sidebar';
-import { FloatingHeader } from './components/FloatingHeader';
+import { TopNav } from './components/TopNav';
 import { DashboardTab } from './components/DashboardTab';
 import { ChatTab } from './components/ChatTab';
 import { EventsTab } from './components/EventsTab';
 import { DirectoryTab } from './components/DirectoryTab';
 import { AnalyticsTab } from './components/AnalyticsTab';
-import type { College, Message, Event, Contact, AnalyticsData } from './types';
+import type { College, Message, Event, Contact, AnalyticsData, TabId } from './types';
 
 // Base URL: set VITE_API_URL for production, otherwise use the dev proxy (/api -> localhost:8000).
 const API = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+
+const SECTION_CSS: Record<TabId, string> = {
+  dashboard: 'var(--dashboard)',
+  chat: 'var(--chat)',
+  events: 'var(--events)',
+  directory: 'var(--directory)',
+  analytics: 'var(--analytics)',
+};
 
 const FALLBACK_COLLEGES: College[] = [
   { id: 'general', name: 'General (All Indian Colleges)', short: 'General', icon: '🇮🇳', type: 'Universal Guidelines', location: 'Pan-India', color: '#4f8ef7' },
@@ -96,7 +103,7 @@ async function apiFetch<T>(path: string, fallback: T): Promise<T> {
 export const App: React.FC = () => {
   const [colleges, setColleges] = useState<College[]>(FALLBACK_COLLEGES);
   const [selected, setSelected] = useState<College | null>(FALLBACK_COLLEGES[0]);
-  const [tab, setTab] = useState<'dashboard' | 'chat' | 'events' | 'directory' | 'analytics'>('dashboard');
+  const [tab, setTab] = useState<TabId>('dashboard');
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatLoading, setChatLoading] = useState(false);
   const [events, setEvents] = useState<Event[]>([]);
@@ -107,7 +114,11 @@ export const App: React.FC = () => {
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [modelName, setModelName] = useState('GPT-4o mini');
   const [sessionId] = useState(() => `s_${Math.random().toString(36).slice(2)}`);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  // Update section accent CSS variable when tab changes
+  useEffect(() => {
+    document.documentElement.style.setProperty('--section-accent', SECTION_CSS[tab]);
+  }, [tab]);
 
   // Load colleges
   useEffect(() => {
@@ -211,32 +222,18 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar
+    <div className="min-h-screen bg-background bg-noise bg-section-grid">
+      <TopNav
         colleges={colleges}
         selectedCollege={selected}
         onSelectCollege={setSelected}
         activeTab={tab}
         setActiveTab={setTab}
         modelName={modelName}
-        onCollapsedChange={setSidebarCollapsed}
-      />
-
-      {/* Desktop spacer — must be sibling of main in flex row */}
-      <motion.div
-        animate={{ width: sidebarCollapsed ? 72 : 256 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-        className="hidden lg:block flex-shrink-0"
       />
 
       {/* Main content */}
-      <main className="flex-1 min-w-0 flex flex-col">
-        {/* Floating header (desktop only) */}
-        <FloatingHeader college={selected} modelName={modelName} />
-
-        {/* Mobile top spacer */}
-        <div className="h-12 lg:hidden flex-shrink-0" />
-
+      <main className="pt-16 min-h-screen flex flex-col relative z-10">
         <div className={`flex-1 overflow-y-auto ${tab === 'chat' ? '' : 'px-4 md:px-6 lg:px-8 py-6 lg:py-8'}`}>
           <AnimatePresence mode="wait">
             <motion.div

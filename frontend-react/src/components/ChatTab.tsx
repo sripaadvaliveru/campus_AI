@@ -7,6 +7,7 @@ import {
   ChevronRight, AlertCircle, MessageSquare
 } from 'lucide-react';
 import { ShimmerButton, Badge, BlueprintStat } from './ui/Primitives';
+import { DoodleChat } from './ui/doodles/DoodleChat';
 import { cn } from '../lib/cn';
 import type { College, Message } from '../types';
 
@@ -77,9 +78,9 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-2rem)]">
+    <div className="flex flex-col h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)]">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-white flex-shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 border-t-2 border-t-blue-500 bg-white flex-shrink-0">
         <div className="flex items-center gap-2.5">
           <span className="text-lg">{college.icon}</span>
           <div>
@@ -109,14 +110,17 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6 relative">
+        {/* Doodle background for empty state */}
+        {messages.length === 0 && <DoodleChat />}
+
         {messages.length === 0 ? (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="h-full flex flex-col items-center justify-center max-w-lg mx-auto text-center space-y-6"
+            className="h-full flex flex-col items-center justify-center max-w-lg mx-auto text-center space-y-6 relative z-10"
           >
             <div className="space-y-1.5">
-              <h3 className="font-display text-lg font-semibold text-slate-800">What can I help you with?</h3>
+              <h3 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-blue-600 to-cyan-600">What can I help you with?</h3>
               <p className="text-sm text-slate-500">
                 Ask about academics, events, contacts, or campus life.
               </p>

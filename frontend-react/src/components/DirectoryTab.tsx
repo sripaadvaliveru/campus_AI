@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Mail, Phone, Building2, Copy, Check, Users, UserCircle2 } from 'lucide-react';
 import { Card, Badge, ShimmerButton, Skeleton } from './ui/Primitives';
+import { DoodlePeople } from './ui/doodles/DoodlePeople';
 import { cn } from '../lib/cn';
 import type { Contact } from '../types';
 
@@ -58,9 +59,10 @@ export const DirectoryTab: React.FC<DirectoryTabProps> = ({ contacts, loading })
   const initials = (name: string) => name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <div className="space-y-5 pb-10">
-      <div>
-        <h1 className="font-display text-xl font-semibold text-slate-900 tracking-tight">Contact Directory</h1>
+    <div className="space-y-5 pb-10 relative">
+      <DoodlePeople />
+      <div className="relative z-10">
+        <h1 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-emerald-600 to-teal-600 tracking-tight">Contact Directory</h1>
         <p className="text-xs text-slate-500 mt-0.5">Faculty, staff, HoDs, and placement coordinators.</p>
       </div>
 

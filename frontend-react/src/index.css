@@ -22,6 +22,13 @@
     --input: 220 13% 91%;
     --ring: 221 83% 53%;
     --radius: 0.75rem;
+
+    --section-accent: 239 84% 67%;
+    --dashboard: 239 84% 67%;
+    --chat: 221 83% 53%;
+    --events: 38 92% 50%;
+    --directory: 160 84% 39%;
+    --analytics: 258 90% 66%;
   }
 
   * {
@@ -66,7 +73,52 @@
   }
 }
 
+/* ── Noise Grain Overlay ─────────────────────────────── */
+.bg-noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Section Grid Overlay ────────────────────────────── */
+.bg-section-grid::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(var(--section-accent) 1px, transparent 1px),
+    linear-gradient(to right, var(--section-accent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Doodle Float Animation ──────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--rotate, 0deg)); }
+}
+
 @layer utilities {
+  .doodle-float {
+    animation: float var(--duration, 6s) ease-in-out infinite;
+  }
+  .doodle-float-delay-1 {
+    animation: float var(--duration, 6s) ease-in-out infinite;
+    animation-delay: -2s;
+  }
+  .doodle-float-delay-2 {
+    animation: float var(--duration, 6s) ease-in-out infinite;
+    animation-delay: -4s;
+  }
+
   .hover-lift {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
@@ -83,5 +135,24 @@
     height: 2rem;
     border-radius: 0.5rem;
     flex-shrink: 0;
+  }
+
+  .gradient-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* ── Reduced Motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .doodle-float,
+  .doodle-float-delay-1,
+  .doodle-float-delay-2 {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

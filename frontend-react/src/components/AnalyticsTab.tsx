@@ -2,6 +2,7 @@ import React from 'react';
 import { TrendingUp, MessageSquare, Clock, Award, Zap, Activity } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { AnimatedCounter, Card, ProgressBar, Badge, Skeleton, BlueprintStat } from './ui/Primitives';
+import { DoodleData } from './ui/doodles/DoodleData';
 import { cn } from '../lib/cn';
 import type { AnalyticsData } from '../types';
 
@@ -92,9 +93,10 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
   ];
 
   return (
-    <div className="space-y-6 pb-10">
-      <div>
-        <h1 className="font-display text-xl font-semibold text-slate-900 tracking-tight">Analytics</h1>
+    <div className="space-y-6 pb-10 relative">
+      <DoodleData />
+      <div className="relative z-10">
+        <h1 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-violet-600 to-purple-600 tracking-tight">Analytics</h1>
         <p className="text-xs text-slate-500 mt-0.5">Usage metrics from the SQLite analytics engine.</p>
       </div>
 
@@ -134,8 +136,8 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2563EB" stopOpacity={0.15}/>
-                    <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.15}/>
+                    <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E4E7F0" />
@@ -150,7 +152,7 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
                     fontSize: '12px',
                   }}
                 />
-                <Area type="monotone" dataKey="count" stroke="#2563EB" strokeWidth={1.5} fillOpacity={1} fill="url(#colorCount)" />
+                <Area type="monotone" dataKey="count" stroke="#8B5CF6" strokeWidth={1.5} fillOpacity={1} fill="url(#colorCount)" />
               </AreaChart>
             </ResponsiveContainer>
           )}

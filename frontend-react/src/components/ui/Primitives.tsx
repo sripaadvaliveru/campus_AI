@@ -85,8 +85,8 @@ export const Card: React.FC<CardProps> = ({
 }) => (
   <div
     className={cn(
-      'bg-white rounded-xl border border-slate-200/60 shadow-card transition-all duration-200',
-      hover && 'hover:shadow-card-hover hover:border-slate-300/60 cursor-pointer',
+      'bg-white/90 rounded-xl border border-slate-200/60 shadow-card transition-all duration-200',
+      hover && 'hover:shadow-card-hover hover:border-slate-300/60 hover:scale-[1.02] cursor-pointer',
       className
     )}
     onClick={onClick}
@@ -100,7 +100,7 @@ export const Card: React.FC<CardProps> = ({
 // ────────────────────────────────────────────────────
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'accent';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
@@ -113,10 +113,11 @@ export const ShimmerButton: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const variants = {
-    primary: 'bg-brand-blue hover:bg-blue-600 text-white shadow-sm',
+    primary: 'bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-sm hover:shadow-lg hover:shadow-blue-500/25',
     secondary: 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300',
     ghost: 'hover:bg-slate-100 text-slate-500 hover:text-slate-700',
     danger: 'bg-red-600 hover:bg-red-700 text-white',
+    accent: 'bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600 text-white shadow-sm hover:shadow-lg hover:shadow-indigo-500/25',
   };
 
   const sizes = {
@@ -160,16 +161,16 @@ export const BlueprintStat: React.FC<BlueprintStatProps> = ({
   <span className={cn(
     'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md',
     'bg-slate-50 border border-slate-200/80',
-    'font-mono text-2xs tracking-wider text-slate-500 uppercase',
+    'font-mono text-2xs tracking-wider text-slate-600 uppercase',
     className
   )}>
-    <span className="text-slate-400">{label}:</span>
-    <span className="text-slate-700 font-semibold">{value}</span>
+    {label && <span className="text-slate-400">{label}:</span>}
+    <span className="text-slate-800 font-semibold">{value}</span>
   </span>
 );
 
 // ────────────────────────────────────────────────────
-//  Badge
+//  Badge (WCAG AA contrast)
 // ────────────────────────────────────────────────────
 interface BadgeProps {
   children: React.ReactNode;
@@ -180,13 +181,13 @@ interface BadgeProps {
 }
 
 const badgeVariants = {
-  blue: 'bg-blue-50 text-blue-700 border-blue-200/60',
-  purple: 'bg-purple-50 text-purple-700 border-purple-200/60',
-  green: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
-  amber: 'bg-amber-50 text-amber-700 border-amber-200/60',
-  rose: 'bg-rose-50 text-rose-700 border-rose-200/60',
-  cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200/60',
-  slate: 'bg-slate-100 text-slate-600 border-slate-200/60',
+  blue: 'bg-blue-50 text-blue-900 border-blue-200/60',
+  purple: 'bg-purple-50 text-purple-900 border-purple-200/60',
+  green: 'bg-emerald-50 text-emerald-900 border-emerald-200/60',
+  amber: 'bg-amber-50 text-amber-900 border-amber-200/60',
+  rose: 'bg-rose-50 text-rose-900 border-rose-200/60',
+  cyan: 'bg-cyan-50 text-cyan-900 border-cyan-200/60',
+  slate: 'bg-slate-100 text-slate-700 border-slate-200/60',
 };
 
 const dotColors = {

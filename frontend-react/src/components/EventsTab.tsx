@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Calendar, Clock, CheckSquare, Square, Filter } from 'lucide-react';
 import { Badge, Card, ShimmerButton, Skeleton, BlueprintStat } from './ui/Primitives';
+import { DoodleCalendar } from './ui/doodles/DoodleCalendar';
 import { cn } from '../lib/cn';
 import type { Event } from '../types';
 
@@ -70,10 +71,11 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
   });
 
   return (
-    <div className="space-y-5 pb-10">
+    <div className="space-y-5 pb-10 relative">
+      <DoodleCalendar />
       {/* Header */}
-      <div>
-        <h1 className="font-display text-xl font-semibold text-slate-900 tracking-tight">Academic Calendar</h1>
+      <div className="relative z-10">
+        <h1 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-amber-600 to-orange-600 tracking-tight">Academic Calendar</h1>
         <p className="text-xs text-slate-500 mt-0.5">Exams, fests, holidays, and placements.</p>
       </div>
 
