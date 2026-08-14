@@ -115,6 +115,15 @@ export const App: React.FC = () => {
   const [modelName, setModelName] = useState('GPT-4o mini');
   const [sessionId] = useState(() => `s_${Math.random().toString(36).slice(2)}`);
 
+  // Dynamic document title
+  useEffect(() => {
+    if (selected && selected.id !== 'general') {
+      document.title = `${selected.short} — CampusAI`;
+    } else {
+      document.title = `CampusAI — Universal Campus Intelligence`;
+    }
+  }, [selected, tab]);
+
   // Update section accent CSS variable when tab changes
   useEffect(() => {
     document.documentElement.style.setProperty('--section-accent', SECTION_CSS[tab]);
@@ -152,7 +161,7 @@ export const App: React.FC = () => {
         .then(d => setAnalytics(d || FALLBACK_ANALYTICS))
         .finally(() => setAnalyticsLoading(false));
     }
-  }, [tab, events.length, contacts.length, analytics]);
+  }, [tab]);
 
   const handleSend = async (text: string) => {
     const userMsg: Message = {
