@@ -2,65 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '../../lib/cn';
 
 // ────────────────────────────────────────────────────
-//  Typewriter
-// ────────────────────────────────────────────────────
-interface TypewriterProps {
-  words: string[];
-  className?: string;
-  speed?: number;
-  deleteSpeed?: number;
-  pauseTime?: number;
-}
-
-export const Typewriter: React.FC<TypewriterProps> = ({
-  words,
-  className,
-  speed = 80,
-  deleteSpeed = 40,
-  pauseTime = 2000,
-}) => {
-  const [text, setText] = useState('');
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    if (isPaused) {
-      const timer = setTimeout(() => {
-        setIsPaused(false);
-        setIsDeleting(true);
-      }, pauseTime);
-      return () => clearTimeout(timer);
-    }
-
-    const currentWord = words[wordIndex];
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        const next = currentWord.slice(0, text.length + 1);
-        setText(next);
-        if (next === currentWord) setIsPaused(true);
-      } else {
-        const next = text.slice(0, text.length - 1);
-        setText(next);
-        if (next === '') {
-          setIsDeleting(false);
-          setWordIndex((i) => (i + 1) % words.length);
-        }
-      }
-    }, isDeleting ? deleteSpeed : speed);
-
-    return () => clearTimeout(timer);
-  }, [text, isDeleting, isPaused, wordIndex, words, speed, deleteSpeed, pauseTime]);
-
-  return (
-    <span className={cn('inline-flex items-center', className)}>
-      <span>{text}</span>
-      <span className="ml-0.5 w-0.5 h-[1em] bg-brand-blue animate-cursor-blink inline-block" />
-    </span>
-  );
-};
-
-// ────────────────────────────────────────────────────
 //  Animated Counter
 // ────────────────────────────────────────────────────
 interface AnimatedCounterProps {
@@ -121,7 +62,7 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 };
 
 // ────────────────────────────────────────────────────
-//  Card (replaces GlassCard for light theme)
+//  Card
 // ────────────────────────────────────────────────────
 interface CardProps {
   children: React.ReactNode;
@@ -135,8 +76,8 @@ export const Card: React.FC<CardProps> = ({
 }) => (
   <div
     className={cn(
-      'bg-white rounded-2xl border border-slate-200/80 card-shadow transition-all duration-300',
-      hover && 'hover:-translate-y-0.5 hover:shadow-card-hover cursor-pointer',
+      'bg-white rounded-xl border border-slate-200/60 shadow-card transition-shadow duration-200',
+      hover && 'hover:shadow-card-hover cursor-pointer',
       className
     )}
     onClick={onClick}
@@ -145,45 +86,40 @@ export const Card: React.FC<CardProps> = ({
   </div>
 );
 
-// Keep GlassCard as alias for backward compatibility
-export const GlassCard = Card;
-
 // ────────────────────────────────────────────────────
-//  ShimmerButton
+//  Button (renamed from ShimmerButton)
 // ────────────────────────────────────────────────────
-interface ShimmerButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
-  shimmer?: boolean;
 }
 
-export const ShimmerButton: React.FC<ShimmerButtonProps> = ({
+export const ShimmerButton: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'md',
   className,
-  shimmer = true,
   ...props
 }) => {
   const variants = {
-    primary: 'bg-brand-blue hover:bg-blue-700 text-white shadow-sm',
+    primary: 'bg-brand-blue hover:bg-blue-600 text-white shadow-sm',
     secondary: 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300',
-    ghost: 'hover:bg-slate-100 text-slate-600 hover:text-slate-900',
+    ghost: 'hover:bg-slate-100 text-slate-500 hover:text-slate-700',
     danger: 'bg-red-600 hover:bg-red-700 text-white',
   };
 
   const sizes = {
     sm: 'px-3 py-1.5 text-xs rounded-lg gap-1.5',
-    md: 'px-5 py-2.5 text-sm rounded-xl gap-2',
-    lg: 'px-8 py-3.5 text-base rounded-xl gap-2.5',
+    md: 'px-5 py-2.5 text-sm rounded-lg gap-2',
+    lg: 'px-8 py-3.5 text-base rounded-lg gap-2.5',
   };
 
   return (
     <button
       className={cn(
-        'relative inline-flex items-center justify-center font-semibold transition-all duration-200',
+        'relative inline-flex items-center justify-center font-medium transition-all duration-150',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'active:scale-95',
@@ -199,7 +135,7 @@ export const ShimmerButton: React.FC<ShimmerButtonProps> = ({
 };
 
 // ────────────────────────────────────────────────────
-//  Badge (light theme variants)
+//  Badge
 // ────────────────────────────────────────────────────
 interface BadgeProps {
   children: React.ReactNode;
@@ -210,13 +146,13 @@ interface BadgeProps {
 }
 
 const badgeVariants = {
-  blue: 'bg-blue-50 text-blue-700 border-blue-200',
-  purple: 'bg-purple-50 text-purple-700 border-purple-200',
-  green: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  amber: 'bg-amber-50 text-amber-700 border-amber-200',
-  rose: 'bg-rose-50 text-rose-700 border-rose-200',
-  cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-  slate: 'bg-slate-100 text-slate-600 border-slate-200',
+  blue: 'bg-blue-50 text-blue-700 border-blue-200/60',
+  purple: 'bg-purple-50 text-purple-700 border-purple-200/60',
+  green: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
+  amber: 'bg-amber-50 text-amber-700 border-amber-200/60',
+  rose: 'bg-rose-50 text-rose-700 border-rose-200/60',
+  cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200/60',
+  slate: 'bg-slate-100 text-slate-600 border-slate-200/60',
 };
 
 const dotColors = {
@@ -228,7 +164,7 @@ export const Badge: React.FC<BadgeProps> = ({
   children, variant = 'blue', dot = false, pulse = false, className,
 }) => (
   <span className={cn(
-    'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-2xs font-semibold uppercase tracking-wider border',
+    'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium border',
     badgeVariants[variant], className
   )}>
     {dot && (
@@ -258,6 +194,9 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) { setVisible(true); return; }
+
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setVisible(true); },
       { threshold: 0.1 }
@@ -268,11 +207,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   const initialStyles: React.CSSProperties = {
     opacity: 0,
-    transform: direction === 'up' ? 'translateY(30px)' :
-               direction === 'down' ? 'translateY(-30px)' :
-               direction === 'left' ? 'translateX(-30px)' :
-               direction === 'right' ? 'translateX(30px)' : 'none',
-    transition: `all 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+    transform: direction === 'up' ? 'translateY(20px)' :
+               direction === 'down' ? 'translateY(-20px)' :
+               direction === 'left' ? 'translateX(-20px)' :
+               direction === 'right' ? 'translateX(20px)' : 'none',
+    transition: `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
   };
 
   const visibleStyles: React.CSSProperties = {
@@ -292,10 +231,10 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 };
 
 // ────────────────────────────────────────────────────
-//  Divider (light theme)
+//  Divider
 // ────────────────────────────────────────────────────
 export const Divider: React.FC<{ className?: string }> = ({ className }) => (
-  <div className={cn('h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent', className)} />
+  <div className={cn('h-px bg-slate-100', className)} />
 );
 
 // ────────────────────────────────────────────────────
@@ -313,7 +252,7 @@ export const LoadingSpinner: React.FC<{ className?: string; size?: number }> = (
 );
 
 // ────────────────────────────────────────────────────
-//  Skeleton (new for light theme)
+//  Skeleton
 // ────────────────────────────────────────────────────
 interface SkeletonProps {
   className?: string;
@@ -325,14 +264,14 @@ export const Skeleton: React.FC<SkeletonProps> = ({ className, count = 1 }) => (
     {Array.from({ length: count }).map((_, i) => (
       <div
         key={i}
-        className={cn('animate-skeleton bg-slate-200 rounded-md', className)}
+        className={cn('animate-skeleton bg-slate-100 rounded-lg', className)}
       />
     ))}
   </div>
 );
 
 // ────────────────────────────────────────────────────
-//  ProgressBar (light theme)
+//  ProgressBar
 // ────────────────────────────────────────────────────
 interface ProgressBarProps {
   value: number;
@@ -361,9 +300,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div ref={ref} className={cn('space-y-1.5', className)}>
       {label && (
-        <div className="flex justify-between text-xs font-medium text-slate-500">
+        <div className="flex justify-between text-xs text-slate-500">
           <span className="capitalize">{label}</span>
-          <span className="text-slate-700">{Math.round(pct)}%</span>
+          <span className="text-slate-700 font-medium">{Math.round(pct)}%</span>
         </div>
       )}
       <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">

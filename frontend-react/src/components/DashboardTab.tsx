@@ -2,13 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight, Sparkles, GraduationCap, BookOpen,
-  Zap, Shield, Globe, Cpu, ChevronRight, Activity,
+  Shield, Globe, Cpu, Activity,
   FlaskConical, Scale, Stethoscope, Building2, Wheat
 } from 'lucide-react';
 import { DoodleBanner } from './ui/DoodleBanner';
 import {
-  Typewriter, AnimatedCounter,
-  ShimmerButton, Badge, Card, ScrollReveal, ProgressBar
+  AnimatedCounter, ShimmerButton, Badge, Card, ScrollReveal, ProgressBar
 } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { College, TabId } from '../types';
@@ -40,206 +39,161 @@ const DISCIPLINES = [
 const getFeatures = (modelName: string) => [
   {
     icon: Cpu, title: 'LangGraph ReAct Agent',
-    desc: 'Powered by a multi-step reasoning agent that autonomously selects from 5 domain tools — context-aware, real-time.',
-    badge: 'Core Engine', badgeVariant: 'blue' as const
+    desc: 'Multi-step reasoning agent that autonomously selects from 5 domain tools.',
+    badge: 'Core', badgeVariant: 'blue' as const
   },
   {
     icon: Shield, title: 'FAISS Semantic Search',
-    desc: 'Dense vector embeddings from sentence-transformers enable precise sub-second retrieval across campus handbooks.',
+    desc: 'Dense vector embeddings for precise sub-second retrieval across campus handbooks.',
     badge: 'RAG', badgeVariant: 'purple' as const
   },
   {
-    icon: Zap, title: modelName,
-    desc: 'Ultra-fast, token-efficient responses calibrated for Indian academic terminology.',
+    icon: Sparkles, title: modelName,
+    desc: 'Token-efficient responses calibrated for Indian academic terminology.',
     badge: 'LLM', badgeVariant: 'amber' as const
   },
   {
     icon: Globe, title: 'Universal Coverage',
-    desc: 'Works for ALL Indian college types — Engineering, Medical, Law, Architecture, Agriculture, Pharmacy & more.',
+    desc: 'Works for ALL Indian college types — Engineering, Medical, Law, Agriculture & more.',
     badge: 'Pan-India', badgeVariant: 'green' as const
   },
 ];
-
-const staggerContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
-};
 
 export const DashboardTab: React.FC<DashboardTabProps> = ({
   colleges, onSelectCollege, setActiveTab, modelName,
 }) => {
   return (
-    <div className="space-y-16 pb-16">
+    <div className="space-y-12 pb-12">
 
       {/* ── Hero Section ─────────────────────────────── */}
-      <section className="relative min-h-[480px] flex items-center">
-        {/* Doodle background */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden">
+      <section className="relative rounded-2xl overflow-hidden bg-white border border-slate-100">
+        {/* Doodle accent — subtle, not dominant */}
+        <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
           <DoodleBanner />
         </div>
 
-        <div className="relative z-10 max-w-4xl pt-12 pb-8 px-4 md:px-0">
+        <div className="relative z-10 max-w-3xl pt-12 pb-10 px-6 md:px-10">
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-block"
+            transition={{ duration: 0.4 }}
+            className="mb-5"
           >
-            <Badge variant="blue" dot pulse>
-              Powered by {modelName} · LangChain · FAISS
+            <Badge variant="blue">
+              {modelName} · LangChain · FAISS
             </Badge>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-4xl md:text-6xl font-black text-slate-900 leading-[1.08] tracking-tight mb-4"
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3"
           >
-            Your <span className="text-brand-blue">AI</span> Campus
-            <br />
-            <span className="text-slate-700">
-              <Typewriter
-                words={['Assistant', 'Advisor', 'Navigator', 'Directory', 'Calendar']}
-                speed={90}
-              />
-            </span>
+            Your campus, simplified.
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-slate-500 text-base md:text-lg leading-relaxed max-w-2xl mb-8"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-slate-500 text-sm md:text-base leading-relaxed max-w-xl mb-7"
           >
-            Universal campus information intelligence for all Indian college types — from IITs to medical colleges.
-            Ask in natural language about regulations, events, contacts, and campus life.
+            Universal campus intelligence for all Indian college types.
+            Ask about academics, events, contacts, and campus life.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
             className="flex flex-wrap gap-3"
           >
             <ShimmerButton size="lg" onClick={() => setActiveTab('chat')}>
-              <Sparkles className="h-4 w-4" />
-              Start AI Chat
+              Start Chatting
               <ArrowRight className="h-4 w-4" />
             </ShimmerButton>
-            <ShimmerButton size="lg" variant="secondary" onClick={() => setActiveTab('events')}>
-              <span>Explore Events</span>
+            <ShimmerButton size="lg" variant="ghost" onClick={() => {
+              document.getElementById('all-colleges')?.scrollIntoView({ behavior: 'smooth' });
+            }}>
+              Browse Colleges
             </ShimmerButton>
           </motion.div>
         </div>
       </section>
 
       {/* ── Stats Row ─────────────────────────────────── */}
-      <motion.section
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: '-60px' }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
-      >
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {STATS.map((stat, i) => {
           const Icon = stat.icon;
           return (
-            <motion.div key={i} variants={fadeUp}>
-              <Card className="p-5" hover={false}>
-                <div className={cn('w-10 h-10 rounded-xl mb-3 flex items-center justify-center', stat.bg)}>
-                  <Icon className={cn('h-5 w-5', stat.color)} />
-                </div>
-                <div className={cn('text-2xl font-black mb-1', stat.color)}>
-                  <AnimatedCounter to={stat.value} suffix={stat.suffix} duration={1800} />
-                </div>
-                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{stat.label}</p>
-              </Card>
-            </motion.div>
+            <Card key={i} className="p-4 bg-slate-50/80" hover={false}>
+              <div className={cn('w-8 h-8 rounded-lg mb-2.5 flex items-center justify-center', stat.bg)}>
+                <Icon className={cn('h-4 w-4', stat.color)} />
+              </div>
+              <div className={cn('text-xl font-bold mb-0.5', stat.color)}>
+                <AnimatedCounter to={stat.value} suffix={stat.suffix} duration={1800} />
+              </div>
+              <p className="text-xs text-slate-500">{stat.label}</p>
+            </Card>
           );
         })}
-      </motion.section>
+      </section>
 
       {/* ── Featured Colleges ─────────────────────────── */}
       <ScrollReveal>
-        <section id="all-colleges" className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="font-display text-xl font-bold text-slate-900 tracking-tight">Campus Contexts</h2>
-              <p className="text-xs text-slate-500 mt-0.5">Select a college to focus your AI responses</p>
-            </div>
-            <ShimmerButton variant="ghost" size="sm" onClick={() => {
-              const el = document.getElementById('all-colleges');
-              el?.scrollIntoView({ behavior: 'smooth' });
-            }}>
-              View all <ChevronRight className="h-3.5 w-3.5" />
-            </ShimmerButton>
+        <section id="all-colleges" className="space-y-5">
+          <div>
+            <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Campus Contexts</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Select a college to focus your AI responses</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {colleges.slice(0, 6).map((college, i) => (
-              <ScrollReveal key={college.id} delay={i * 60} direction="up">
-                <Card
-                  className="p-5 group border-l-4 border-l-transparent hover:border-l-brand-blue"
-                  onClick={() => { onSelectCollege(college); setActiveTab('chat'); }}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="text-2xl p-2.5 bg-slate-50 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                      {college.icon}
-                    </div>
-                    <Badge variant="slate" className="text-2xs">
-                      {college.type.split(' ')[0]}
-                    </Badge>
-                  </div>
-                  <h3 title={college.name} className="font-semibold text-slate-900 text-sm group-hover:text-brand-blue transition-colors truncate mb-1">
-                    {college.name}
-                  </h3>
-                  <p className="text-2xs text-slate-500 mb-3 truncate">{college.location}</p>
-                  <div className="flex items-center gap-1.5 text-2xs font-semibold text-brand-blue group-hover:gap-2.5 transition-all duration-200">
-                    <span>Ask about {college.short}</span>
-                    <ChevronRight className="h-3 w-3" />
-                  </div>
-                </Card>
-              </ScrollReveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {colleges.slice(0, 6).map((college) => (
+              <Card
+                key={college.id}
+                className="p-4 group"
+                onClick={() => { onSelectCollege(college); setActiveTab('chat'); }}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <span className="text-xl">{college.icon}</span>
+                  <Badge variant="slate" className="text-2xs">{college.type.split(' ')[0]}</Badge>
+                </div>
+                <h3 title={college.name} className="font-medium text-sm text-slate-800 group-hover:text-brand-blue transition-colors truncate mb-0.5">
+                  {college.name}
+                </h3>
+                <p className="text-xs text-slate-400 truncate mb-2">{college.location}</p>
+                <span className="text-xs font-medium text-brand-blue">Ask about {college.short} →</span>
+              </Card>
             ))}
           </div>
         </section>
       </ScrollReveal>
 
-      {/* ── Disciplines Coverage ──────────────────────── */}
+      {/* ── Disciplines ──────────────────────────────── */}
       <ScrollReveal>
-        <section className="space-y-6">
+        <section className="space-y-5">
           <div>
-            <h2 className="font-display text-xl font-bold text-slate-900 tracking-tight">Academic Discipline Coverage</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Knowledge depth across Indian college regulatory domains</p>
+            <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Academic Coverage</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Knowledge depth across Indian regulatory domains</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {DISCIPLINES.map((d, i) => {
               const Icon = d.icon;
               return (
-                <ScrollReveal key={i} delay={i * 50}>
-                  <Card className="p-5 relative overflow-hidden" hover={false}>
-                    <div className={cn('absolute top-0 left-0 w-1 h-full rounded-l-2xl bg-gradient-to-b', d.color)} />
-                    <div className="pl-4 space-y-3">
-                      <div className="flex items-center gap-2.5">
-                        <div className={cn('p-2 rounded-lg bg-gradient-to-br', d.color, 'bg-opacity-10')}>
-                          <Icon className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-sm text-slate-900">{d.label}</p>
-                          <p className="text-2xs text-slate-500">{d.desc}</p>
-                        </div>
-                      </div>
-                      <ProgressBar value={d.coverage} label="knowledge coverage" color={`${d.color}`} />
+                <Card key={i} className="p-4" hover={false}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={cn('p-2 rounded-lg bg-gradient-to-br', d.color, 'bg-opacity-10')}>
+                      <Icon className="h-4 w-4 text-white" />
                     </div>
-                  </Card>
-                </ScrollReveal>
+                    <div>
+                      <p className="font-medium text-sm text-slate-800">{d.label}</p>
+                      <p className="text-2xs text-slate-400">{d.desc}</p>
+                    </div>
+                  </div>
+                  <ProgressBar value={d.coverage} label="coverage" color={d.color} />
+                </Card>
               );
             })}
           </div>
@@ -248,48 +202,42 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
       {/* ── Features ─────────────────────────────────── */}
       <ScrollReveal>
-        <section className="space-y-6">
-          <h2 className="font-display text-xl font-bold text-slate-900 tracking-tight">Technology Stack</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <section className="space-y-5">
+          <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Technology</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {getFeatures(modelName).map((f, i) => {
               const Icon = f.icon;
               return (
-                <ScrollReveal key={i} delay={i * 80}>
-                  <Card className="p-6 group" hover={false}>
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-blue-50 rounded-xl flex-shrink-0">
-                        <Icon className="h-5 w-5 text-brand-blue" />
-                      </div>
-                      <div className="space-y-2 flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="font-semibold text-sm text-slate-900">{f.title}</p>
-                          <Badge variant={f.badgeVariant} className="ml-auto">{f.badge}</Badge>
-                        </div>
-                        <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
-                      </div>
+                <Card key={i} className="p-5" hover={false}>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-blue-50 rounded-lg flex-shrink-0">
+                      <Icon className="h-4 w-4 text-brand-blue" />
                     </div>
-                  </Card>
-                </ScrollReveal>
+                    <div className="space-y-1 flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-sm text-slate-800">{f.title}</p>
+                        <Badge variant={f.badgeVariant} className="ml-auto">{f.badge}</Badge>
+                      </div>
+                      <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
+                    </div>
+                  </div>
+                </Card>
               );
             })}
           </div>
         </section>
       </ScrollReveal>
 
-      {/* ── CTA Banner ───────────────────────────────── */}
+      {/* ── CTA ──────────────────────────────────────── */}
       <ScrollReveal>
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-white to-blue-50 border border-blue-100">
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 p-8 md:p-10">
-            <div className="space-y-2 text-center md:text-left">
-              <h3 className="font-display text-2xl font-bold text-slate-900">Ready to ask about your campus?</h3>
-              <p className="text-slate-500 text-sm">Select a college context from the sidebar, then start your AI conversation.</p>
-            </div>
-            <ShimmerButton size="lg" onClick={() => setActiveTab('chat')} className="flex-shrink-0">
-              <Sparkles className="h-4 w-4" />
-              Open AI Chat
-              <ArrowRight className="h-4 w-4" />
-            </ShimmerButton>
+        <section className="rounded-xl border border-slate-100 bg-slate-50/50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="font-medium text-sm text-slate-800">Ready to explore?</p>
+            <p className="text-xs text-slate-500">Select a college and start your AI conversation.</p>
           </div>
+          <ShimmerButton onClick={() => setActiveTab('chat')} className="flex-shrink-0">
+            Start Chatting <ArrowRight className="h-3.5 w-3.5" />
+          </ShimmerButton>
         </section>
       </ScrollReveal>
     </div>

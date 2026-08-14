@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import {
   Send, Clock, Terminal, ThumbsUp, ThumbsDown,
-  Copy, Check, Trash2, Bot, User, Lightbulb, Zap,
+  Copy, Check, Trash2, Bot, User, Lightbulb,
   ChevronRight, AlertCircle, MessageSquare
 } from 'lucide-react';
 import { ShimmerButton, Badge } from './ui/Primitives';
@@ -44,7 +44,6 @@ export const ChatTab: React.FC<ChatTabProps> = ({
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  // Auto-grow textarea
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = 'auto';
@@ -78,111 +77,99 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-2rem)] bg-slate-50">
+    <div className="flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-2rem)]">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 bg-white flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="text-xl p-2 bg-slate-50 rounded-xl">{college.icon}</div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border-2 border-white" />
-          </div>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-white flex-shrink-0">
+        <div className="flex items-center gap-2.5">
+          <span className="text-lg">{college.icon}</span>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-slate-900">{college.short} AI Assistant</h2>
-              <Badge variant="green" dot pulse className="hidden sm:inline-flex">Online</Badge>
+              <h2 className="text-sm font-semibold text-slate-800">{college.short}</h2>
+              <Badge variant="green" dot className="hidden sm:inline-flex">Online</Badge>
             </div>
-            <p className="text-2xs text-slate-500 truncate max-w-xs">{college.name}</p>
+            <p className="text-xs text-slate-400 truncate max-w-xs">{college.name}</p>
           </div>
         </div>
 
-        {messages.length > 0 && (
-          <>
+        <div className="flex items-center gap-1">
+          {messages.length > 0 && (
             <ShimmerButton variant="ghost" size="sm" onClick={() => setShowSuggestions(v => !v)}>
               <Lightbulb className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">{showSuggestions ? 'Hide' : 'Ideas'}</span>
             </ShimmerButton>
-            <ShimmerButton variant="danger" size="sm" onClick={onClearHistory}>
+          )}
+          {messages.length > 0 && (
+            <ShimmerButton variant="ghost" size="sm" onClick={onClearHistory}>
               <Trash2 className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Clear</span>
             </ShimmerButton>
-          </>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 relative">
+      <div className="flex-1 overflow-y-auto px-4 py-6 relative">
         {messages.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="h-full flex flex-col items-center justify-center max-w-xl mx-auto text-center space-y-8 py-10"
+            className="h-full flex flex-col items-center justify-center max-w-lg mx-auto text-center space-y-6"
           >
-            <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center">
-                <MessageSquare className="h-7 w-7 text-brand-blue" />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h3 className="font-display text-xl font-bold text-slate-900">Ask CampusAI anything</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">
-                I can help with academic regulations, events, campus facilities,
-                contacts, scholarships, and campus life — powered by real data.
+            <div className="space-y-1.5">
+              <h3 className="font-display text-lg font-semibold text-slate-800">What can I help you with?</h3>
+              <p className="text-sm text-slate-500">
+                Ask about academics, events, contacts, or campus life.
               </p>
             </div>
 
             <div className="w-full space-y-2">
-              <div className="flex items-center gap-1.5 text-2xs text-slate-400 uppercase tracking-wider font-semibold">
-                <Lightbulb className="h-3 w-3" /> Try asking
-              </div>
+              <p className="text-xs text-slate-400 font-medium">Try asking</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {SUGGESTIONS.map((s, i) => (
                   <motion.button
                     key={i}
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.07 }}
+                    transition={{ delay: i * 0.05 }}
                     onClick={() => setInput(s.text)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150 group"
+                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150 group"
                   >
-                    <span className="text-base flex-shrink-0">{s.icon}</span>
+                    <span className="text-sm flex-shrink-0">{s.icon}</span>
                     <span className="flex-1 truncate">{s.text}</span>
-                    <ChevronRight className="h-3 w-3 text-slate-300 group-hover:text-brand-blue group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    <ChevronRight className="h-3 w-3 text-slate-300 group-hover:text-brand-blue transition-colors flex-shrink-0" />
                   </motion.button>
                 ))}
               </div>
             </div>
           </motion.div>
         ) : (
-          <div className="max-w-3xl mx-auto space-y-5">
+          <div className="max-w-2xl mx-auto space-y-4">
             <AnimatePresence initial={false}>
               {messages.map((msg) => {
                 const isBot = msg.role === 'assistant';
                 return (
                   <motion.div
                     key={msg.id}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className={cn('flex gap-3', isBot ? '' : 'flex-row-reverse')}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className={cn('flex gap-2.5', isBot ? '' : 'flex-row-reverse')}
                   >
                     {/* Avatar */}
                     <div className={cn(
-                      'w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5',
-                      isBot
-                        ? 'bg-brand-blue'
-                        : 'bg-slate-700'
+                      'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5',
+                      isBot ? 'bg-brand-blue' : 'bg-slate-700'
                     )}>
-                      {isBot ? <Bot className="h-3.5 w-3.5 text-white" /> : <User className="h-3.5 w-3.5 text-white" />}
+                      {isBot ? <Bot className="h-3 w-3 text-white" /> : <User className="h-3 w-3 text-white" />}
                     </div>
 
                     {/* Bubble */}
-                    <div className={cn('max-w-[80%] space-y-1.5', isBot ? '' : '')}>
+                    <div className="max-w-[80%] space-y-1">
                       <div className={cn(
-                        'relative group px-4 py-3 rounded-2xl text-sm leading-relaxed border',
+                        'relative group px-3.5 py-2.5 rounded-xl text-sm leading-relaxed',
                         isBot
-                          ? 'bg-white text-slate-700 border-slate-200 shadow-sm'
-                          : 'bg-brand-blue text-white border-blue-600'
+                          ? 'bg-white text-slate-700 border border-slate-100'
+                          : 'bg-brand-blue text-white'
                       )}>
                         {isBot ? (
                           <div className="prose prose-sm max-w-none prose-p:my-1 prose-headings:my-2 prose-pre:bg-slate-50 prose-pre:border prose-pre:border-slate-200 prose-code:text-brand-blue prose-code:bg-blue-50 prose-code:px-1 prose-code:rounded">
@@ -194,9 +181,9 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
                         {/* Bot metadata */}
                         {isBot && (msg.toolUsed || msg.responseTimeMs) && (
-                          <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-2">
+                          <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap gap-2">
                             {msg.toolUsed && (
-                              <span className="flex items-center gap-1 text-2xs font-medium text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
+                              <span className="flex items-center gap-1 text-2xs font-medium text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded">
                                 <Terminal className="h-2.5 w-2.5 text-brand-blue" />
                                 {msg.toolUsed}
                               </span>
@@ -212,10 +199,10 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
                         {/* Hover actions */}
                         <div className={cn(
-                          'absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150',
-                          isBot ? 'right-2' : 'left-2'
+                          'absolute top-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150',
+                          isBot ? 'right-1.5' : 'left-1.5'
                         )}>
-                          <div className="flex items-center gap-1 bg-white rounded-lg p-1.5 border border-slate-200 shadow-sm">
+                          <div className="flex items-center gap-0.5 bg-white rounded-md p-1 border border-slate-200 shadow-sm">
                             <button
                               onClick={() => handleCopy(msg.content, msg.id)}
                               className="p-1 rounded text-slate-400 hover:text-slate-700 transition-colors"
@@ -246,7 +233,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                         <span>{msg.timestamp}</span>
                         {feedbacks[msg.id] && (
                           <span className="text-emerald-500 flex items-center gap-0.5">
-                            <Check className="h-2.5 w-2.5" /> Feedback logged
+                            <Check className="h-2.5 w-2.5" /> Logged
                           </span>
                         )}
                       </div>
@@ -259,26 +246,25 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             {/* Typing indicator */}
             {loading && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex gap-3"
+                className="flex gap-2.5"
               >
-                <div className="w-7 h-7 rounded-lg bg-brand-blue flex items-center justify-center flex-shrink-0">
-                  <Bot className="h-3.5 w-3.5 text-white" />
+                <div className="w-6 h-6 rounded-full bg-brand-blue flex items-center justify-center flex-shrink-0">
+                  <Bot className="h-3 w-3 text-white" />
                 </div>
-                <div className="bg-white border border-slate-200 shadow-sm px-4 py-3 rounded-2xl flex items-center gap-3">
+                <div className="bg-white border border-slate-100 px-3.5 py-2.5 rounded-xl flex items-center gap-2.5">
                   <div className="flex gap-1">
                     {[0, 1, 2].map(i => (
                       <motion.div
                         key={i}
-                        animate={{ y: [0, -6, 0] }}
-                        transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.15 }}
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.12 }}
                         className="w-1.5 h-1.5 rounded-full bg-brand-blue"
                       />
                     ))}
                   </div>
                   <span className="text-xs text-slate-500">Searching campus data…</span>
-                  <Zap className="h-3 w-3 text-amber-500 animate-bounce" />
                 </div>
               </motion.div>
             )}
@@ -286,27 +272,24 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           </div>
         )}
 
-        {/* Collapsible suggestions when messages exist */}
+        {/* Collapsible suggestions */}
         {messages.length > 0 && showSuggestions && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="max-w-3xl mx-auto space-y-2 pt-2 pb-4"
+            className="max-w-2xl mx-auto space-y-2 pt-3 pb-4"
           >
-            <div className="flex items-center gap-1.5 text-2xs text-slate-400 uppercase tracking-wider font-semibold px-1">
-              <Lightbulb className="h-3 w-3" /> Try asking
-            </div>
+            <p className="text-xs text-slate-400 font-medium px-1">Try asking</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {SUGGESTIONS.map((s, i) => (
                 <button
                   key={i}
                   onClick={() => { setInput(s.text); setShowSuggestions(false); }}
-                  className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150 group"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150"
                 >
-                  <span className="text-base flex-shrink-0">{s.icon}</span>
+                  <span className="text-sm flex-shrink-0">{s.icon}</span>
                   <span className="flex-1 truncate">{s.text}</span>
-                  <ChevronRight className="h-3 w-3 text-slate-300 group-hover:text-brand-blue group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                 </button>
               ))}
             </div>
@@ -316,25 +299,25 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
       {/* Input Area */}
       <div className="flex-shrink-0 px-4 pb-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden focus-within:ring-2 focus-within:ring-brand-blue focus-within:border-transparent transition-all duration-200">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue/20 transition-all duration-150">
             <textarea
               ref={inputRef}
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={`Ask about ${college.short}… (Shift+Enter for new line)`}
+              placeholder={`Ask about ${college.short}…`}
               aria-label={`Ask ${college.short} AI assistant a question`}
               rows={1}
               disabled={loading}
-              className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 px-4 pt-3.5 pb-1 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
+              className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 px-4 pt-3 pb-1 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
               style={{ lineHeight: '1.6' }}
             />
-            <div className="flex items-center justify-between px-3 pb-3 pt-1">
-              <div className="flex items-center gap-1.5 text-2xs text-slate-400">
-                <AlertCircle className="h-3 w-3" />
-                <span>Context: {college.short}</span>
-              </div>
+            <div className="flex items-center justify-between px-3 pb-2.5 pt-0.5">
+              <span className="text-2xs text-slate-400">
+                <AlertCircle className="h-3 w-3 inline mr-1" />
+                {college.short}
+              </span>
               <ShimmerButton
                 onClick={handleSend}
                 disabled={!input.trim() || loading}
@@ -342,10 +325,12 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                 aria-label="Send message"
               >
                 <Send className="h-3.5 w-3.5" />
-                <span>Send</span>
               </ShimmerButton>
             </div>
           </div>
+          <p className="text-2xs text-slate-400 text-center mt-2">
+            Enter to send · Shift+Enter for new line
+          </p>
         </div>
       </div>
     </div>

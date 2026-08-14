@@ -231,7 +231,7 @@ export const App: React.FC = () => {
       {/* Main content */}
       <main className="flex-1 min-w-0 flex flex-col">
         {/* Mobile top spacer */}
-        <div className="h-14 lg:hidden flex-shrink-0" />
+        <div className="h-12 lg:hidden flex-shrink-0" />
 
         <div className={`flex-1 overflow-y-auto ${tab === 'chat' ? '' : 'px-4 md:px-6 lg:px-8 py-6 lg:py-8'}`}>
           <AnimatePresence mode="wait">
