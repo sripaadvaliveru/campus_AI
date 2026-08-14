@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import {
   ArrowRight, Sparkles, GraduationCap, BookOpen,
   Shield, Globe, Cpu, Activity,
-  FlaskConical, Scale, Stethoscope, Building2, Wheat
+  FlaskConical, Scale, Stethoscope, Building2, Wheat, ChevronRight
 } from 'lucide-react';
 import { DoodleBanner } from './ui/DoodleBanner';
 import {
-  AnimatedCounter, ShimmerButton, Badge, Card, ScrollReveal, ProgressBar
+  AnimatedCounter, ShimmerButton, Badge, Card, ScrollReveal, ProgressBar, BlueprintStat, spring
 } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { College, TabId } from '../types';
@@ -21,10 +21,10 @@ interface DashboardTabProps {
 }
 
 const STATS = [
-  { label: 'Colleges', value: 22, suffix: '+', icon: GraduationCap, color: 'text-blue-600', bg: 'bg-blue-50' },
-  { label: 'Query Topics', value: 150, suffix: '+', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50' },
-  { label: 'RAG Docs', value: 5000, suffix: '+', icon: Cpu, color: 'text-cyan-600', bg: 'bg-cyan-50' },
-  { label: 'Satisfaction', value: 95, suffix: '%', icon: Activity, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { label: 'Colleges', value: 22, suffix: '+', icon: GraduationCap, color: 'text-blue-600', bg: 'bg-blue-50', tag: '22' },
+  { label: 'Query Topics', value: 150, suffix: '+', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50', tag: '150+' },
+  { label: 'RAG Docs', value: 5000, suffix: '+', icon: Cpu, color: 'text-cyan-600', bg: 'bg-cyan-50', tag: '5.2k' },
+  { label: 'Satisfaction', value: 95, suffix: '%', icon: Activity, color: 'text-emerald-600', bg: 'bg-emerald-50', tag: '95%' },
 ];
 
 const DISCIPLINES = [
@@ -59,6 +59,17 @@ const getFeatures = (modelName: string) => [
   },
 ];
 
+const GRADIENT_COLORS = [
+  'from-blue-500 to-blue-600',
+  'from-orange-400 to-orange-500',
+  'from-teal-400 to-teal-500',
+  'from-purple-500 to-purple-600',
+  'from-emerald-400 to-emerald-500',
+  'from-amber-400 to-amber-500',
+  'from-rose-400 to-rose-500',
+  'from-cyan-400 to-cyan-500',
+];
+
 export const DashboardTab: React.FC<DashboardTabProps> = ({
   colleges, onSelectCollege, setActiveTab, modelName,
 }) => {
@@ -67,7 +78,6 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
       {/* ── Hero Section ─────────────────────────────── */}
       <section className="relative rounded-2xl overflow-hidden bg-white border border-slate-100">
-        {/* Doodle accent — subtle, not dominant */}
         <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
           <DoodleBanner />
         </div>
@@ -87,7 +97,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ ...spring.crisp, delay: 0.1 }}
             className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3"
           >
             Your campus, simplified.
@@ -111,7 +121,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           >
             <ShimmerButton size="lg" onClick={() => setActiveTab('chat')}>
               Start Chatting
-              <ArrowRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </ShimmerButton>
             <ShimmerButton size="lg" variant="ghost" onClick={() => {
               document.getElementById('all-colleges')?.scrollIntoView({ behavior: 'smooth' });
@@ -128,8 +138,11 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           const Icon = stat.icon;
           return (
             <Card key={i} className="p-4 bg-slate-50/80" hover={false}>
-              <div className={cn('w-8 h-8 rounded-lg mb-2.5 flex items-center justify-center', stat.bg)}>
-                <Icon className={cn('h-4 w-4', stat.color)} />
+              <div className="flex items-center justify-between mb-2.5">
+                <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', stat.bg)}>
+                  <Icon className={cn('h-4 w-4', stat.color)} />
+                </div>
+                <BlueprintStat label="" value={stat.tag} />
               </div>
               <div className={cn('text-xl font-bold mb-0.5', stat.color)}>
                 <AnimatedCounter to={stat.value} suffix={stat.suffix} duration={1800} />
@@ -140,31 +153,62 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         })}
       </section>
 
-      {/* ── Featured Colleges ─────────────────────────── */}
+      {/* ── Featured Colleges (Bento Grid) ──────────── */}
       <ScrollReveal>
         <section id="all-colleges" className="space-y-5">
-          <div>
-            <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Campus Contexts</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Select a college to focus your AI responses</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-display text-lg font-semibold text-slate-900 tracking-tight">Campus Contexts</h2>
+              <p className="text-xs text-slate-500 mt-0.5">Select a college to focus your AI responses</p>
+            </div>
+            <BlueprintStat label="DOCS" value="5.2k" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {colleges.slice(0, 6).map((college) => (
-              <Card
+            {colleges.slice(0, 6).map((college, i) => (
+              <motion.div
                 key={college.id}
-                className="p-4 group"
-                onClick={() => { onSelectCollege(college); setActiveTab('chat'); }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...spring.crisp, delay: i * 0.05 }}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <span className="text-xl">{college.icon}</span>
-                  <Badge variant="slate" className="text-2xs">{college.type.split(' ')[0]}</Badge>
-                </div>
-                <h3 title={college.name} className="font-medium text-sm text-slate-800 group-hover:text-brand-blue transition-colors truncate mb-0.5">
-                  {college.name}
-                </h3>
-                <p className="text-xs text-slate-400 truncate mb-2">{college.location}</p>
-                <span className="text-xs font-medium text-brand-blue">Ask about {college.short} →</span>
-              </Card>
+                <Card
+                  className="p-4 group relative overflow-hidden"
+                  onClick={() => { onSelectCollege(college); setActiveTab('chat'); }}
+                >
+                  {/* Blueprint top border accent */}
+                  <div className={cn(
+                    'absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r opacity-60',
+                    GRADIENT_COLORS[i % GRADIENT_COLORS.length]
+                  )} />
+
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-xl">{college.icon}</span>
+                      <div className="min-w-0">
+                        <h3 title={college.name} className="font-medium text-sm text-slate-800 group-hover:text-brand-blue transition-colors truncate">
+                          {college.name}
+                        </h3>
+                        <p className="text-xs text-slate-400 truncate">{college.location}</p>
+                      </div>
+                    </div>
+                    {/* Status beacon */}
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Badge variant="slate" className="text-2xs font-mono">{college.type.split(' ')[0]}</Badge>
+                    <span className="text-xs font-medium text-brand-blue flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                      Ask <ChevronRight className="h-3 w-3" />
+                    </span>
+                  </div>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -189,7 +233,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-800">{d.label}</p>
-                      <p className="text-2xs text-slate-400">{d.desc}</p>
+                      <p className="text-2xs text-slate-400 font-mono">{d.desc}</p>
                     </div>
                   </div>
                   <ProgressBar value={d.coverage} label="coverage" color={d.color} />
@@ -236,7 +280,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
             <p className="text-xs text-slate-500">Select a college and start your AI conversation.</p>
           </div>
           <ShimmerButton onClick={() => setActiveTab('chat')} className="flex-shrink-0">
-            Start Chatting <ArrowRight className="h-3.5 w-3.5" />
+            Start Chatting <ChevronRight className="h-3.5 w-3.5" />
           </ShimmerButton>
         </section>
       </ScrollReveal>

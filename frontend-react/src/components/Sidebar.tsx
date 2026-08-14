@@ -108,7 +108,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
               <motion.div
                 layoutId="activeNav"
                 className="absolute inset-0 rounded-lg bg-brand-blue"
-                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
               />
             )}
             <Icon className={cn('h-4 w-4 flex-shrink-0 relative z-10', isActive ? 'text-white' : 'text-slate-400')} />
@@ -272,7 +272,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             />
             <motion.aside
               initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 28 }}
               className="fixed left-0 top-0 bottom-0 w-64 z-50 bg-white border-r border-slate-100 lg:hidden overflow-hidden"
             >
               <div className="mt-12">

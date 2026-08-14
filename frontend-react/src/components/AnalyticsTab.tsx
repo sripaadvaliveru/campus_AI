@@ -1,7 +1,7 @@
 import React from 'react';
 import { TrendingUp, MessageSquare, Clock, Award, Zap, Activity } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { AnimatedCounter, Card, ProgressBar, Badge, Skeleton } from './ui/Primitives';
+import { AnimatedCounter, Card, ProgressBar, Badge, Skeleton, BlueprintStat } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { AnalyticsData } from '../types';
 
@@ -113,7 +113,7 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
               <div className={cn('text-xl font-bold', card.iconColor)}>
                 <AnimatedCounter to={card.value} suffix={card.suffix || ''} duration={1500} decimals={card.suffix === '%' ? 1 : 0} />
               </div>
-              <p className="text-2xs text-slate-400 mt-0.5">{card.sub}</p>
+              <p className="text-2xs text-slate-400 mt-0.5 font-mono">{card.sub}</p>
             </Card>
           );
         })}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Calendar, Clock, CheckSquare, Square, Filter } from 'lucide-react';
-import { Badge, Card, ShimmerButton, Skeleton } from './ui/Primitives';
+import { Badge, Card, ShimmerButton, Skeleton, BlueprintStat } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { Event } from '../types';
 
@@ -178,7 +178,7 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
                     <div className="space-y-2">
                       <div className="flex items-start justify-between gap-2">
                         <Badge variant={badgeColor}>{e.category}</Badge>
-                        <span className="text-2xs text-slate-400">{e.semester}</span>
+                        <BlueprintStat label="" value={e.semester} />
                       </div>
 
                       <h3 className={cn('font-medium text-sm text-slate-800 leading-snug line-clamp-2', !isPast && 'group-hover:text-brand-blue transition-colors')}>

@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import {
-  Send, Clock, Terminal, ThumbsUp, ThumbsDown,
+  Send, ThumbsUp, ThumbsDown,
   Copy, Check, Trash2, Bot, User, Lightbulb,
   ChevronRight, AlertCircle, MessageSquare
 } from 'lucide-react';
-import { ShimmerButton, Badge } from './ui/Primitives';
+import { ShimmerButton, Badge, BlueprintStat } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { College, Message } from '../types';
 
@@ -181,18 +181,12 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
                         {/* Bot metadata */}
                         {isBot && (msg.toolUsed || msg.responseTimeMs) && (
-                          <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap gap-2">
+                          <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap gap-1.5">
                             {msg.toolUsed && (
-                              <span className="flex items-center gap-1 text-2xs font-medium text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded">
-                                <Terminal className="h-2.5 w-2.5 text-brand-blue" />
-                                {msg.toolUsed}
-                              </span>
+                              <BlueprintStat label="TOOL" value={msg.toolUsed} />
                             )}
                             {msg.responseTimeMs !== undefined && (
-                              <span className="flex items-center gap-1 text-2xs text-slate-400">
-                                <Clock className="h-2.5 w-2.5" />
-                                {msg.responseTimeMs}ms
-                              </span>
+                              <BlueprintStat label="TIME" value={`${msg.responseTimeMs}ms`} />
                             )}
                           </div>
                         )}

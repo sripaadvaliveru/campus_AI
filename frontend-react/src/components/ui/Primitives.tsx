@@ -62,6 +62,15 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 };
 
 // ────────────────────────────────────────────────────
+//  Spring Physics Presets
+// ────────────────────────────────────────────────────
+export const spring = {
+  crisp: { type: 'spring' as const, stiffness: 400, damping: 28 },
+  gentle: { type: 'spring' as const, stiffness: 300, damping: 30 },
+  bouncy: { type: 'spring' as const, stiffness: 500, damping: 24 },
+} as const;
+
+// ────────────────────────────────────────────────────
 //  Card
 // ────────────────────────────────────────────────────
 interface CardProps {
@@ -76,8 +85,8 @@ export const Card: React.FC<CardProps> = ({
 }) => (
   <div
     className={cn(
-      'bg-white rounded-xl border border-slate-200/60 shadow-card transition-shadow duration-200',
-      hover && 'hover:shadow-card-hover cursor-pointer',
+      'bg-white rounded-xl border border-slate-200/60 shadow-card transition-all duration-200',
+      hover && 'hover:shadow-card-hover hover:border-slate-300/60 cursor-pointer',
       className
     )}
     onClick={onClick}
@@ -119,7 +128,7 @@ export const ShimmerButton: React.FC<ButtonProps> = ({
   return (
     <button
       className={cn(
-        'relative inline-flex items-center justify-center font-medium transition-all duration-150',
+        'group/btn relative inline-flex items-center justify-center font-medium transition-all duration-150',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'active:scale-95',
@@ -129,10 +138,35 @@ export const ShimmerButton: React.FC<ButtonProps> = ({
       )}
       {...props}
     >
-      {children}
+      <span className="inline-flex items-center gap-2 transition-transform duration-200 group-hover/btn:translate-x-0.5">
+        {children}
+      </span>
     </button>
   );
 };
+
+// ────────────────────────────────────────────────────
+//  Blueprint Stat (monospace metadata tag)
+// ────────────────────────────────────────────────────
+interface BlueprintStatProps {
+  label: string;
+  value: string | number;
+  className?: string;
+}
+
+export const BlueprintStat: React.FC<BlueprintStatProps> = ({
+  label, value, className,
+}) => (
+  <span className={cn(
+    'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md',
+    'bg-slate-50 border border-slate-200/80',
+    'font-mono text-2xs tracking-wider text-slate-500 uppercase',
+    className
+  )}>
+    <span className="text-slate-400">{label}:</span>
+    <span className="text-slate-700 font-semibold">{value}</span>
+  </span>
+);
 
 // ────────────────────────────────────────────────────
 //  Badge

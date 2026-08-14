@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sidebar } from './components/Sidebar';
+import { FloatingHeader } from './components/FloatingHeader';
 import { DashboardTab } from './components/DashboardTab';
 import { ChatTab } from './components/ChatTab';
 import { EventsTab } from './components/EventsTab';
@@ -224,12 +225,15 @@ export const App: React.FC = () => {
       {/* Desktop spacer — must be sibling of main in flex row */}
       <motion.div
         animate={{ width: sidebarCollapsed ? 72 : 256 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
         className="hidden lg:block flex-shrink-0"
       />
 
       {/* Main content */}
       <main className="flex-1 min-w-0 flex flex-col">
+        {/* Floating header (desktop only) */}
+        <FloatingHeader college={selected} modelName={modelName} />
+
         {/* Mobile top spacer */}
         <div className="h-12 lg:hidden flex-shrink-0" />
 
