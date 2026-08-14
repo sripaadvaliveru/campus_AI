@@ -3,7 +3,7 @@ test_tools.py — Tests for core/tools.py tool classes.
 """
 
 import json
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 

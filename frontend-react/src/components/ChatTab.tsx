@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 import {
   Send, Clock, Terminal, ThumbsUp, ThumbsDown,
   Copy, Check, Trash2, Bot, User, Lightbulb, Zap,
   ChevronRight, AlertCircle, MessageSquare
 } from 'lucide-react';
 import { ShimmerButton, Badge } from './ui/Primitives';
-import { GlowingOrb } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { College, Message } from '../types';
 
@@ -37,11 +37,19 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const college = selectedCollege || { id: 'general', name: 'General', short: 'General', icon: '🇮🇳', color: '#3b82f6' };
+  const college = selectedCollege || { id: 'general', name: 'General', short: 'General', icon: '🇮🇳', color: '#2563EB' };
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
+
+  // Auto-grow textarea
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 128)}px`;
+    }
+  }, [input]);
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
@@ -69,17 +77,17 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-2rem)]">
+    <div className="flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-2rem)] bg-slate-50">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/5 flex-shrink-0">
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 bg-white flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="text-xl p-2 bg-slate-800/60 rounded-xl border border-white/5">{college.icon}</div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-slate-950" />
+            <div className="text-xl p-2 bg-slate-50 rounded-xl">{college.icon}</div>
+            <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border-2 border-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-white">{college.short} AI Assistant</h2>
+              <h2 className="text-sm font-bold text-slate-900">{college.short} AI Assistant</h2>
               <Badge variant="green" dot pulse className="hidden sm:inline-flex">Online</Badge>
             </div>
             <p className="text-2xs text-slate-500 truncate max-w-xs">{college.name}</p>
@@ -96,9 +104,6 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 relative">
-        <GlowingOrb color="#3b82f6" size={300} intensity={0.04} className="top-[20%] right-[5%]" />
-        <GlowingOrb color="#8b5cf6" size={250} intensity={0.03} className="bottom-[30%] left-[2%]" />
-
         {messages.length === 0 ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -106,22 +111,21 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             className="h-full flex flex-col items-center justify-center max-w-xl mx-auto text-center space-y-8 py-10"
           >
             <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-600/20 border border-blue-500/15 flex items-center justify-center">
-                <MessageSquare className="h-7 w-7 text-blue-400" />
+              <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                <MessageSquare className="h-7 w-7 text-brand-blue" />
               </div>
-              <div className="absolute -inset-2 rounded-3xl border border-blue-500/10 animate-pulse" />
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-display text-xl font-bold text-white">Ask CampusAI anything</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h3 className="font-display text-xl font-bold text-slate-900">Ask CampusAI anything</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
                 I can help with academic regulations, events, campus facilities,
                 contacts, scholarships, and campus life — powered by real data.
               </p>
             </div>
 
             <div className="w-full space-y-2">
-              <div className="flex items-center gap-1.5 text-2xs text-slate-600 uppercase tracking-wider font-semibold">
+              <div className="flex items-center gap-1.5 text-2xs text-slate-400 uppercase tracking-wider font-semibold">
                 <Lightbulb className="h-3 w-3" /> Try asking
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -132,11 +136,11 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.07 }}
                     onClick={() => setInput(s.text)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-white/5 hover:border-white/10 text-left text-xs text-slate-300 hover:text-white transition-all duration-150 group"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150 group"
                   >
                     <span className="text-base flex-shrink-0">{s.icon}</span>
                     <span className="flex-1 truncate">{s.text}</span>
-                    <ChevronRight className="h-3 w-3 text-slate-600 group-hover:text-slate-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    <ChevronRight className="h-3 w-3 text-slate-300 group-hover:text-brand-blue group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </motion.button>
                 ))}
               </div>
@@ -159,8 +163,8 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                     <div className={cn(
                       'w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5',
                       isBot
-                        ? 'bg-gradient-to-br from-blue-500 to-indigo-600 shadow-glow-sm'
-                        : 'bg-gradient-to-br from-emerald-500 to-teal-600'
+                        ? 'bg-brand-blue'
+                        : 'bg-slate-700'
                     )}>
                       {isBot ? <Bot className="h-3.5 w-3.5 text-white" /> : <User className="h-3.5 w-3.5 text-white" />}
                     </div>
@@ -170,22 +174,28 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                       <div className={cn(
                         'relative group px-4 py-3 rounded-2xl text-sm leading-relaxed border',
                         isBot
-                          ? 'glass-card text-slate-200 border-white/5'
-                          : 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white border-blue-500/50 shadow-glow-sm'
+                          ? 'bg-white text-slate-700 border-slate-200 shadow-sm'
+                          : 'bg-brand-blue text-white border-blue-600'
                       )}>
-                        <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed">{msg.content}</pre>
+                        {isBot ? (
+                          <div className="prose prose-sm max-w-none prose-p:my-1 prose-headings:my-2 prose-pre:bg-slate-50 prose-pre:border prose-pre:border-slate-200 prose-code:text-brand-blue prose-code:bg-blue-50 prose-code:px-1 prose-code:rounded">
+                            <ReactMarkdown>{msg.content}</ReactMarkdown>
+                          </div>
+                        ) : (
+                          <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed">{msg.content}</pre>
+                        )}
 
                         {/* Bot metadata */}
                         {isBot && (msg.toolUsed || msg.responseTimeMs) && (
-                          <div className="mt-3 pt-2.5 border-t border-white/5 flex flex-wrap gap-2">
+                          <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-2">
                             {msg.toolUsed && (
-                              <span className="flex items-center gap-1 text-2xs font-medium text-slate-500 bg-slate-900 px-2 py-0.5 rounded border border-white/5">
-                                <Terminal className="h-2.5 w-2.5 text-blue-500" />
+                              <span className="flex items-center gap-1 text-2xs font-medium text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
+                                <Terminal className="h-2.5 w-2.5 text-brand-blue" />
                                 {msg.toolUsed}
                               </span>
                             )}
                             {msg.responseTimeMs !== undefined && (
-                              <span className="flex items-center gap-1 text-2xs text-slate-500">
+                              <span className="flex items-center gap-1 text-2xs text-slate-400">
                                 <Clock className="h-2.5 w-2.5" />
                                 {msg.responseTimeMs}ms
                               </span>
@@ -198,24 +208,24 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                           'absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150',
                           isBot ? 'right-2' : 'left-2'
                         )}>
-                          <div className="flex items-center gap-1 glass rounded-lg p-1.5 border border-white/5 shadow-glass">
+                          <div className="flex items-center gap-1 bg-white rounded-lg p-1.5 border border-slate-200 shadow-sm">
                             <button
                               onClick={() => handleCopy(msg.content, msg.id)}
-                              className="p-1 rounded text-slate-500 hover:text-white transition-colors"
+                              className="p-1 rounded text-slate-400 hover:text-slate-700 transition-colors"
                             >
-                              {copied === msg.id ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+                              {copied === msg.id ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
                             </button>
                             {isBot && (
                               <>
                                 <button
                                   onClick={() => handleFeedback(msg.id, 1)}
-                                  className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === 1 ? 'text-blue-400' : 'text-slate-500 hover:text-white')}
+                                  className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === 1 ? 'text-brand-blue' : 'text-slate-400 hover:text-slate-700')}
                                 >
                                   <ThumbsUp className="h-3 w-3" />
                                 </button>
                                 <button
                                   onClick={() => handleFeedback(msg.id, -1)}
-                                  className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === -1 ? 'text-rose-400' : 'text-slate-500 hover:text-white')}
+                                  className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === -1 ? 'text-rose-500' : 'text-slate-400 hover:text-slate-700')}
                                 >
                                   <ThumbsDown className="h-3 w-3" />
                                 </button>
@@ -225,7 +235,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                         </div>
                       </div>
 
-                      <div className={cn('flex items-center gap-2 px-1 text-2xs text-slate-600', isBot ? '' : 'flex-row-reverse')}>
+                      <div className={cn('flex items-center gap-2 px-1 text-2xs text-slate-400', isBot ? '' : 'flex-row-reverse')}>
                         <span>{msg.timestamp}</span>
                         {feedbacks[msg.id] && (
                           <span className="text-emerald-500 flex items-center gap-0.5">
@@ -246,22 +256,22 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 className="flex gap-3"
               >
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-glow-sm">
+                <div className="w-7 h-7 rounded-lg bg-brand-blue flex items-center justify-center flex-shrink-0">
                   <Bot className="h-3.5 w-3.5 text-white" />
                 </div>
-                <div className="glass-card border border-white/5 px-4 py-3 rounded-2xl flex items-center gap-3">
+                <div className="bg-white border border-slate-200 shadow-sm px-4 py-3 rounded-2xl flex items-center gap-3">
                   <div className="flex gap-1">
                     {[0, 1, 2].map(i => (
                       <motion.div
                         key={i}
                         animate={{ y: [0, -6, 0] }}
                         transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.15 }}
-                        className="w-1.5 h-1.5 rounded-full bg-blue-500"
+                        className="w-1.5 h-1.5 rounded-full bg-brand-blue"
                       />
                     ))}
                   </div>
                   <span className="text-xs text-slate-500">Searching campus data…</span>
-                  <Zap className="h-3 w-3 text-amber-500 animate-bounce-subtle" />
+                  <Zap className="h-3 w-3 text-amber-500 animate-bounce" />
                 </div>
               </motion.div>
             )}
@@ -273,7 +283,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
       {/* Input Area */}
       <div className="flex-shrink-0 px-4 pb-4">
         <div className="max-w-3xl mx-auto">
-          <div className="glass-card rounded-2xl border border-white/8 overflow-hidden focus-within:border-blue-500/30 transition-colors duration-200 shadow-glass">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden focus-within:ring-2 focus-within:ring-brand-blue focus-within:border-transparent transition-all duration-200">
             <textarea
               ref={inputRef}
               value={input}
@@ -283,11 +293,11 @@ export const ChatTab: React.FC<ChatTabProps> = ({
               aria-label={`Ask ${college.short} AI assistant a question`}
               rows={1}
               disabled={loading}
-              className="w-full bg-transparent text-sm text-white placeholder-slate-600 px-4 pt-3.5 pb-1 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
+              className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 px-4 pt-3.5 pb-1 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
               style={{ lineHeight: '1.6' }}
             />
             <div className="flex items-center justify-between px-3 pb-3 pt-1">
-              <div className="flex items-center gap-1.5 text-2xs text-slate-600">
+              <div className="flex items-center gap-1.5 text-2xs text-slate-400">
                 <AlertCircle className="h-3 w-3" />
                 <span>Context: {college.short}</span>
               </div>

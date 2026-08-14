@@ -5,7 +5,6 @@ conftest.py — Shared test fixtures for CampusAI test suite.
 import sqlite3
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 

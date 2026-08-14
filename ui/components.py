@@ -134,9 +134,8 @@ def render_message(msg: dict, idx: int, feedback_given: set):
     timestamp = msg.get("timestamp", "")
     tool = msg.get("tool_used", "")
 
-    safe_content = html.escape(content)
-
     if role == "user":
+        safe_content = html.escape(content)
         st.markdown(f"""
         <div class="message user">
             <div class="message-avatar">\U0001f464</div>
@@ -154,7 +153,9 @@ def render_message(msg: dict, idx: int, feedback_given: set):
         <div class="message bot">
             <div class="message-avatar">{get_college_icon_html("\U0001f393")}</div>
             <div style="width:100%">
-                <div class="message-bubble">{safe_content}</div>
+        """, unsafe_allow_html=True)
+        st.markdown(content)
+        st.markdown(f"""
                 <div class="message-meta">{timestamp} {tool_badge}</div>
             </div>
         </div>""", unsafe_allow_html=True)

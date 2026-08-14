@@ -12,17 +12,27 @@ import type { College, Message, Event, Contact, AnalyticsData } from './types';
 const API = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
 
 const FALLBACK_COLLEGES: College[] = [
-  { id: 'general', name: 'General (All Indian Colleges)', short: 'General', icon: '🇮🇳', type: 'Universal', location: 'Pan-India', color: '#4f8ef7' },
+  { id: 'general', name: 'General (All Indian Colleges)', short: 'General', icon: '🇮🇳', type: 'Universal Guidelines', location: 'Pan-India', color: '#4f8ef7' },
   { id: 'iith', name: 'IIT Hyderabad (IITH)', short: 'IITH', icon: '🔬', type: 'Central Government Institute', location: 'Kandi, Hyderabad', color: '#f0883e' },
-  { id: 'iiith', name: 'IIIT Hyderabad (IIITH)', short: 'IIITH', icon: '💻', type: 'Autonomous Deemed University', location: 'Gachibowli, Hyderabad', color: '#39c5b9' },
+  { id: 'iiith', name: 'IIIT Hyderabad (IIITH)', short: 'IIITH', icon: '💻', type: 'Autonomous Deemed University (PPP)', location: 'Gachibowli, Hyderabad', color: '#39c5b9' },
   { id: 'nalsar', name: 'NALSAR University of Law', short: 'NALSAR', icon: '⚖️', type: 'National Law University', location: 'Hyderabad', color: '#7c5cbf' },
   { id: 'nims', name: "NIMS — Nizam's Institute of Medical Sciences", short: 'NIMS', icon: '🏥', type: 'Autonomous Medical University', location: 'Hyderabad', color: '#3fb950' },
   { id: 'hcu', name: 'University of Hyderabad (HCU)', short: 'HCU', icon: '🎓', type: 'Central University', location: 'Gachibowli, Hyderabad', color: '#d29922' },
   { id: 'osmania', name: 'Osmania University', short: 'OU', icon: '📜', type: 'State University', location: 'Hyderabad', color: '#e3b341' },
   { id: 'bits_hyd', name: 'BITS Pilani — Hyderabad Campus', short: 'BITS Hyd', icon: '🏛️', type: 'Private Deemed University', location: 'Shameerpet, Hyderabad', color: '#58a6ff' },
-  { id: 'isb_hyd', name: 'Indian School of Business (ISB)', short: 'ISB', icon: '💼', type: 'Private Business School', location: 'Gachibowli, Hyderabad', color: '#7c5cbf' },
+  { id: 'isb_hyd', name: 'Indian School of Business (ISB) Hyderabad', short: 'ISB Hyd', icon: '💼', type: 'Private Business School', location: 'Gachibowli, Hyderabad', color: '#7c5cbf' },
+  { id: 'imt_hyd', name: 'IMT Hyderabad', short: 'IMT Hyd', icon: '📈', type: 'Private Business School', location: 'Shamshabad, Hyderabad', color: '#f0883e' },
+  { id: 'ibs_hyd', name: 'ICFAI Business School (IBS) Hyderabad', short: 'IBS Hyd', icon: '📊', type: 'Private Business School', location: 'Donthanapally, Hyderabad', color: '#39c5b9' },
+  { id: 'omc', name: 'Osmania Medical College (OMC)', short: 'OMC', icon: '🩺', type: 'Government Medical College', location: 'Koti, Hyderabad', color: '#3fb950' },
+  { id: 'nizam', name: 'Nizam College Hyderabad', short: 'Nizam', icon: '🏛️', type: 'Constituent College of Osmania University', location: 'Basheerbagh, Hyderabad', color: '#d29922' },
+  { id: 'st_francis', name: 'St. Francis College for Women', short: 'St. Francis', icon: '👩‍🎓', type: 'Autonomous Minority College', location: 'Begumpet, Hyderabad', color: '#4f8ef7' },
   { id: 'jntuh', name: 'JNTU Hyderabad (JNTUH)', short: 'JNTUH', icon: '⚙️', type: 'State University', location: 'Kukatpally, Hyderabad', color: '#e3b341' },
   { id: 'cbit', name: 'Chaitanya Bharathi Institute of Technology (CBIT)', short: 'CBIT', icon: '🏫', type: 'Autonomous Private Institute', location: 'Gandipet, Hyderabad', color: '#4f8ef7' },
+  { id: 'griet', name: 'Gokaraju Rangaraju Institute (GRIET)', short: 'GRIET', icon: '📐', type: 'Autonomous Private Institute', location: 'Bachupally, Hyderabad', color: '#f0883e' },
+  { id: 'vnr_vjiet', name: 'VNR VJIET', short: 'VNR VJIET', icon: '🧪', type: 'Autonomous Private Institute', location: 'Bachupally, Hyderabad', color: '#39c5b9' },
+  { id: 'vardhaman', name: 'Vardhaman College of Engineering', short: 'Vardhaman', icon: '🔬', type: 'Autonomous Private Institute', location: 'Shamshabad, Hyderabad', color: '#3fb950' },
+  { id: 'anurag', name: 'Anurag University', short: 'Anurag', icon: '🛰️', type: 'Private University', location: 'Venkatapur, Hyderabad', color: '#7c5cbf' },
+  { id: 'iare', name: 'Institute of Aeronautical Engineering (IARE)', short: 'IARE', icon: '✈️', type: 'Autonomous Private Institute', location: 'Dundigal, Hyderabad', color: '#58a6ff' },
 ];
 
 const FALLBACK_EVENTS: Event[] = [
@@ -94,6 +104,7 @@ export const App: React.FC = () => {
   const [contactsLoading, setContactsLoading] = useState(false);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [modelName, setModelName] = useState('GPT-4o mini');
   const [sessionId] = useState(() => `s_${Math.random().toString(36).slice(2)}`);
 
   // Load colleges
@@ -101,6 +112,10 @@ export const App: React.FC = () => {
     apiFetch<{ colleges: College[] }>('/colleges', { colleges: FALLBACK_COLLEGES })
       .then(data => {
         if (data.colleges?.length) { setColleges(data.colleges); setSelected(data.colleges[0]); }
+      });
+    apiFetch<{ provider: string; model: string }>('/health', { provider: 'openai', model: 'GPT-4o mini' })
+      .then(data => {
+        if (data.model) setModelName(data.model);
       });
   }, []);
 
@@ -179,7 +194,7 @@ export const App: React.FC = () => {
   const renderTab = () => {
     switch (tab) {
       case 'dashboard':
-        return <DashboardTab colleges={colleges} selectedCollege={selected} onSelectCollege={setSelected} setActiveTab={setTab} />;
+        return <DashboardTab colleges={colleges} selectedCollege={selected} onSelectCollege={setSelected} setActiveTab={setTab} modelName={modelName} />;
       case 'chat':
         return <ChatTab selectedCollege={selected} messages={messages} onSendMessage={handleSend} onClearHistory={() => setMessages([])} onSendFeedback={handleFeedback} loading={chatLoading} />;
       case 'events':
@@ -187,7 +202,7 @@ export const App: React.FC = () => {
       case 'directory':
         return <DirectoryTab contacts={contacts} loading={contactsLoading} />;
       case 'analytics':
-        return <AnalyticsTab analyticsData={analytics} loading={analyticsLoading} />;
+        return <AnalyticsTab analyticsData={analytics} loading={analyticsLoading} modelName={modelName} />;
       default:
         return null;
     }
@@ -201,6 +216,7 @@ export const App: React.FC = () => {
         onSelectCollege={setSelected}
         activeTab={tab}
         setActiveTab={setTab}
+        modelName={modelName}
       />
 
       {/* Main content */}

@@ -79,7 +79,7 @@ def render():
                     <div style="height:1px;background:var(--border);margin:0.75rem 0"></div>
                     <div class="contact-info">
                         \U0001f4e7 <a href="mailto:{contact.get('email','')}" style="color:#4f8ef7;text-decoration:none">{contact.get('email','N/A')}</a><br>
-                        \U0001f4de {contact.get('phone','N/A')}<br>
+                        \U0001f4de <a href="tel:{contact.get('phone','').replace('-','')}" style="color:#4f8ef7;text-decoration:none">{contact.get('phone','N/A')}</a><br>
                         \U0001f3e2 {contact.get('office_location','N/A')}<br>
                         \U0001f550 {contact.get('office_hours','N/A')}
                     </div>

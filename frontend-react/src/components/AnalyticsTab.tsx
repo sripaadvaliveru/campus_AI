@@ -1,27 +1,58 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, MessageSquare, Clock, Award, Zap, Activity } from 'lucide-react';
-import { AnimatedCounter, GlassCard, ProgressBar, ScrollReveal, Badge } from './ui/Primitives';
-import { GlowingOrb } from './ui/Primitives';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AnimatedCounter, Card, ProgressBar, ScrollReveal, Badge, Skeleton } from './ui/Primitives';
 import { cn } from '../lib/cn';
 import type { AnalyticsData } from '../types';
 
 interface AnalyticsTabProps {
   analyticsData: AnalyticsData | null;
   loading: boolean;
+  modelName: string;
 }
 
-export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loading }) => {
+const AnalyticsSkeleton = () => (
+  <div className="space-y-8 pb-10">
+    <div className="space-y-1">
+      <Skeleton className="h-8 w-48" />
+      <Skeleton className="h-4 w-64" />
+    </div>
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <Card key={i} className="p-5" hover={false}>
+          <div className="space-y-3">
+            <Skeleton className="h-3 w-20" />
+            <Skeleton className="h-8 w-16" />
+            <Skeleton className="h-3 w-24" />
+          </div>
+        </Card>
+      ))}
+    </div>
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <Card className="lg:col-span-8 p-6" hover={false}>
+        <Skeleton className="h-5 w-40 mb-4" />
+        <Skeleton className="h-36 w-full" />
+      </Card>
+      <Card className="lg:col-span-4 p-6" hover={false}>
+        <Skeleton className="h-5 w-32 mb-4" />
+        <Skeleton className="h-4 w-full mb-3" count={4} />
+      </Card>
+    </div>
+  </div>
+);
+
+export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loading, modelName }) => {
   if (loading || !analyticsData) {
-    return (
-      <div className="flex flex-col items-center justify-center py-24 gap-3">
-        <div className="w-10 h-10 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />
-        <span className="text-sm text-slate-500">Loading analytics data…</span>
-      </div>
-    );
+    return <AnalyticsSkeleton />;
   }
 
   const { summary, popular_queries, recent_queries } = analyticsData;
+
+  const chartData = (summary.daily_counts || []).map(d => ({
+    name: d.day.slice(5),
+    count: d.count,
+  }));
 
   const KPI_CARDS = [
     {
@@ -29,10 +60,8 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
       value: summary.total_queries,
       sub: `${summary.today_queries} today`,
       icon: MessageSquare,
-      gradient: 'from-blue-500/15 to-indigo-500/10',
-      border: 'border-blue-500/15',
-      iconColor: 'text-blue-400',
-      glow: '#3b82f6',
+      bg: 'bg-blue-50',
+      iconColor: 'text-brand-blue',
     },
     {
       label: 'Satisfaction',
@@ -40,21 +69,17 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
       suffix: '%',
       sub: `${summary.positive_feedback} 👍 / ${summary.negative_feedback} 👎`,
       icon: Award,
-      gradient: 'from-emerald-500/15 to-green-500/10',
-      border: 'border-emerald-500/15',
-      iconColor: 'text-emerald-400',
-      glow: '#10b981',
+      bg: 'bg-emerald-50',
+      iconColor: 'text-emerald-600',
     },
     {
       label: 'Avg Response',
       value: summary.avg_response_time_ms,
       suffix: 'ms',
-      sub: 'GPT-4o mini',
+      sub: modelName,
       icon: Clock,
-      gradient: 'from-amber-500/15 to-orange-500/10',
-      border: 'border-amber-500/15',
-      iconColor: 'text-amber-400',
-      glow: '#f59e0b',
+      bg: 'bg-amber-50',
+      iconColor: 'text-amber-600',
     },
     {
       label: 'RAG Vectors',
@@ -62,73 +87,16 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
       suffix: '+',
       sub: 'FAISS Index',
       icon: Zap,
-      gradient: 'from-purple-500/15 to-pink-500/10',
-      border: 'border-purple-500/15',
-      iconColor: 'text-purple-400',
-      glow: '#8b5cf6',
+      bg: 'bg-purple-50',
+      iconColor: 'text-purple-600',
     },
   ];
 
-  const renderLineChart = () => {
-    const data = summary.daily_counts || [];
-    if (!data.length) return <p className="text-xs text-slate-500 text-center py-12">No data yet.</p>;
-
-    const max = Math.max(...data.map(d => d.count), 1);
-    const W = 500, H = 140, PX = 30, PY = 20;
-
-    const pts = data.map((d, i) => ({
-      x: PX + (i * (W - PX * 2)) / Math.max(data.length - 1, 1),
-      y: H - PY - ((d.count / max) * (H - PY * 2)),
-      count: d.count,
-      day: d.day.slice(5),
-    }));
-
-    const line = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
-    const area = pts.length > 0
-      ? `${line} L ${pts[pts.length - 1].x} ${H - PY} L ${pts[0].x} ${H - PY} Z`
-      : '';
-
-    return (
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-36" role="img" aria-label="Query volume line chart for the last 7 days">
-        <defs>
-          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-          </linearGradient>
-          <filter id="glow-line">
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-        </defs>
-        {/* Grid */}
-        {[0.25, 0.5, 0.75].map(r => (
-          <line key={r} x1={PX} y1={PY + r * (H - PY * 2)} x2={W - PX} y2={PY + r * (H - PY * 2)}
-            stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-        ))}
-        {/* Area */}
-        <path d={area} fill="url(#areaGrad)" />
-        {/* Line */}
-        <path d={line} fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#glow-line)" />
-        {/* Nodes */}
-        {pts.map((p, i) => (
-          <g key={i}>
-            <circle cx={p.x} cy={p.y} r="5" fill="#0f172a" stroke="#3b82f6" strokeWidth="2.5" />
-            <circle cx={p.x} cy={p.y} r="2" fill="#3b82f6" />
-            {/* Labels */}
-            <text x={p.x} y={H - 5} textAnchor="middle" fill="#475569" fontSize="9" fontWeight="600">{p.day}</text>
-          </g>
-        ))}
-      </svg>
-    );
-  };
-
   return (
-    <div className="space-y-8 pb-10 relative">
-      <GlowingOrb color="#6366f1" size={400} intensity={0.05} className="top-20 right-0" />
-
+    <div className="space-y-8 pb-10">
       <div>
-        <h1 className="font-display text-2xl font-black text-white tracking-tight">Analytics Dashboard</h1>
-        <p className="text-sm text-slate-400">Real-time usage metrics from the SQLite analytics engine.</p>
+        <h1 className="font-display text-2xl font-black text-slate-900 tracking-tight">Analytics Dashboard</h1>
+        <p className="text-sm text-slate-500">Real-time usage metrics from the SQLite analytics engine.</p>
       </div>
 
       {/* KPI Cards */}
@@ -148,22 +116,20 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
                 show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
               }}
             >
-              <GlassCard
-                className={cn('p-5 border relative overflow-hidden', card.border)}
-                hover={false}
-              >
-                <div className={cn('absolute inset-0 bg-gradient-to-br opacity-60', card.gradient)} />
-                <div className="relative z-10 space-y-3">
+              <Card className="p-5" hover={false}>
+                <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <p className="text-2xs uppercase tracking-wider font-semibold text-slate-500">{card.label}</p>
-                    <Icon className={cn('h-4 w-4', card.iconColor)} />
+                    <div className={cn('p-2 rounded-lg', card.bg)}>
+                      <Icon className={cn('h-4 w-4', card.iconColor)} />
+                    </div>
                   </div>
                   <div className={cn('text-2xl font-black', card.iconColor)}>
                     <AnimatedCounter to={card.value} suffix={card.suffix || ''} duration={1500} decimals={card.suffix === '%' ? 1 : 0} />
                   </div>
                   <p className="text-2xs text-slate-500">{card.sub}</p>
                 </div>
-              </GlassCard>
+              </Card>
             </motion.div>
           );
         })}
@@ -172,21 +138,46 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
       {/* Chart + Categories */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <ScrollReveal className="lg:col-span-8">
-          <GlassCard className="p-6 space-y-4" hover={false}>
+          <Card className="p-6 space-y-4" hover={false}>
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-blue-400" />
-              <h2 className="font-semibold text-sm text-white">Query Volume — Last 7 Days</h2>
+              <TrendingUp className="h-4 w-4 text-brand-blue" />
+              <h2 className="font-semibold text-sm text-slate-900">Query Volume — Last 7 Days</h2>
               <Badge variant="blue" className="ml-auto">Live</Badge>
             </div>
-            {renderLineChart()}
-          </GlassCard>
+            {chartData.length === 0 ? (
+              <p className="text-xs text-slate-500 text-center py-12">No data yet.</p>
+            ) : (
+              <ResponsiveContainer width="100%" height={200}>
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#2563EB" stopOpacity={0.2}/>
+                      <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E4E7F0" />
+                  <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6B7280' }} />
+                  <YAxis tick={{ fontSize: 12, fill: '#6B7280' }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#fff',
+                      border: '1px solid #E4E7F0',
+                      borderRadius: '0.5rem',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                    }}
+                  />
+                  <Area type="monotone" dataKey="count" stroke="#2563EB" strokeWidth={2} fillOpacity={1} fill="url(#colorCount)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            )}
+          </Card>
         </ScrollReveal>
 
         <ScrollReveal className="lg:col-span-4" delay={100}>
-          <GlassCard className="p-6 space-y-5 h-full" hover={false}>
+          <Card className="p-6 space-y-5 h-full" hover={false}>
             <div className="flex items-center gap-2">
-              <Activity className="h-4 w-4 text-purple-400" />
-              <h2 className="font-semibold text-sm text-white">Top Categories</h2>
+              <Activity className="h-4 w-4 text-purple-600" />
+              <h2 className="font-semibold text-sm text-slate-900">Top Categories</h2>
             </div>
             {summary.top_categories.length === 0 ? (
               <p className="text-xs text-slate-500 text-center py-8">No queries yet.</p>
@@ -212,49 +203,49 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
                 })}
               </div>
             )}
-          </GlassCard>
+          </Card>
         </ScrollReveal>
       </div>
 
       {/* Popular + Recent */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <ScrollReveal className="lg:col-span-4" delay={50}>
-          <GlassCard className="p-6 space-y-4" hover={false}>
-            <h2 className="font-semibold text-sm text-white">Popular Queries</h2>
-            <div className="divide-y divide-white/5">
+          <Card className="p-6 space-y-4" hover={false}>
+            <h2 className="font-semibold text-sm text-slate-900">Popular Queries</h2>
+            <div className="divide-y divide-slate-100">
               {popular_queries.length === 0
                 ? <p className="text-xs text-slate-500 py-6 text-center">No data.</p>
                 : popular_queries.map((q, i) => (
                   <div key={i} className="py-2.5 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <span className="text-2xs font-bold text-slate-700 w-4 flex-shrink-0">{i + 1}</span>
-                      <span className="text-xs text-slate-300 truncate">"{q.user_query}"</span>
+                      <span className="text-2xs font-bold text-slate-400 w-4 flex-shrink-0">{i + 1}</span>
+                      <span className="text-xs text-slate-700 truncate">"{q.user_query}"</span>
                     </div>
                     <Badge variant="slate">{q.frequency}×</Badge>
                   </div>
                 ))}
             </div>
-          </GlassCard>
+          </Card>
         </ScrollReveal>
 
         <ScrollReveal className="lg:col-span-8" delay={100}>
-          <GlassCard className="p-6 space-y-4" hover={false}>
-            <h2 className="font-semibold text-sm text-white">Recent Queries</h2>
+          <Card className="p-6 space-y-4" hover={false}>
+            <h2 className="font-semibold text-sm text-slate-900">Recent Queries</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-white/5 text-slate-500 uppercase tracking-wider text-2xs">
+                  <tr className="border-b border-slate-200 text-slate-500 uppercase tracking-wider text-2xs">
                     <th className="text-left pb-2 pr-4 font-semibold">Query</th>
                     <th className="text-left pb-2 pr-4 font-semibold">Category</th>
                     <th className="text-right pb-2 font-semibold">Time</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100">
                   {recent_queries.length === 0
                     ? <tr><td colSpan={3} className="py-8 text-center text-slate-500">No logs yet.</td></tr>
                     : recent_queries.map(q => (
-                      <tr key={q.id} className="group hover:bg-white/2 transition-colors">
-                        <td className="py-2.5 pr-4 text-slate-300 truncate max-w-[240px]" title={q.user_query}>
+                      <tr key={q.id} className="group hover:bg-slate-50 transition-colors">
+                        <td className="py-2.5 pr-4 text-slate-700 truncate max-w-[240px]" title={q.user_query}>
                           "{q.user_query}"
                         </td>
                         <td className="py-2.5 pr-4">
@@ -262,14 +253,14 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
                         </td>
                         <td className="py-2.5 text-right font-medium text-slate-500">
                           {q.timestamp ? new Date(q.timestamp).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}
-                          <span className="block text-2xs text-slate-600">{q.response_time_ms}ms</span>
+                          <span className="block text-2xs text-slate-400">{q.response_time_ms}ms</span>
                         </td>
                       </tr>
                     ))}
                 </tbody>
               </table>
             </div>
-          </GlassCard>
+          </Card>
         </ScrollReveal>
       </div>
     </div>

@@ -124,11 +124,14 @@ with st.sidebar:
     active_college = st.session_state.get("selected_college")
     if active_college:
         c_info = COLLEGE_MAP.get(active_college, {})
+        _short = c_info.get('short', '—')
+        _type = c_info.get('type', '')
+        _logo = get_college_logo_html(active_college, size=40)
         st.markdown(f"""
         <div class="college-badge" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:1.25rem;">
-            <div style="margin-bottom:0.5rem">{get_college_logo_html(active_college, size=40)}</div>
-            <div style="font-size:1.0rem;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;margin-top:0.25rem">{c_info.get('short','\u2014')}</div>
-            <div style="font-size:0.65rem;color:var(--text-secondary);margin-top:0.1rem">{c_info.get('type','')}</div>
+            <div style="margin-bottom:0.5rem">{_logo}</div>
+            <div style="font-size:1.0rem;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;margin-top:0.25rem">{_short}</div>
+            <div style="font-size:0.65rem;color:var(--text-secondary);margin-top:0.1rem">{_type}</div>
         </div>
         """, unsafe_allow_html=True)
         if st.button("\U0001f504 Switch College", use_container_width=True):
@@ -178,10 +181,12 @@ with st.sidebar:
         vs_ready = False
 
     status_color = "#10b981" if api_ok else "#ef4444"
+    from core.config import OPENAI_MODEL, GEMINI_MODEL
+    active_model = GEMINI_MODEL if provider == "gemini" else OPENAI_MODEL
     if provider == "gemini" and google_ok:
-        status_text = "Gemini Online"
+        status_text = f"Gemini Online ({active_model})"
     elif openai_ok:
-        status_text = "OpenAI Online"
+        status_text = f"OpenAI Online ({active_model})"
     else:
         status_text = "System Offline"
     status_emoji = "\U0001f7e2" if api_ok else "\U0001f534"

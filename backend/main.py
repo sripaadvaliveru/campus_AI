@@ -19,7 +19,7 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 # ── Shared config (single source of truth) ────────────────────────────────────
-from core.config import COLLEGES, COLLEGE_MAP, DATA_DIR
+from core.config import COLLEGES, COLLEGE_MAP
 from core.data_loader import load_contacts, load_events
 
 logging.basicConfig(level=logging.INFO)
@@ -36,7 +36,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",   # React dev server
+        "http://localhost:8501",   # Streamlit
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -75,6 +78,7 @@ class HealthResponse(BaseModel):
     status: str
     api_key_set: bool
     vector_store_ready: bool
+    provider: str
     model: str
     timestamp: str
 
@@ -107,6 +111,11 @@ def root():
 @app.get("/health", response_model=HealthResponse, tags=["General"])
 def health():
     """System health — API key status, vector store, model name."""
+    from core.config import get_active_provider, OPENAI_MODEL, GEMINI_MODEL
+
+    provider = get_active_provider()
+    model = OPENAI_MODEL if provider == "openai" else GEMINI_MODEL
+
     api_key = os.getenv("OPENAI_API_KEY", "")
     api_key_set = bool(api_key and api_key != "your_openai_api_key_here")
 
@@ -120,7 +129,8 @@ def health():
         status="ok" if api_key_set else "degraded",
         api_key_set=api_key_set,
         vector_store_ready=vs_ready,
-        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        provider=provider,
+        model=model,
         timestamp=datetime.now().isoformat(),
     )
 

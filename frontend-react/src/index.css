@@ -5,33 +5,31 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --background: 222 47% 4%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 7%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 7%;
-    --popover-foreground: 210 40% 98%;
+    --background: 231 33% 97%;
+    --foreground: 224 71% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
     --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 224 71% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 224 71% 4%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 224 71% 4%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
     --radius: 0.75rem;
 
-    /* Custom brand colors */
-    --brand-primary: #3b82f6;
-    --brand-secondary: #8b5cf6;
-    --brand-accent: #06b6d4;
-    --brand-glow: rgba(59, 130, 246, 0.15);
-    --brand-glow-purple: rgba(139, 92, 246, 0.12);
+    /* Light theme brand colors */
+    --brand-primary: #2563EB;
+    --brand-accent-light: #DBEAFE;
+    --brand-surface: #F0F2F9;
   }
 
   * {
@@ -53,153 +51,67 @@
   }
 
   ::selection {
-    background: rgba(59, 130, 246, 0.3);
-    color: #93c5fd;
+    background: rgba(37, 99, 235, 0.2);
+    color: #1e40af;
   }
 
   ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #F1F5F9;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.3);
+    background: #CBD5E1;
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(59, 130, 246, 0.5);
+    background: #94A3B8;
   }
 }
 
 @layer utilities {
-  /* Glass morphism */
-  .glass {
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+  /* Light card styles (replaces glassmorphism) */
+  .card-shadow {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   }
 
-  .glass-card {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  .card-shadow-md {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
-  .glass-light {
-    background: rgba(30, 41, 59, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+  .card-shadow-hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
-  /* Glow effects */
-  .glow-blue {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.1);
+  /* Light border utilities */
+  .border-light {
+    border-color: #E4E7F0;
   }
 
-  .glow-purple {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.1);
-  }
-
-  .glow-cyan {
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2), 0 0 40px rgba(6, 182, 212, 0.1);
-  }
-
-  .text-glow-blue {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.2);
-  }
-
-  .text-glow-purple {
-    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.2);
-  }
-
-  /* Gradient text */
-  .gradient-text {
-    background: linear-gradient(135deg, #60a5fa, #a78bfa, #34d399);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
+  /* Gradient text (light theme) */
   .gradient-text-blue {
-    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    background: linear-gradient(135deg, #2563EB, #3B82F6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .gradient-text-warm {
-    background: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Grid pattern backgrounds */
+  /* Grid pattern backgrounds (light) */
   .bg-grid {
     background-image: 
-      linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-      linear-gradient(to right, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+      linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
   .bg-dot {
-    background-image: radial-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(37, 99, 235, 0.06) 1px, transparent 1px);
     background-size: 24px 24px;
-  }
-
-  /* Animated gradients */
-  .animate-gradient {
-    background-size: 300% 300%;
-    animation: gradient-shift 6s ease infinite;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  /* Border gradients */
-  .border-gradient {
-    border: 1px solid transparent;
-    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-                linear-gradient(135deg, rgba(59,130,246,0.3), rgba(139,92,246,0.3)) border-box;
-  }
-
-  /* Shine effect */
-  .shine {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .shine::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -75%;
-    width: 50%;
-    height: 200%;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(255, 255, 255, 0.04),
-      transparent
-    );
-    transform: skewX(-20deg);
-    animation: shine-anim 4s ease-in-out infinite;
-  }
-
-  @keyframes shine-anim {
-    0% { left: -75%; }
-    100% { left: 150%; }
   }
 
   /* Floating animations */
@@ -255,39 +167,38 @@
   .delay-700 { animation-delay: 700ms; }
   .delay-800 { animation-delay: 800ms; }
 
-  /* Hover lift */
+  /* Hover lift (light version) */
   .hover-lift {
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
   }
 
   .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
-  /* Number counter animation */
-  @keyframes count-up {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Skeleton loading animation */
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
   }
 
-  /* Noise texture overlay */
-  .noise::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    opacity: 0.4;
-    pointer-events: none;
-    z-index: 0;
-    border-radius: inherit;
+  .animate-skeleton {
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    background: #E4E7F0;
+    border-radius: 0.375rem;
   }
 
-  /* Glow orb */
-  .orb {
-    filter: blur(60px);
-    border-radius: 50%;
-    position: absolute;
-    pointer-events: none;
+  /* Section icon helper */
+  .section-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    background: #DBEAFE;
+    color: #2563EB;
+    flex-shrink: 0;
   }
 }

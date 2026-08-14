@@ -2,7 +2,6 @@
 test_config.py — Tests for core/config.py functions and constants.
 """
 
-import os
 from pathlib import Path
 
 import pytest

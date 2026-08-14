@@ -2,9 +2,6 @@
 test_database.py — Tests for core/database.py functions using temp file SQLite.
 """
 
-import sqlite3
-import os
-
 import pytest
 
 

@@ -55,7 +55,7 @@ export const Typewriter: React.FC<TypewriterProps> = ({
   return (
     <span className={cn('inline-flex items-center', className)}>
       <span>{text}</span>
-      <span className="ml-0.5 w-0.5 h-[1em] bg-current animate-cursor-blink inline-block" />
+      <span className="ml-0.5 w-0.5 h-[1em] bg-brand-blue animate-cursor-blink inline-block" />
     </span>
   );
 };
@@ -121,79 +121,32 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 };
 
 // ────────────────────────────────────────────────────
-//  GlowingOrb
+//  Card (replaces GlassCard for light theme)
 // ────────────────────────────────────────────────────
-interface GlowingOrbProps {
-  color?: string;
-  size?: number;
-  intensity?: number;
-  className?: string;
-  animate?: boolean;
-}
-
-export const GlowingOrb: React.FC<GlowingOrbProps> = ({
-  color = '#3b82f6',
-  size = 300,
-  intensity = 0.15,
-  className,
-  animate = true,
-}) => (
-  <div
-    className={cn('absolute rounded-full pointer-events-none', animate && 'animate-float-slow', className)}
-    style={{
-      width: size,
-      height: size,
-      background: color,
-      filter: `blur(${size * 0.4}px)`,
-      opacity: intensity,
-    }}
-  />
-);
-
-// ────────────────────────────────────────────────────
-//  MagneticCard
-// ────────────────────────────────────────────────────
-interface MagneticCardProps {
+interface CardProps {
   children: React.ReactNode;
   className?: string;
-  strength?: number;
+  hover?: boolean;
+  onClick?: () => void;
 }
 
-export const MagneticCard: React.FC<MagneticCardProps> = ({
-  children,
-  className,
-  strength = 15,
-}) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+export const Card: React.FC<CardProps> = ({
+  children, className, hover = true, onClick,
+}) => (
+  <div
+    className={cn(
+      'bg-white rounded-2xl border border-slate-200/80 card-shadow transition-all duration-300',
+      hover && 'hover:-translate-y-0.5 hover:shadow-card-hover cursor-pointer',
+      className
+    )}
+    onClick={onClick}
+  >
+    {children}
+  </div>
+);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = ((e.clientX - cx) / (rect.width / 2)) * strength;
-    const dy = ((e.clientY - cy) / (rect.height / 2)) * strength;
-    cardRef.current.style.transform = `perspective(1000px) rotateX(${-dy * 0.4}deg) rotateY(${dx * 0.4}deg) translateY(-4px)`;
-    cardRef.current.style.boxShadow = `${-dx * 0.5}px ${-dy * 0.5}px 30px rgba(59,130,246,0.15)`;
-  };
-
-  const handleMouseLeave = () => {
-    if (!cardRef.current) return;
-    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-    cardRef.current.style.boxShadow = '';
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      className={cn('transition-all duration-200 ease-out', className)}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      {children}
-    </div>
-  );
-};
+// Keep GlassCard as alias for backward compatibility
+export const GlassCard = Card;
 
 // ────────────────────────────────────────────────────
 //  ShimmerButton
@@ -215,10 +168,10 @@ export const ShimmerButton: React.FC<ShimmerButtonProps> = ({
   ...props
 }) => {
   const variants = {
-    primary: 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-glow',
-    secondary: 'glass border-border text-slate-200 hover:border-blue-500/30 hover:text-white',
-    ghost: 'hover:bg-white/5 text-slate-300 hover:text-white',
-    danger: 'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white',
+    primary: 'bg-brand-blue hover:bg-blue-700 text-white shadow-sm',
+    secondary: 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300',
+    ghost: 'hover:bg-slate-100 text-slate-600 hover:text-slate-900',
+    danger: 'bg-red-600 hover:bg-red-700 text-white',
   };
 
   const sizes = {
@@ -231,10 +184,9 @@ export const ShimmerButton: React.FC<ShimmerButtonProps> = ({
     <button
       className={cn(
         'relative inline-flex items-center justify-center font-semibold transition-all duration-200',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'active:scale-95',
-        shimmer && variant === 'primary' && 'shine',
         variants[variant],
         sizes[size],
         className
@@ -247,7 +199,7 @@ export const ShimmerButton: React.FC<ShimmerButtonProps> = ({
 };
 
 // ────────────────────────────────────────────────────
-//  Badge
+//  Badge (light theme variants)
 // ────────────────────────────────────────────────────
 interface BadgeProps {
   children: React.ReactNode;
@@ -258,13 +210,13 @@ interface BadgeProps {
 }
 
 const badgeVariants = {
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-  rose: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
-  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-  slate: 'bg-slate-800/80 text-slate-400 border-slate-700/50',
+  blue: 'bg-blue-50 text-blue-700 border-blue-200',
+  purple: 'bg-purple-50 text-purple-700 border-purple-200',
+  green: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  amber: 'bg-amber-50 text-amber-700 border-amber-200',
+  rose: 'bg-rose-50 text-rose-700 border-rose-200',
+  cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+  slate: 'bg-slate-100 text-slate-600 border-slate-200',
 };
 
 const dotColors = {
@@ -288,41 +240,6 @@ export const Badge: React.FC<BadgeProps> = ({
     {children}
   </span>
 );
-
-// ────────────────────────────────────────────────────
-//  GlassCard
-// ────────────────────────────────────────────────────
-interface GlassCardProps {
-  children: React.ReactNode;
-  className?: string;
-  hover?: boolean;
-  glow?: 'blue' | 'purple' | 'cyan' | false;
-  onClick?: () => void;
-}
-
-export const GlassCard: React.FC<GlassCardProps> = ({
-  children, className, hover = true, glow = false, onClick,
-}) => {
-  const glowMap = {
-    blue: 'hover:shadow-glow hover:border-blue-500/20',
-    purple: 'hover:shadow-glow-purple hover:border-purple-500/20',
-    cyan: 'hover:border-cyan-500/20',
-  };
-
-  return (
-    <div
-      className={cn(
-        'glass-card rounded-2xl transition-all duration-300',
-        hover && 'hover:-translate-y-1 hover:shadow-card-hover cursor-pointer',
-        glow && glowMap[glow],
-        className
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </div>
-  );
-};
 
 // ────────────────────────────────────────────────────
 //  ScrollReveal
@@ -375,10 +292,10 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 };
 
 // ────────────────────────────────────────────────────
-//  Divider
+//  Divider (light theme)
 // ────────────────────────────────────────────────────
 export const Divider: React.FC<{ className?: string }> = ({ className }) => (
-  <div className={cn('h-px bg-gradient-to-r from-transparent via-white/10 to-transparent', className)} />
+  <div className={cn('h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent', className)} />
 );
 
 // ────────────────────────────────────────────────────
@@ -389,14 +306,33 @@ export const LoadingSpinner: React.FC<{ className?: string; size?: number }> = (
 }) => (
   <div className={cn('flex flex-col items-center justify-center gap-3', className)}>
     <div
-      className="rounded-full border-2 border-transparent border-t-blue-500 animate-spin"
+      className="rounded-full border-2 border-slate-200 border-t-brand-blue animate-spin"
       style={{ width: size, height: size }}
     />
   </div>
 );
 
 // ────────────────────────────────────────────────────
-//  ProgressBar
+//  Skeleton (new for light theme)
+// ────────────────────────────────────────────────────
+interface SkeletonProps {
+  className?: string;
+  count?: number;
+}
+
+export const Skeleton: React.FC<SkeletonProps> = ({ className, count = 1 }) => (
+  <div className="space-y-3">
+    {Array.from({ length: count }).map((_, i) => (
+      <div
+        key={i}
+        className={cn('animate-skeleton bg-slate-200 rounded-md', className)}
+      />
+    ))}
+  </div>
+);
+
+// ────────────────────────────────────────────────────
+//  ProgressBar (light theme)
 // ────────────────────────────────────────────────────
 interface ProgressBarProps {
   value: number;
@@ -407,7 +343,7 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
-  value, max = 100, label, color = 'from-blue-500 to-indigo-500', className,
+  value, max = 100, label, color = 'from-blue-500 to-blue-600', className,
 }) => {
   const pct = Math.min((value / max) * 100, 100);
   const [width, setWidth] = useState(0);
@@ -425,12 +361,12 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div ref={ref} className={cn('space-y-1.5', className)}>
       {label && (
-        <div className="flex justify-between text-xs font-medium text-slate-400">
+        <div className="flex justify-between text-xs font-medium text-slate-500">
           <span className="capitalize">{label}</span>
-          <span className="text-slate-300">{Math.round(pct)}%</span>
+          <span className="text-slate-700">{Math.round(pct)}%</span>
         </div>
       )}
-      <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
         <div
           className={cn('h-full rounded-full bg-gradient-to-r transition-all duration-1000 ease-out', color)}
           style={{ width: `${width}%` }}

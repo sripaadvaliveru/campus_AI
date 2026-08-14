@@ -3,14 +3,14 @@ chat.py — Chat page with message history, suggestions, and voice input.
 Extracted from app.py lines 1549-2063.
 """
 
-import html
+import html as html_mod
 import textwrap
 import streamlit as st
 from datetime import datetime
 from typing import Optional
 
 from core.config import COLLEGE_MAP, is_any_api_configured
-from ui.components import get_college_icon_html, get_college_logo_html, safe_hex_to_rgb, render_message
+from ui.components import get_college_icon_html, safe_hex_to_rgb, render_message
 
 
 # ── College-specific quick suggestions ────────────────────────────────────────
@@ -93,7 +93,6 @@ def _send_message(user_input: str):
                 tool_used = event["name"]
             elif event["type"] == "content":
                 response += event["text"]
-                import html as html_mod
                 safe_response = html_mod.escape(response)
                 typing_placeholder.markdown(f"""
                 <div class="message bot">
