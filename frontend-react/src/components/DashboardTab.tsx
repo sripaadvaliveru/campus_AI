@@ -77,13 +77,13 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
     <div className="space-y-16 pb-16">
 
       {/* ── Hero Section ─────────────────────────────── */}
-      <section className="relative min-h-[420px] flex items-center">
+      <section className="relative min-h-[480px] flex items-center">
         {/* Doodle background */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden">
           <DoodleBanner />
         </div>
 
-        <div className="relative z-10 max-w-4xl pt-10">
+        <div className="relative z-10 max-w-4xl pt-12 pb-8 px-4 md:px-0">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -167,13 +167,16 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
       {/* ── Featured Colleges ─────────────────────────── */}
       <ScrollReveal>
-        <section className="space-y-6">
+        <section id="all-colleges" className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-display text-xl font-bold text-slate-900 tracking-tight">Campus Contexts</h2>
               <p className="text-xs text-slate-500 mt-0.5">Select a college to focus your AI responses</p>
             </div>
-            <ShimmerButton variant="ghost" size="sm" onClick={() => setActiveTab('chat')}>
+            <ShimmerButton variant="ghost" size="sm" onClick={() => {
+              const el = document.getElementById('all-colleges');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}>
               View all <ChevronRight className="h-3.5 w-3.5" />
             </ShimmerButton>
           </div>
@@ -193,7 +196,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                       {college.type.split(' ')[0]}
                     </Badge>
                   </div>
-                  <h3 className="font-semibold text-slate-900 text-sm group-hover:text-brand-blue transition-colors truncate mb-1">
+                  <h3 title={college.name} className="font-semibold text-slate-900 text-sm group-hover:text-brand-blue transition-colors truncate mb-1">
                     {college.name}
                   </h3>
                   <p className="text-2xs text-slate-500 mb-3 truncate">{college.location}</p>

@@ -106,6 +106,7 @@ export const App: React.FC = () => {
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [modelName, setModelName] = useState('GPT-4o mini');
   const [sessionId] = useState(() => `s_${Math.random().toString(36).slice(2)}`);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // Load colleges
   useEffect(() => {
@@ -217,6 +218,14 @@ export const App: React.FC = () => {
         activeTab={tab}
         setActiveTab={setTab}
         modelName={modelName}
+        onCollapsedChange={setSidebarCollapsed}
+      />
+
+      {/* Desktop spacer — must be sibling of main in flex row */}
+      <motion.div
+        animate={{ width: sidebarCollapsed ? 72 : 256 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="hidden lg:block flex-shrink-0"
       />
 
       {/* Main content */}

@@ -352,7 +352,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setWidth(pct); },
-      { threshold: 0.3 }
+      { threshold: 0.5 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();

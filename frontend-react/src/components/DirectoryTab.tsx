@@ -103,8 +103,8 @@ export const DirectoryTab: React.FC<DirectoryTabProps> = ({ contacts, loading })
         <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
           <UserCircle2 className="h-10 w-10 text-slate-300" />
           <div>
-            <p className="text-slate-700 font-semibold">No contacts found</p>
-            <p className="text-sm text-slate-500 mt-1">Try a different search term</p>
+            <p className="text-slate-700 font-semibold">No contacts found{search ? ` for "${search}"` : ''}</p>
+            <p className="text-sm text-slate-500 mt-1">Try a different search term or department filter</p>
           </div>
           <ShimmerButton variant="ghost" size="sm" onClick={() => { setSearch(''); setDept('all'); }}>
             Clear filters

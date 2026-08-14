@@ -29,6 +29,8 @@ interface SidebarProps {
   activeTab: TabId;
   setActiveTab: (t: TabId) => void;
   modelName: string;
+  onWidthChange?: (width: number) => void;
+  onCollapsedChange?: (collapsed: boolean) => void;
 }
 
 interface SidebarContentProps {
@@ -210,11 +212,17 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 );
 
 export const Sidebar: React.FC<SidebarProps> = ({
-  colleges, selectedCollege, onSelectCollege, activeTab, setActiveTab, modelName,
+  colleges, selectedCollege, onSelectCollege, activeTab, setActiveTab, modelName, onCollapsedChange,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [search, setSearch] = useState('');
+
+  const handleToggleCollapse = () => {
+    const next = !collapsed;
+    setCollapsed(next);
+    onCollapsedChange?.(next);
+  };
 
   const filtered = colleges.filter(c =>
     c.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -228,7 +236,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const sidebarContentProps: SidebarContentProps = {
     collapsed,
-    onToggleCollapse: () => setCollapsed(!collapsed),
+    onToggleCollapse: handleToggleCollapse,
     search,
     onSearchChange: setSearch,
     filtered,
@@ -291,12 +299,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Desktop spacer */}
-      <motion.div
-        animate={{ width: collapsed ? 72 : 256 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="hidden lg:block flex-shrink-0"
-      />
     </>
   );
 };

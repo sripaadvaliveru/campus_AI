@@ -34,6 +34,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
   const [feedbacks, setFeedbacks] = useState<Record<string, 1 | -1>>({});
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -95,10 +96,16 @@ export const ChatTab: React.FC<ChatTabProps> = ({
         </div>
 
         {messages.length > 0 && (
-          <ShimmerButton variant="danger" size="sm" onClick={onClearHistory}>
-            <Trash2 className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Clear</span>
-          </ShimmerButton>
+          <>
+            <ShimmerButton variant="ghost" size="sm" onClick={() => setShowSuggestions(v => !v)}>
+              <Lightbulb className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">{showSuggestions ? 'Hide' : 'Ideas'}</span>
+            </ShimmerButton>
+            <ShimmerButton variant="danger" size="sm" onClick={onClearHistory}>
+              <Trash2 className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Clear</span>
+            </ShimmerButton>
+          </>
         )}
       </div>
 
@@ -277,6 +284,33 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             )}
             <div ref={endRef} />
           </div>
+        )}
+
+        {/* Collapsible suggestions when messages exist */}
+        {messages.length > 0 && showSuggestions && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="max-w-3xl mx-auto space-y-2 pt-2 pb-4"
+          >
+            <div className="flex items-center gap-1.5 text-2xs text-slate-400 uppercase tracking-wider font-semibold px-1">
+              <Lightbulb className="h-3 w-3" /> Try asking
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {SUGGESTIONS.map((s, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setInput(s.text); setShowSuggestions(false); }}
+                  className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150 group"
+                >
+                  <span className="text-base flex-shrink-0">{s.icon}</span>
+                  <span className="flex-1 truncate">{s.text}</span>
+                  <ChevronRight className="h-3 w-3 text-slate-300 group-hover:text-brand-blue group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                </button>
+              ))}
+            </div>
+          </motion.div>
         )}
       </div>
 
