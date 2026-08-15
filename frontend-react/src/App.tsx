@@ -141,17 +141,23 @@ export const App: React.FC = () => {
       });
   }, []);
 
-  // Load tab-specific data
+  // Load tab-specific data (re-fetches when college changes)
   useEffect(() => {
-    if (tab === 'events' && !events.length) {
+    if (tab === 'events') {
       setEventsLoading(true);
-      apiFetch<{ events: Event[] }>('/events', { events: FALLBACK_EVENTS })
+      const params = new URLSearchParams();
+      if (selected?.id && selected.id !== 'general') params.set('college_id', selected.id);
+      const qs = params.toString();
+      apiFetch<{ events: Event[] }>(`/events${qs ? `?${qs}` : ''}`, { events: FALLBACK_EVENTS })
         .then(d => setEvents(d.events || FALLBACK_EVENTS))
         .finally(() => setEventsLoading(false));
     }
-    if (tab === 'directory' && !contacts.length) {
+    if (tab === 'directory') {
       setContactsLoading(true);
-      apiFetch<{ contacts: Contact[] }>('/contacts', { contacts: FALLBACK_CONTACTS })
+      const params = new URLSearchParams();
+      if (selected?.id && selected.id !== 'general') params.set('college_id', selected.id);
+      const qs = params.toString();
+      apiFetch<{ contacts: Contact[] }>(`/contacts${qs ? `?${qs}` : ''}`, { contacts: FALLBACK_CONTACTS })
         .then(d => setContacts(d.contacts || FALLBACK_CONTACTS))
         .finally(() => setContactsLoading(false));
     }
@@ -161,7 +167,7 @@ export const App: React.FC = () => {
         .then(d => setAnalytics(d || FALLBACK_ANALYTICS))
         .finally(() => setAnalyticsLoading(false));
     }
-  }, [tab]);
+  }, [tab, selected?.id]);
 
   const handleSend = async (text: string) => {
     const userMsg: Message = {

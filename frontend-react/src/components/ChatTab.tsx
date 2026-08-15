@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import {
   Send, ThumbsUp, ThumbsDown,
-  Copy, Check, Trash2, Bot, User, Lightbulb,
-  ChevronRight, AlertCircle, MessageSquare
+  Copy, Check, Trash2, Bot, Lightbulb,
+  ChevronRight, Sparkles
 } from 'lucide-react';
 import { ShimmerButton, Badge, BlueprintStat } from './ui/Primitives';
 import { DoodleChat } from './ui/doodles/DoodleChat';
@@ -39,12 +39,13 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const college = selectedCollege || { id: 'general', name: 'General', short: 'General', icon: '🇮🇳', color: '#2563EB' };
+  const college = selectedCollege || { id: 'general', name: 'General', short: 'General', icon: '🇮🇳', color: '#D97706' };
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  // Auto-resize textarea with smooth transition
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = 'auto';
@@ -78,105 +79,138 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)]">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 border-t-2 border-t-blue-500 bg-white flex-shrink-0">
-        <div className="flex items-center gap-2.5">
-          <span className="text-lg">{college.icon}</span>
+    <div className="flex flex-col h-[calc(100vh-4rem)]">
+      {/* ── Header ──────────────────────────────────────── */}
+      <div className="flex items-center justify-between px-4 py-3 bg-[#FBF8F3]/80 backdrop-blur-md border-b border-[#E8E2D5] flex-shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
+            <Sparkles className="h-4 w-4 text-white" />
+          </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-semibold text-slate-800">{college.short}</h2>
-              <Badge variant="green" dot className="hidden sm:inline-flex">Online</Badge>
+              <h2 className="text-sm font-semibold text-stone-800">Chat with AI</h2>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+              </span>
             </div>
-            <p className="text-xs text-slate-400 truncate max-w-xs">{college.name}</p>
+            <p className="text-xs text-stone-400">
+              {college.icon} {college.name}
+            </p>
           </div>
         </div>
 
         <div className="flex items-center gap-1">
           {messages.length > 0 && (
-            <ShimmerButton variant="ghost" size="sm" onClick={() => setShowSuggestions(v => !v)}>
-              <Lightbulb className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">{showSuggestions ? 'Hide' : 'Ideas'}</span>
-            </ShimmerButton>
+            <button
+              onClick={() => setShowSuggestions(v => !v)}
+              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition-all duration-150"
+              aria-label="Show suggestions"
+            >
+              <Lightbulb className="h-4 w-4" />
+            </button>
           )}
           {messages.length > 0 && (
-            <ShimmerButton variant="ghost" size="sm" onClick={onClearHistory}>
-              <Trash2 className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Clear</span>
-            </ShimmerButton>
+            <button
+              onClick={onClearHistory}
+              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition-all duration-150"
+              aria-label="Clear chat history"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
           )}
         </div>
       </div>
 
-      {/* Messages */}
+      {/* ── Messages Area ───────────────────────────────── */}
       <div className="flex-1 overflow-y-auto px-4 py-6 relative">
         {/* Doodle background for empty state */}
         {messages.length === 0 && <DoodleChat />}
 
+        {/* Subtle gradient background */}
+        {messages.length > 0 && (
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-50/30 to-transparent pointer-events-none" />
+        )}
+
         {messages.length === 0 ? (
+          /* ── Empty State ──────────────────────────────── */
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="h-full flex flex-col items-center justify-center max-w-lg mx-auto text-center space-y-6 relative z-10"
+            className="h-full flex flex-col items-center justify-center max-w-lg mx-auto text-center space-y-8 relative z-10"
           >
-            <div className="space-y-1.5">
-              <h3 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-blue-600 to-cyan-600">What can I help you with?</h3>
-              <p className="text-sm text-slate-500">
-                Ask about academics, events, contacts, or campus life.
+            {/* Large bot icon */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center shadow-lg shadow-amber-900/25"
+            >
+              <Bot className="h-8 w-8 text-white" />
+            </motion.div>
+
+            <div className="space-y-2">
+              <h3 className="font-display text-2xl font-bold gradient-text bg-gradient-to-r from-amber-700 to-amber-800">
+                What can I help you with?
+              </h3>
+              <p className="text-sm text-stone-500 max-w-sm mx-auto">
+                Ask about academics, events, contacts, or campus life for {college.short}.
               </p>
             </div>
 
+            {/* Suggestion cards */}
             <div className="w-full space-y-2">
-              <p className="text-xs text-slate-400 font-medium">Try asking</p>
+              <p className="text-xs text-stone-400 font-medium">Try asking</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {SUGGESTIONS.map((s, i) => (
                   <motion.button
                     key={i}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
+                    transition={{ delay: 0.2 + i * 0.05 }}
                     onClick={() => setInput(s.text)}
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150 group"
+                    className="group flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] text-left text-xs text-stone-600 hover:border-amber-500/60 hover:bg-amber-50/50 hover:shadow-md hover:text-stone-900 transition-all duration-200"
                   >
-                    <span className="text-sm flex-shrink-0">{s.icon}</span>
+                    <span className="text-base flex-shrink-0">{s.icon}</span>
                     <span className="flex-1 truncate">{s.text}</span>
-                    <ChevronRight className="h-3 w-3 text-slate-300 group-hover:text-brand-blue transition-colors flex-shrink-0" />
+                    <ChevronRight className="h-3 w-3 text-stone-300 group-hover:text-amber-600 transition-colors flex-shrink-0" />
                   </motion.button>
                 ))}
               </div>
             </div>
           </motion.div>
         ) : (
-          <div className="max-w-2xl mx-auto space-y-4">
+          /* ── Message List ─────────────────────────────── */
+          <div className="max-w-3xl mx-auto space-y-6 relative z-10">
             <AnimatePresence initial={false}>
               {messages.map((msg) => {
                 const isBot = msg.role === 'assistant';
                 return (
                   <motion.div
                     key={msg.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ opacity: 0, y: 12, x: isBot ? -20 : 20, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 28 }}
                     className={cn('flex gap-2.5', isBot ? '' : 'flex-row-reverse')}
                   >
-                    {/* Avatar */}
-                    <div className={cn(
-                      'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5',
-                      isBot ? 'bg-brand-blue' : 'bg-slate-700'
-                    )}>
-                      {isBot ? <Bot className="h-3 w-3 text-white" /> : <User className="h-3 w-3 text-white" />}
-                    </div>
+                    {/* Bot icon (only for bot messages) */}
+                    {isBot && (
+                      <div className="w-5 h-5 rounded-md bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Bot className="h-2.5 w-2.5 text-white" />
+                      </div>
+                    )}
 
-                    {/* Bubble */}
-                    <div className="max-w-[80%] space-y-1">
+                    {/* Message content */}
+                    <div className={cn('space-y-1', isBot ? 'max-w-[85%]' : 'max-w-[75%]')}>
+                      {/* Bubble */}
                       <div className={cn(
-                        'relative group px-3.5 py-2.5 rounded-xl text-sm leading-relaxed',
+                        'relative group',
                         isBot
-                          ? 'bg-white text-slate-700 border border-slate-100'
-                          : 'bg-brand-blue text-white'
+                          ? 'text-stone-700'
+                          : 'bg-gradient-to-r from-amber-600 to-amber-700 text-white px-4 py-2.5 rounded-2xl rounded-br-md shadow-md shadow-amber-900/10'
                       )}>
                         {isBot ? (
-                          <div className="prose prose-sm max-w-none prose-p:my-1 prose-headings:my-2 prose-pre:bg-slate-50 prose-pre:border prose-pre:border-slate-200 prose-code:text-brand-blue prose-code:bg-blue-50 prose-code:px-1 prose-code:rounded">
+                          <div className="chat-prose prose prose-sm max-w-none">
                             <ReactMarkdown>{msg.content}</ReactMarkdown>
                           </div>
                         ) : (
@@ -185,7 +219,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
 
                         {/* Bot metadata */}
                         {isBot && (msg.toolUsed || msg.responseTimeMs) && (
-                          <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap gap-1.5">
+                          <div className="mt-2 flex flex-wrap gap-1.5">
                             {msg.toolUsed && (
                               <BlueprintStat label="TOOL" value={msg.toolUsed} />
                             )}
@@ -194,43 +228,40 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                             )}
                           </div>
                         )}
-
-                        {/* Hover actions */}
-                        <div className={cn(
-                          'absolute top-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150',
-                          isBot ? 'right-1.5' : 'left-1.5'
-                        )}>
-                          <div className="flex items-center gap-0.5 bg-white rounded-md p-1 border border-slate-200 shadow-sm">
-                            <button
-                              onClick={() => handleCopy(msg.content, msg.id)}
-                              className="p-1 rounded text-slate-400 hover:text-slate-700 transition-colors"
-                            >
-                              {copied === msg.id ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
-                            </button>
-                            {isBot && (
-                              <>
-                                <button
-                                  onClick={() => handleFeedback(msg.id, 1)}
-                                  className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === 1 ? 'text-brand-blue' : 'text-slate-400 hover:text-slate-700')}
-                                >
-                                  <ThumbsUp className="h-3 w-3" />
-                                </button>
-                                <button
-                                  onClick={() => handleFeedback(msg.id, -1)}
-                                  className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === -1 ? 'text-rose-500' : 'text-slate-400 hover:text-slate-700')}
-                                >
-                                  <ThumbsDown className="h-3 w-3" />
-                                </button>
-                              </>
-                            )}
-                          </div>
-                        </div>
                       </div>
 
-                      <div className={cn('flex items-center gap-2 px-1 text-2xs text-slate-400', isBot ? '' : 'flex-row-reverse')}>
-                        <span>{msg.timestamp}</span>
-                        {feedbacks[msg.id] && (
-                          <span className="text-emerald-500 flex items-center gap-0.5">
+                      {/* Timestamp + Actions row */}
+                      <div className={cn('flex items-center gap-2 px-1', isBot ? '' : 'flex-row-reverse')}>
+                        <span className="text-2xs text-stone-400">{msg.timestamp}</span>
+
+                        {isBot && (
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                            <button
+                              onClick={() => handleCopy(msg.content, msg.id)}
+                              className="p-1 rounded text-stone-400 hover:text-stone-600 transition-colors"
+                              aria-label="Copy message"
+                            >
+                              {copied === msg.id ? <Check className="h-3 w-3 text-amber-600" /> : <Copy className="h-3 w-3" />}
+                            </button>
+                            <button
+                              onClick={() => handleFeedback(msg.id, 1)}
+                              className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === 1 ? 'text-amber-600' : 'text-stone-400 hover:text-stone-600')}
+                              aria-label="Good response"
+                            >
+                              <ThumbsUp className="h-3 w-3" />
+                            </button>
+                            <button
+                              onClick={() => handleFeedback(msg.id, -1)}
+                              className={cn('p-1 rounded transition-colors', feedbacks[msg.id] === -1 ? 'text-rose-500' : 'text-stone-400 hover:text-stone-600')}
+                              aria-label="Bad response"
+                            >
+                              <ThumbsDown className="h-3 w-3" />
+                            </button>
+                          </div>
+                        )}
+
+                        {feedbacks[msg.id] && isBot && (
+                          <span className="text-2xs text-amber-600 flex items-center gap-0.5">
                             <Check className="h-2.5 w-2.5" /> Logged
                           </span>
                         )}
@@ -241,28 +272,28 @@ export const ChatTab: React.FC<ChatTabProps> = ({
               })}
             </AnimatePresence>
 
-            {/* Typing indicator */}
+            {/* ── Typing Indicator ─────────────────────── */}
             {loading && (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex gap-2.5"
               >
-                <div className="w-6 h-6 rounded-full bg-brand-blue flex items-center justify-center flex-shrink-0">
-                  <Bot className="h-3 w-3 text-white" />
+                <div className="w-5 h-5 rounded-md bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center flex-shrink-0 mt-1">
+                  <Bot className="h-2.5 w-2.5 text-white" />
                 </div>
-                <div className="bg-white border border-slate-100 px-3.5 py-2.5 rounded-xl flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 pt-1">
                   <div className="flex gap-1">
                     {[0, 1, 2].map(i => (
                       <motion.div
                         key={i}
                         animate={{ y: [0, -4, 0] }}
                         transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.12 }}
-                        className="w-1.5 h-1.5 rounded-full bg-brand-blue"
+                        className="w-2 h-2 rounded-full bg-amber-400"
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-slate-500">Searching campus data…</span>
+                  <span className="text-xs text-stone-400 italic">Searching campus data…</span>
                 </div>
               </motion.div>
             )}
@@ -270,24 +301,25 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           </div>
         )}
 
-        {/* Collapsible suggestions */}
+        {/* ── Collapsible Suggestions ──────────────────── */}
         {messages.length > 0 && showSuggestions && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="max-w-2xl mx-auto space-y-2 pt-3 pb-4"
+            className="max-w-3xl mx-auto space-y-2 pt-3 pb-4 relative z-10"
           >
-            <p className="text-xs text-slate-400 font-medium px-1">Try asking</p>
+            <p className="text-xs text-stone-400 font-medium px-1">Try asking</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {SUGGESTIONS.map((s, i) => (
                 <button
                   key={i}
                   onClick={() => { setInput(s.text); setShowSuggestions(false); }}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-left text-xs text-slate-600 hover:text-slate-900 transition-all duration-150"
+                  className="group flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] hover:border-amber-500/60 hover:bg-amber-50/50 text-left text-xs text-stone-600 hover:text-stone-900 transition-all duration-200"
                 >
                   <span className="text-sm flex-shrink-0">{s.icon}</span>
                   <span className="flex-1 truncate">{s.text}</span>
+                  <ChevronRight className="h-3 w-3 text-stone-300 group-hover:text-amber-600 transition-colors flex-shrink-0" />
                 </button>
               ))}
             </div>
@@ -295,38 +327,49 @@ export const ChatTab: React.FC<ChatTabProps> = ({
         )}
       </div>
 
-      {/* Input Area */}
-      <div className="flex-shrink-0 px-4 pb-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue/20 transition-all duration-150">
+      {/* ── Input Area ──────────────────────────────────── */}
+      <div className="flex-shrink-0 px-4 pb-4 relative z-10">
+        <div className="max-w-3xl mx-auto">
+          <div className="relative bg-[#FFFDF9] backdrop-blur-xl rounded-2xl border border-[#E3D9C6] shadow-lg shadow-amber-900/5 overflow-hidden transition-all duration-200 focus-within:border-amber-600/60 focus-within:ring-2 focus-within:ring-amber-500/10">
+            {/* College context */}
+            <div className="flex items-center gap-2 px-4 pt-3 pb-0">
+              <span className="text-sm">{college.icon}</span>
+              <span className="text-2xs text-stone-400 font-medium">Ask about {college.short}</span>
+            </div>
+
+            {/* Textarea */}
             <textarea
               ref={inputRef}
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={`Ask about ${college.short}…`}
+              placeholder="Type your question..."
               aria-label={`Ask ${college.short} AI assistant a question`}
               rows={1}
               disabled={loading}
-              className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 px-4 pt-3 pb-1 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
-              style={{ lineHeight: '1.6' }}
+              className="w-full bg-transparent text-sm text-stone-900 placeholder-stone-400 px-4 pt-2 pb-2 pr-12 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
+              style={{ lineHeight: '1.6', transition: 'height 0.15s ease' }}
             />
-            <div className="flex items-center justify-between px-3 pb-2.5 pt-0.5">
-              <span className="text-2xs text-slate-400">
-                <AlertCircle className="h-3 w-3 inline mr-1" />
-                {college.short}
-              </span>
-              <ShimmerButton
+
+            {/* Send button */}
+            <div className="absolute right-2 bottom-2">
+              <button
                 onClick={handleSend}
                 disabled={!input.trim() || loading}
-                size="sm"
                 aria-label="Send message"
+                className={cn(
+                  'w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200',
+                  input.trim() && !loading
+                    ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-sm hover:shadow-md hover:shadow-amber-500/25 active:scale-95'
+                    : 'bg-[#E8E2D5] text-stone-400 cursor-not-allowed'
+                )}
               >
                 <Send className="h-3.5 w-3.5" />
-              </ShimmerButton>
+              </button>
             </div>
           </div>
-          <p className="text-2xs text-slate-400 text-center mt-2">
+
+          <p className="text-2xs text-stone-400 text-center mt-2">
             Enter to send · Shift+Enter for new line
           </p>
         </div>

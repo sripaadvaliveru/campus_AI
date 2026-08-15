@@ -1,0 +1,88 @@
+{
+  "academic_year": "2026-2027",
+  "odd_semester": {
+    "name": "Odd Semester (July - November 2026)",
+    "events": [
+      {"date": "2026-07-01", "event": "Orientation Week Begins", "category": "orientation", "description": "Freshman orientation and campus introduction for incoming students"},
+      {"date": "2026-07-05", "event": "Odd Semester Classes Begin", "category": "academic", "description": " commencement of lectures for all departments"},
+      {"date": "2026-07-15", "event": "PS-I Registration Deadline", "category": "academic", "description": "Practice School I cycle registration for third-year students"},
+      {"date": "2026-07-20", "event": "Add/Drop Course Deadline", "category": "academic", "description": "Last day for course additions and drops without penalty"},
+      {"date": "2026-08-01", "event": "Independence Day Holiday", "category": "holiday", "description": "National holiday celebration"},
+      {"date": "2026-08-15", "event": "Technical Workshop Series", "category": "technical", "description": "Departmental technical workshops and seminars"},
+      {"date": "2026-08-25", "event": "Mid-Semester Examination Begins", "category": "exam", "description": "First mid-term examinations for all courses"},
+      {"date": "2026-09-01", "event": "PS-II Coordination Meeting", "category": "placement", "description": "Practice School II placement coordination with industry partners"},
+      {"date": "2026-09-10", "event": "BITS Sports League Kickoff", "category": "sports", "description": "Inter-branch sports competition begins"},
+      {"date": "2026-09-15", "event": "Cultural Club Auditions", "category": "cultural", "description": "Auditions for dance, music, drama, and literary clubs"},
+      {"date": "2026-09-20", "event": "Placement Training Program", "category": "placement", "description": "Pre-placement training sessions for final year students"},
+      {"date": "2026-09-25", "event": "Ganesh Chaturthi Celebration", "category": "cultural", "description": "Festival celebration on campus"},
+      {"date": "2026-10-01", "event": "PS-I Cycle Starts", "category": "academic", "description": "Practice School I industry immersion begins for third-year students"},
+      {"date": "2026-10-05", "event": "Mid-Semester Results Declared", "category": "exam", "description": "Results of first mid-term examinations released"},
+      {"date": "2026-10-15", "event": "BOSM Begins", "category": "sports", "description": "BITS Open Sports Meet - annual inter-college sports extravaganza"},
+      {"date": "2026-10-20", "event": "BOSM Finals", "category": "sports", "description": "Championship matches and closing ceremony of BOSM"},
+      {"date": "2026-10-25", "event": "Research Symposium", "category": "technical", "description": "Annual research presentation and poster competition"},
+      {"date": "2026-11-01", "event": "End-Semester Examination Schedule Released", "category": "exam", "description": "Final examination timetable published"},
+      {"date": "2026-11-05", "event": "APOGEE Begins", "category": "technical", "description": "Annual technical fest featuring workshops, hackathons, and competitions"},
+      {"date": "2026-11-10", "event": "APOGEE Technical Events", "category": "technical", "description": "Coding competitions, robotics, and technical paper presentations"},
+      {"date": "2026-11-15", "event": "APOGEE Guest Lectures", "category": "technical", "description": "Industry expert talks and panel discussions"},
+      {"date": "2026-11-20", "event": "End-Semester Examinations Begin", "category": "exam", "description": "Final examinations for all courses commence"},
+      {"date": "2026-11-25", "event": "PS-I Cycle Ends", "category": "academic", "description": "Completion of Practice School I industry immersion"},
+      {"date": "2026-11-30", "event": "End-Semester Examinations End", "category": "exam", "description": "Final examinations conclude"}
+    ]
+  },
+  "even_semester": {
+    "name": "Even Semester (January - May 2027)",
+    "events": [
+      {"date": "2027-01-05", "event": "Even Semester Registration", "category": "academic", "description": "Course registration for even semester begins"},
+      {"date": "2027-01-10", "event": "Classes Begin", "category": "academic", "description": "Commencement of even semester lectures"},
+      {"date": "2027-01-15", "event": "BITS Innovation Challenge", "category": "technical", "description": "Annual entrepreneurship and innovation competition"},
+      {"date": "2027-01-20", "event": "Republic Day Celebration", "category": "holiday", "description": "National holiday with flag hoisting ceremony"},
+      {"date": "2027-01-25", "event": "PS-II Registration Opens", "category": "placement", "description": "Practice School II placement registration for final year students"},
+      {"date": "2027-02-01", "event": "Confluence Begins", "category": "social", "description": "Annual management and business fest"},
+      {"date": "2027-02-05", "event": "Confluence Business Events", "category": "social", "description": "Case studies, business simulations, and entrepreneurship talks"},
+      {"date": "2027-02-10", "event": "Add/Drop Course Deadline", "category": "academic", "description": "Last day for course modifications without penalty"},
+      {"date": "2027-02-15", "event": "Departmental Tech Talks", "category": "technical", "description": "Guest lectures from industry professionals"},
+      {"date": "2027-02-20", "event": "Cultural Night", "category": "cultural", "description": "Annual cultural night featuring student performances"},
+      {"date": "2027-02-25", "event": "Placement Drive - Phase I", "category": "placement", "description": "First phase of campus placement drives begins"},
+      {"date": "2027-03-01", "event": "Mid-Semester Examination Begins", "category": "exam", "description": "First mid-term examinations for even semester"},
+      {"date": "2027-03-05", "event": "Arena Begins", "category": "cultural", "description": "Annual cultural fest with music, dance, and drama competitions"},
+      {"date": "2027-03-10", "event": "Arena Main Events", "category": "cultural", "description": "Headliner performances and cultural competitions"},
+      {"date": "2027-03-15", "event": "Holi Celebration", "category": "cultural", "description": "Festival of colors celebration on campus"},
+      {"date": "2027-03-20", "event": "Placement Drive - Phase II", "category": "placement", "description": "Second phase of campus placement drives"},
+      {"date": "2027-03-25", "event": "Technical Project Exhibition", "category": "technical", "description": "Student project showcase and competition"},
+      {"date": "2027-04-01", "event": "Mid-Semester Results Declared", "category": "exam", "description": "Mid-term examination results released"},
+      {"date": "2027-04-05", "event": "PS-II Cycle Starts", "category": "academic", "description": "Practice School II industry immersion begins for final year students"},
+      {"date": "2027-04-10", "event": "Sports Day", "category": "sports", "description": "Annual sports day with athletic competitions"},
+      {"date": "2027-04-15", "event": "End-Semester Exam Schedule Released", "category": "exam", "description": "Final examination timetable published"},
+      {"date": "2027-04-20", "event": "Seminar Week", "category": "technical", "description": "Departmental seminars and paper presentations"},
+      {"date": "2027-04-25", "event": "End-Semester Examinations Begin", "category": "exam", "description": "Final examinations commence"},
+      {"date": "2027-05-01", "event": "May Day Holiday", "category": "holiday", "description": "International Workers' Day celebration"},
+      {"date": "2027-05-05", "event": "End-Semester Examinations End", "category": "exam", "description": "Final examinations conclude"},
+      {"date": "2027-05-10", "event": "PS-II Cycle Ends", "category": "academic", "description": "Completion of Practice School II industry immersion"},
+      {"date": "2027-05-15", "event": "Semester Results Declared", "category": "exam", "description": "Final semester results published"}
+    ]
+  },
+  "placement_calendar": {
+    "events": [
+      {"period": "July 2026", "event": "PS-I Preparation", "description": "Practice School I company shortlisting and documentation"},
+      {"period": "September 2026", "event": "PS-II Coordination", "description": "Industry partner coordination for Practice School II"},
+      {"period": "October 2026", "event": "PS-I Cycle", "description": "Practice School I industry immersion for third-year students"},
+      {"period": "January 2027", "event": "PS-II Registration", "description": "Registration for Practice School II placement"},
+      {"period": "February 2027", "event": "Placement Drive Phase I", "description": "First phase of final year campus placements"},
+      {"period": "March 2027", "event": "Placement Drive Phase II", "description": "Second phase of final year campus placements"},
+      {"period": "April 2027", "event": "PS-II Cycle", "description": "Practice School II industry immersion for final year students"},
+      {"period": "May 2027", "event": "Summer Internship Coordination", "description": "Coordination for summer internship opportunities"}
+    ]
+  },
+  "important_deadlines": [
+    {"deadline": "2026-07-20", "description": "Add/Drop Course Deadline for Odd Semester"},
+    {"deadline": "2026-07-15", "description": "PS-I Registration Deadline"},
+    {"deadline": "2026-09-01", "description": "PS-II Coordination Meeting"},
+    {"deadline": "2026-11-01", "description": "End-Semester Examination Schedule Release"},
+    {"deadline": "2027-01-10", "description": "Even Semester Registration Deadline"},
+    {"deadline": "2027-01-25", "description": "PS-II Registration Opens"},
+    {"deadline": "2027-02-10", "description": "Add/Drop Course Deadline for Even Semester"},
+    {"deadline": "2027-04-15", "description": "End-Semester Exam Schedule Release"},
+    {"deadline": "2027-05-10", "description": "PS-II Cycle Ends"},
+    {"deadline": "2027-05-15", "description": "Semester Results Declared"}
+  ]
+}

@@ -1,0 +1,29 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Prof. Ramesh Kumar,Professor & HoD,CSE,rkumar@osmania.ac.in,040-27682345,Engineering College - Block A Room 301,10:00 AM - 04:00 PM,Computer Science & Engineering
+2,Prof. Suresh Babu,Professor & HoD,ECE,sbabu@osmania.ac.in,040-27682346,Engineering College - Block B Room 205,10:00 AM - 04:00 PM,Electronics & Communication Engineering
+3,Prof. Venkateshwar Reddy,Professor & HoD,ME,venkateshr@osmania.ac.in,040-27682347,Engineering College - Block C Room 102,11:00 AM - 03:00 PM,Mechanical Engineering
+4,Prof. Mahesh Chandra,Professor & HoD,CE,maheshc@osmania.ac.in,040-27682348,Engineering College - Block D Room 108,10:00 AM - 02:00 PM,Civil Engineering
+5,Prof. Sudhakar Rao,Professor & HoD,EE,srao@osmania.ac.in,040-27682349,Engineering College - Block E Room 204,11:00 AM - 04:00 PM,Electrical Engineering
+6,Prof. Prasad Reddy,Professor & HoD,BBA,preddy@osmania.ac.in,040-27001234,Arts College - Room 412,10:00 AM - 01:00 PM,Business Administration
+7,Prof. Niranjan Babu,Professor & HoD,MBA,nbabu@osmania.ac.in,040-27001235,Arts College - Room 415,10:00 AM - 01:00 PM,Management Studies
+8,Prof. Kiran Kumar,Professor & HoD,MCA,kkumar@osmania.ac.in,040-27001236,Arts College - Room 418,11:00 AM - 03:00 PM,Computer Applications
+9,Prof. Venkata Subbaiah,Professor & HoD,Commerce,vsubbaiah@osmania.ac.in,040-27001237,Arts College - Room 305,10:00 AM - 02:00 PM,Commerce & Accounting
+10,Prof. Raghunath Reddy,Professor & HoD,Economics,rrreddy@osmania.ac.in,040-27001238,Arts College - Room 308,11:00 AM - 03:00 PM,Economics & Econometrics
+11,Prof. Ashok Kumar,Professor & HoD,Political Science,ashokk@osmania.ac.in,040-27001239,Arts College - Room 312,10:00 AM - 01:00 PM,Political Science & Public Administration
+12,Prof. Padmavathi,Professor & HoD,English,padmavathi@osmania.ac.in,040-27001240,Arts College - Room 315,11:00 AM - 02:00 PM,English Literature & Linguistics
+13,Prof. Gopalakrishna,Professor & HoD,Telugu,gopalak@osmania.ac.in,040-27001241,Arts College - Room 318,10:00 AM - 01:00 PM,Telugu Literature & Language
+14,Prof. Syed Hasan,Professor & HoD,Urdu,syedh@osmania.ac.in,040-27001242,Arts College - Room 321,11:00 AM - 03:00 PM,Urdu Literature & Language
+15,Prof. Krishnamurthy,Dean,Faculty of Engineering,krishnam@osmania.ac.in,040-27682000,Engineering College - Dean Cabin,10:00 AM - 05:00 PM,Engineering Administration
+16,Prof. Sita Devi,Dean,Faculty of Arts,sitadevi@osmania.ac.in,040-27001000,Arts College - Dean Cabin,10:00 AM - 04:00 PM,Arts & Humanities Administration
+17,Prof. Ramakrishna,Dean,Faculty of Science,ramak@osmania.ac.in,040-27002000,Science College - Dean Cabin,10:00 AM - 04:00 PM,Science Administration
+18,Prof. Lakshmi Devi,Dean,Student Welfare,ldevi@osmania.ac.in,040-27003000,Admin Building - Room 101,10:00 AM - 05:00 PM,Student Affairs & Welfare
+19,Dr. Rajesh Sharma,Registrar,Administration,rsharma@osmania.ac.in,040-27000001,Admin Building - Registrar Cabin,10:00 AM - 05:00 PM,University Administration
+20,Dr. Anil Kumar,Finance Officer,Finance,akumar@osmania.ac.in,040-27000002,Admin Building - Finance Section,10:30 AM - 04:30 PM,Financial Management & Accounts
+21,Dr. V. Srinivasa Rao,Controller of Examinations,Examinations,vsrao@osmania.ac.in,040-27000003,Admin Building - Exam Cell,10:00 AM - 05:00 PM,Examination Administration
+22,Dr. P. Srinivasulu,Training & Placement Officer,Placement,psrinivasulu@osmania.ac.in,040-27685000,Engineering College - TPO Cell,09:00 AM - 05:00 PM,Corporate Relations & Placement
+23,Mr. M. Sambasiva Rao,Librarian,Library,msrao@osmania.ac.in,040-27006000,University Library - Main Hall,09:00 AM - 06:00 PM,Library Science & Information Management
+24,Dr. B. Ramesh,Chief Medical Officer,Health Center,bramesh@osmania.ac.in,040-27007000,University Health Center,09:00 AM - 05:00 PM,General Medicine & Healthcare
+25,Dr. T. Vijay Kumar,Hostel Warden (Men),Hostels,tvijayk@osmania.ac.in,040-27008001,Boys Hostel - Block A Office,08:00 AM - 06:00 PM,Student Hostel Administration
+26,Dr. K. Lalitha,Hostel Warden (Women),Hostels,klalitha@osmania.ac.in,040-27008002,Girls Hostel - Block A Office,08:00 AM - 06:00 PM,Student Hostel Administration
+27,Dr. D. Srinivasa Reddy,NSS Officer,Student Activities,dsreddy@osmania.ac.in,040-27009001,Admin Building - NSS Office,10:00 AM - 04:00 PM,National Service Scheme & Social Work
+28,Dr. M. Anjaneyulu,NCC Officer,Student Activities,manjaneyulu@osmania.ac.in,040-27009002,Admin Building - NCC Office,10:00 AM - 04:00 PM,National Cadet Corps & Leadership

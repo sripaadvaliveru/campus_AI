@@ -6,29 +6,29 @@
 
 @layer base {
   :root {
-    --background: 220 14% 97%;
-    --foreground: 224 71% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
-    --primary: 221 83% 53%;
+    --background: 38 33% 97%;
+    --foreground: 24 10% 10%;
+    --card: 38 100% 99%;
+    --card-foreground: 24 10% 10%;
+    --primary: 38 92% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 224 71% 4%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --secondary: 36 20% 95%;
+    --secondary-foreground: 24 10% 10%;
+    --muted: 36 20% 95%;
+    --muted-foreground: 28 15% 46%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
+    --border: 36 20% 89%;
+    --input: 36 20% 89%;
+    --ring: 38 92% 50%;
     --radius: 0.75rem;
 
-    --section-accent: 239 84% 67%;
-    --dashboard: 239 84% 67%;
-    --chat: 221 83% 53%;
-    --events: 38 92% 50%;
-    --directory: 160 84% 39%;
-    --analytics: 258 90% 66%;
+    --section-accent: 38 92% 50%;
+    --dashboard: 28 80% 50%;
+    --chat: 38 92% 50%;
+    --events: 45 85% 55%;
+    --directory: 85 55% 40%;
+    --analytics: 12 70% 45%;
   }
 
   * {
@@ -50,8 +50,8 @@
   }
 
   ::selection {
-    background: #DBEAFE;
-    color: #1D4ED8;
+    background: #FEF3C7;
+    color: #92400E;
   }
 
   ::-webkit-scrollbar {
@@ -64,12 +64,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: #D6CFC2;
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #B8A99A;
   }
 }
 
@@ -124,7 +124,7 @@
   }
   .hover-lift:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(180, 83, 9, 0.1);
   }
 
   .section-icon {
@@ -142,6 +142,91 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+}
+
+/* ── Chat Prose (Notion AI Typography — Warm Amber) ──── */
+.chat-prose h1 {
+  @apply text-lg font-bold mt-4 mb-2;
+  color: #1C1917;
+}
+.chat-prose h2 {
+  @apply text-base font-bold mt-3 mb-1.5;
+  color: #1C1917;
+}
+.chat-prose h3 {
+  @apply text-sm font-semibold mt-3 mb-1.5;
+  color: #292524;
+}
+.chat-prose p {
+  @apply text-[13px] leading-relaxed my-1.5;
+  color: #44403C;
+}
+.chat-prose ul {
+  @apply list-disc pl-4 my-1.5 space-y-0.5;
+}
+.chat-prose ol {
+  @apply list-decimal pl-4 my-1.5 space-y-0.5;
+}
+.chat-prose li {
+  @apply text-[13px] leading-relaxed;
+  color: #44403C;
+}
+.chat-prose blockquote {
+  @apply border-l-[3px] pl-3 italic my-2;
+  border-color: #D97706;
+  color: #78716C;
+}
+.chat-prose pre {
+  @apply rounded-lg p-3 my-2 overflow-x-auto;
+  background: #F3ECE1;
+  border: 1px solid #E3D9C6;
+}
+.chat-prose code {
+  @apply text-xs font-mono px-1 py-0.5 rounded;
+  color: #78350F;
+  background: #F3ECE1;
+}
+.chat-prose pre code {
+  @apply bg-transparent px-0 py-0;
+  color: #1C1917;
+}
+.chat-prose a {
+  @apply underline underline-offset-2;
+  color: #B45309;
+  text-decoration-color: #D97706;
+}
+.chat-prose a:hover {
+  text-decoration-color: #B45309;
+}
+.chat-prose strong {
+  @apply font-semibold;
+  color: #1C1917;
+}
+.chat-prose em {
+  @apply italic;
+  color: #78716C;
+}
+.chat-prose hr {
+  @apply my-3;
+  border-color: #E8E2D5;
+}
+.chat-prose table {
+  @apply w-full text-xs my-2 border-collapse;
+}
+.chat-prose th {
+  @apply text-left font-semibold pb-1;
+  color: #44403C;
+  border-bottom: 1px solid #E8E2D5;
+}
+.chat-prose td {
+  @apply py-1;
+  color: #78716C;
+}
+.chat-prose > :first-child {
+  @apply mt-0;
+}
+.chat-prose > :last-child {
+  @apply mb-0;
 }
 
 /* ── Reduced Motion ──────────────────────────────────── */

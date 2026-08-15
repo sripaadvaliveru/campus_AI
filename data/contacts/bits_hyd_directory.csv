@@ -1,0 +1,26 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Prof. Rajesh Kumar Sharma,Professor & Head,CSE,rksharma@bits-pilani.ac.in,+91-40-6630-1234,Academic Block 1 - Room 301,"Mon-Fri 10:00-12:00",Artificial Intelligence & Machine Learning
+2,Prof. Meenakshi Iyer,Professor & Head,ECE,meenakshi@bits-pilani.ac.in,+91-40-6630-1235,Academic Block 1 - Room 302,"Mon-Fri 10:00-12:00",VLSI Design & Embedded Systems
+3,Prof. Suresh Babu Naidu,Professor & Head,ME,sureshnb@bits-pilani.ac.in,+91-40-6630-1236,Academic Block 2 - Room 201,"Mon-Fri 11:00-13:00",Thermal Engineering & Fluid Mechanics
+4,Prof. Anand Krishnamurthy,Professor & Head,Chemical,anandk@bits-pilani.ac.in,+91-40-6630-1237,Academic Block 2 - Room 202,"Mon-Wed 14:00-16:00",Process Engineering & Catalysis
+5,Prof. Venkataramana Reddy,Professor & Head,EEE,venkatr@bits-pilani.ac.in,+91-40-6630-1238,Academic Block 3 - Room 101,"Tue-Thu 10:00-12:00",Power Systems & Renewable Energy
+6,Prof. Deepika Nair,Professor & Head,Biotech,deepikan@bits-pilani.ac.in,+91-40-6630-1239,Academic Block 3 - Room 102,"Mon-Fri 10:00-12:00",Molecular Biology & Genetic Engineering
+7,Prof. Raghavendra Prasad,Professor & Head,Physics,raghavp@bits-pilani.ac.in,+91-40-6630-1240,Academic Block 4 - Room 101,"Mon-Wed 11:00-13:00",Condensed Matter Physics
+8,Prof. Lakshmi Devi,Professor & Head,Chemistry,lakshmid@bits-pilani.ac.in,+91-40-6630-1241,Academic Block 4 - Room 102,"Tue-Thu 14:00-16:00",Organic Chemistry & Synthesis
+9,Prof. Arvind Kumar,Professor & Head,Mathematics,arvindk@bits-pilani.ac.in,+91-40-6630-1242,Academic Block 5 - Room 101,"Mon-Fri 10:00-12:00",Applied Mathematics & Numerical Analysis
+10,Prof. Priya Venkatesh,Professor & Head,Economics,priyav@bits-pilani.ac.in,+91-40-6630-1243,Academic Block 5 - Room 102,"Mon-Wed 14:00-16:00",Development Economics & Public Policy
+11,Prof. Sanjay Malhotra,Professor & Head,Finance,sanjaym@bits-pilani.ac.in,+91-40-6630-1244,Academic Block 6 - Room 101,"Tue-Thu 10:00-12:00",Corporate Finance & Investment Banking
+12,Prof. Asha Rani,Professor & Head,Management,asharani@bits-pilani.ac.in,+91-40-6630-1245,Academic Block 6 - Room 102,"Mon-Fri 11:00-13:00",Strategic Management & Organizational Behavior
+13,Prof. Vikram Singh,Dean,Academics,vikrams@bits-pilani.ac.in,+91-40-6630-1001,Administrative Block - Room 101,"Mon-Fri 10:00-12:00",Academic Administration & Curriculum Design
+14,Prof. Sunita Rao,Dean,Student Affairs,sunitar@bits-pilani.ac.in,+91-40-6630-1002,Administrative Block - Room 102,"Mon-Fri 11:00-13:00",Student Welfare & Development
+15,Prof. Manoj Gupta,Dean,R&D,manojg@bits-pilani.ac.in,+91-40-6630-1003,Administrative Block - Room 103,"Mon-Wed 14:00-16:00",Research & Innovation Management
+16,Prof. Kavitha Subramanian,Dean,Practice School,kavithas@bits-pilani.ac.in,+91-40-6630-1004,Practice School Block - Room 101,"Mon-Fri 10:00-12:00",Industry-Academia Collaboration
+17,Dr. Ramesh Babu,Registrar,rameshb@bits-pilani.ac.in,+91-40-6630-1005,Administrative Block - Room 104,"Mon-Fri 09:00-11:00",Institutional Administration
+18,Mr. Prakash Joshi,Finance Officer,Finance,prakashj@bits-pilani.ac.in,+91-40-6630-1006,Administrative Block - Room 105,"Mon-Fri 10:00-12:00",Financial Management & Accounts
+19,Dr. Nandini Deshmukh,Controller of Examinations,Examinations,nandinid@bits-pilani.ac.in,+91-40-6630-1007,Administrative Block - Room 106,"Mon-Fri 09:00-11:00",Examination Administration & Evaluation
+20,Prof. Ajay Kumar,Practice School Coordinator,TPO,ajayk@bits-pilani.ac.in,+91-40-6630-1008,Practice School Block - Room 102,"Mon-Fri 11:00-13:00",Industry Relations & Placements
+21,Mr. Srinivas Murthy,Librarian,Library,srinivasm@bits-pilani.ac.in,+91-40-6630-1009,Library - Room 101,"Mon-Sat 09:00-17:00",Library & Information Science
+22,Dr. Padma Sharma,Chief Medical Officer,Health Services,padmas@bits-pilani.ac.in,+91-40-6630-1010,Medical Center - Room 101,"Mon-Sat 09:00-17:00",General Medicine & Student Health
+23,Mr. Gopal Krishna,Hostel Warden,Hostel,gopalk@bits-pilani.ac.in,+91-40-6630-1011,Hostel A - Warden Office,"Mon-Sat 08:00-10:00",Hostel Administration & Student Welfare
+24,Ms. Meera Patel,Hostel Warden,Hostel,meerap@bits-pilani.ac.in,+91-40-6630-1012,Hostel B - Warden Office,"Mon-Sat 08:00-10:00",Hostel Administration & Student Welfare
+25,Mr. Arun Verma,IT Support Manager,IT Services,arunv@bits-pilani.ac.in,+91-40-6630-1013,IT Center - Room 101,"Mon-Fri 09:00-18:00",Network & Systems Administration

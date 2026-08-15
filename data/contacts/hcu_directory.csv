@@ -1,0 +1,31 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Prof. B.J. Rao,Vice Chancellor,Office of VC,vcr@uohyd.ac.in,040-23132201,Admin Block,10:00 AM - 12:00 PM,Molecular Biology
+2,Prof. V. Venkateswarlu,Registrar,Administration,registrar@uohyd.ac.in,040-23132202,Admin Block,10:30 AM - 12:30 PM,Public Administration
+3,Prof. K. Srinivasa Rao,Finance Officer,Finance & Accounts,finance@uohyd.ac.in,040-23132203,Admin Block,11:00 AM - 1:00 PM,Finance & Accounting
+4,Prof. G. Ram Reddy,Controller of Examinations,Examinations,coe@uohyd.ac.in,040-23132204,Exam Cell - Admin Block,10:00 AM - 12:00 PM,Statistics
+5,Dr. P. Sridevi,Chief Librarian,University Library,library@uohyd.ac.in,040-23132205,University Library,09:00 AM - 5:00 PM,Library & Information Science
+6,Dr. M. Krishna Mohan,Chief Medical Officer,Health Centre,cmo@uohyd.ac.in,040-23132206,Health Centre,09:00 AM - 4:00 PM,General Medicine
+7,Prof. T. Raghunatha Rao,Dean,School of Sciences,dean.science@uohyd.ac.in,040-23132210,School of Sciences Building,11:00 AM - 1:00 PM,Physics
+8,Prof. K. Narasimha Reddy,Dean,School of Humanities,dean.humanities@uohyd.ac.in,040-23132211,School of Humanities,11:00 AM - 1:00 PM,Telugu Literature
+9,Prof. G. Prabhakar,Dean,School of Social Sciences,dean.socialsci@uohyd.ac.in,040-23132212,School of Social Sciences,10:30 AM - 12:30 PM,Economics
+10,Prof. L. Srinivasa Rao,Dean,School of Student Welfare,dean.sw@uohyd.ac.in,040-23132213,Student Welfare Building,10:00 AM - 4:00 PM,Sociology
+11,Prof. P. Raghavendra Prasad,Professor & HoD,Department of Physics,hod.physics@uohyd.ac.in,040-23132220,School of Sciences - Room 201,10:00 AM - 12:00 PM,Condensed Matter Physics
+12,Prof. M. Vithal,Professor & HoD,Department of Chemistry,hod.chemistry@uohyd.ac.in,040-23132221,School of Sciences - Room 305,11:00 AM - 1:00 PM,Inorganic Chemistry
+13,Prof. R. Sreenivasa Rao,Professor & HoD,Department of Mathematics,hod.math@uohyd.ac.in,040-23132222,School of Sciences - Room 401,10:30 AM - 12:30 PM,Applied Mathematics
+14,Prof. M. Manoj Kumar,Professor & HoD,Department of Computer Science,hod.cs@uohyd.ac.in,040-23132223,School of Computer Sciences - Room 101,11:00 AM - 1:00 PM,Machine Learning
+15,Prof. K. Sujatha,Professor & HoD,Department of Biotechnology,hod.biotech@uohyd.ac.in,040-23132224,School of Biotechnology - Room 201,10:00 AM - 12:00 PM,Molecular Genetics
+16,Prof. G. Narahari Sastry,Professor & HoD,Department of Microbiology,hod.micro@uohyd.ac.in,040-23132225,School of Life Sciences - Room 301,11:00 AM - 1:00 PM,Structural Microbiology
+17,Prof. S. N. K. Ramanujam,Professor & HoD,Department of Linguistics,hod.linguistics@uohyd.ac.in,040-23132226,School of Humanities - Room 105,10:00 AM - 12:00 PM,Computational Linguistics
+18,Prof. P. Ramakrishna Reddy,Professor & HoD,Department of Telugu,telugu@uohyd.ac.in,040-23132227,School of Humanities - Room 203,11:00 AM - 1:00 PM,Telugu Literature & Poetry
+19,Prof. B. R. S. Seshu,Professor & HoD,Department of Hindi,hod.hindi@uohyd.ac.in,040-23132228,School of Humanities - Room 301,10:30 AM - 12:30 PM,Hindi Literature
+20,Prof. R. Amri,Professor & HoD,Department of English,hod.english@uohyd.ac.in,040-23132229,School of Humanities - Room 401,10:00 AM - 12:00 PM,English Literature
+21,Prof. S. Rajendran,Professor & HoD,Department of Performing Arts,performingarts@uohyd.ac.in,040-23132230,School of Humanities - Auditorium,11:00 AM - 1:00 PM,Music & Dance
+22,Prof. P. V. Krishna Reddy,Professor & HoD,School of Management Studies,hod.mgmt@uohyd.ac.in,040-23132231,School of Management Building,10:30 AM - 12:30 PM,Strategic Management
+23,Dr. A. Satyanarayana,Kaveri Hostel Warden,Hostel Administration,warden.kaveri@uohyd.ac.in,040-23132240,Kaveri Hostel Office,05:00 PM - 7:00 PM,Student Affairs
+24,Dr. B. Srinivasa Reddy,Ganga Hostel Warden,Hostel Administration,warden.ganga@uohyd.ac.in,040-23132241,Ganga Hostel Office,05:00 PM - 7:00 PM,Student Welfare
+25,Dr. K. Ravi Kumar,Godavari Hostel Warden,Hostel Administration,warden.godavari@uohyd.ac.in,040-23132242,Godavari Hostel Office,05:00 PM - 7:00 PM,Student Development
+26,Dr. L. Prabhavathi,Krishna Hostel Warden,Hostel Administration,warden.krishna@uohyd.ac.in,040-23132243,Krishna Hostel Office,05:00 PM - 7:00 PM,Student Counselling
+27,Dr. V. Ramesh Babu,NSS Program Officer,Student Activities,nss@uohyd.ac.in,040-23132244,NSS Office - Student Centre,10:00 AM - 12:00 PM,Social Work
+28,Dr. M. Rajeshwar Reddy,NCC Officer,Student Activities,ncc@uohyd.ac.in,040-23132245,NCC Office - Student Centre,10:00 AM - 12:00 PM,Defence Studies
+29,Mr. T. Srinivas Reddy,Senior System Administrator,IT Services,itsupport@uohyd.ac.in,040-23132250,IT Centre - Admin Block,09:00 AM - 5:30 PM,Computer Science
+30,Mr. D. Venkatesh,Network Engineer,IT Services,network@uohyd.ac.in,040-23132251,IT Centre - Admin Block,09:00 AM - 5:30 PM,Computer Networking

@@ -1,0 +1,26 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Dr. Raghunath Reddy,Professor & HoD,General Medicine,raghunath.reddy@nims.ac.in,040-23489001,OPD Block - 3rd Floor,Mon-Fri 9:00 AM - 4:00 PM,Cardiology
+2,Dr. Meena Sharma,Professor & HoD,General Surgery,meena.sharma@nims.ac.in,040-23489002,OPD Block - 2nd Floor,Mon-Sat 8:00 AM - 3:00 PM,Gastrointestinal Surgery
+3,Dr. Suresh Kumar Babu,Professor & HoD,Orthopedics,suresh.babu@nims.ac.in,040-23489003,OPD Block - Ground Floor,Mon-Fri 9:00 AM - 4:00 PM,Joint Replacement
+4,Dr. Padmavathi Nair,Professor & HoD,Pediatrics,padmavathi.nair@nims.ac.in,040-23489004,OPD Block - 1st Floor,Mon-Sat 8:30 AM - 3:30 PM,Neonatology
+5,Dr. Aruna Kumari Reddy,Professor & HoD,OBG,aruna.reddy@nims.ac.in,040-23489005,OPD Block - 1st Floor,Mon-Fri 9:00 AM - 4:00 PM,Maternal Fetal Medicine
+6,Dr. Venkatesh Rao,Professor & HoD,Radiology,venkatesh.rao@nims.ac.in,040-23489006,Radiology Wing - OPD Block,Mon-Fri 8:30 AM - 5:00 PM,Interventional Radiology
+7,Dr. Lakshmi Devi Menon,Professor & HoD,Pathology,lakshmi.menon@nims.ac.in,040-23489007,Academic Block - Room 201,Mon-Fri 9:00 AM - 5:00 PM,Hematopathology
+8,Dr. Prakash Rao,Professor & HoD,Pharmacology,prakash.rao@nims.ac.in,040-23489008,Academic Block - Room 305,Mon-Fri 9:00 AM - 5:00 PM,Clinical Pharmacology
+9,Dr. Syed Ahmed Hussain,Professor & HoD,Anatomy,syed.hussain@nims.ac.in,040-23489009,Academic Block - Room 102,Mon-Fri 9:00 AM - 5:00 PM,Gross Anatomy
+10,Dr. Kavitha Rani,Professor & HoD,Physiology,kavitha.rani@nims.ac.in,040-23489010,Academic Block - Room 108,Mon-Fri 9:00 AM - 5:00 PM,Cardiovascular Physiology
+11,Dr. Bhanu Prasad Reddy,Professor & HoD,Biochemistry,bhanu.reddy@nims.ac.in,040-23489011,Academic Block - Room 210,Mon-Fri 9:00 AM - 5:00 PM,Clinical Biochemistry
+12,Dr. Nasreen Begum,Professor & HoD,Microbiology,nasreen.begum@nims.ac.in,040-23489012,Academic Block - Room 215,Mon-Fri 9:00 AM - 5:00 PM,Clinical Microbiology
+13,Dr. Rajesh Gupta,Professor & HoD,Community Medicine,rajesh.gupta@nims.ac.in,040-23489013,Community Health Centre,Mon-Fri 8:00 AM - 4:00 PM,Preventive Medicine
+14,Dr. K. Raghavendra Prasad,Dean Medical,Dean Office,raghavendra.prasad@nims.ac.in,040-23489014,Administrative Block - 4th Floor,Mon-Fri 10:00 AM - 5:00 PM,Administration
+15,Dr. Srilatha Vemuri,Dean Academic,Dean Office,srilatha.vemuri@nims.ac.in,040-23489015,Administrative Block - 3rd Floor,Mon-Fri 10:00 AM - 5:00 PM,Medical Education
+16,Dr. A. Madhavi Latha,Dean Student Affairs,Dean Office,madhavi.latha@nims.ac.in,040-23489016,Administrative Block - 3rd Floor,Mon-Fri 10:00 AM - 4:00 PM,Student Welfare
+17,Dr. G. Vijay Kumar,Registrar,Administration,vijay.kumar@nims.ac.in,040-23489017,Administrative Block - 2nd Floor,Mon-Fri 10:00 AM - 5:00 PM,Institutional Administration
+18,Mr. T. Ramesh Naidu,Finance Officer,Finance,ramesh.naidu@nims.ac.in,040-23489018,Administrative Block - 1st Floor,Mon-Fri 10:00 AM - 5:00 PM,Financial Management
+19,Dr. P. Srinivasa Rao,Controller of Examinations,Examination Cell,srinivasa.rao@nims.ac.in,040-23489019,Academic Block - Room 401,Mon-Fri 10:00 AM - 5:00 PM,Examination Administration
+20,Dr. Sunil Kumar Choudhary,Medical Superintendent,Hospital Administration,sunil.choudhary@nims.ac.in,040-23489020,Medical Superintendent Office - Main Block,Mon-Sat 8:00 AM - 6:00 PM,Hospital Administration
+21,Mr. K. Srinivasa Reddy,Librarian,Library,srinivasa.reddy@nims.ac.in,040-23489021,Library Building - Ground Floor,Mon-Sat 8:00 AM - 8:00 PM,Medical Librarianship
+22,Dr. B. Sujatha Reddy,Hostel Warden (Junior),Junior Hostels,sujatha.reddy@nims.ac.in,040-23489022,Junior Hostel - Warden Office,Mon-Sat 7:00 AM - 9:00 PM,Student Housing Administration
+23,Dr. P. Harish Babu,Hostel Warden (Senior),Senior Hostels,harish.babu@nims.ac.in,040-23489023,Senior Hostel - Warden Office,Mon-Sat 7:00 AM - 9:00 PM,Student Housing Administration
+24,Dr. D. Naga Raju,Chief Medical Officer,Occupational Health,naga.raju@nims.ac.in,040-23489024,OPD Block - Ground Floor,Mon-Fri 8:00 AM - 4:00 PM,Occupational Medicine
+25,Dr. Shyamala Devi Karthik,Additional Dean Research,Research Wing,shyamala.karthik@nims.ac.in,040-23489025,Administrative Block - 4th Floor,Mon-Fri 10:00 AM - 5:00 PM,Clinical Research

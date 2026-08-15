@@ -85,8 +85,8 @@ export const Card: React.FC<CardProps> = ({
 }) => (
   <div
     className={cn(
-      'bg-white/90 rounded-xl border border-slate-200/60 shadow-card transition-all duration-200',
-      hover && 'hover:shadow-card-hover hover:border-slate-300/60 hover:scale-[1.02] cursor-pointer',
+      'bg-[#FFFDF9] rounded-xl border border-[#E8E2D5] shadow-card transition-all duration-200',
+      hover && 'hover:shadow-card-hover hover:border-[#D6CFC2] hover:scale-[1.02] cursor-pointer',
       className
     )}
     onClick={onClick}
@@ -113,11 +113,11 @@ export const ShimmerButton: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const variants = {
-    primary: 'bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-sm hover:shadow-lg hover:shadow-blue-500/25',
-    secondary: 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300',
-    ghost: 'hover:bg-slate-100 text-slate-500 hover:text-slate-700',
+    primary: 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white shadow-sm hover:shadow-lg hover:shadow-amber-900/25',
+    secondary: 'bg-[#FFFDF9] border border-[#E8E2D5] text-stone-700 hover:bg-[#F3ECE1] hover:border-[#D6CFC2]',
+    ghost: 'hover:bg-[#F3ECE1] text-stone-500 hover:text-stone-700',
     danger: 'bg-red-600 hover:bg-red-700 text-white',
-    accent: 'bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600 text-white shadow-sm hover:shadow-lg hover:shadow-indigo-500/25',
+    accent: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white shadow-sm hover:shadow-lg hover:shadow-orange-900/25',
   };
 
   const sizes = {
@@ -130,7 +130,7 @@ export const ShimmerButton: React.FC<ButtonProps> = ({
     <button
       className={cn(
         'group/btn relative inline-flex items-center justify-center font-medium transition-all duration-150',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-amber focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'active:scale-95',
         variants[variant],
@@ -160,17 +160,17 @@ export const BlueprintStat: React.FC<BlueprintStatProps> = ({
 }) => (
   <span className={cn(
     'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md',
-    'bg-slate-50 border border-slate-200/80',
-    'font-mono text-2xs tracking-wider text-slate-600 uppercase',
+    'bg-[#F3ECE1] border border-[#E3D9C6]',
+    'font-mono text-2xs tracking-wider uppercase',
     className
   )}>
-    {label && <span className="text-slate-400">{label}:</span>}
-    <span className="text-slate-800 font-semibold">{value}</span>
+    {label && <span className="text-stone-400">{label}:</span>}
+    <span className="text-stone-800 font-semibold">{value}</span>
   </span>
 );
 
 // ────────────────────────────────────────────────────
-//  Badge (WCAG AA contrast)
+//  Badge (WCAG AA contrast — warm palette)
 // ────────────────────────────────────────────────────
 interface BadgeProps {
   children: React.ReactNode;
@@ -181,18 +181,18 @@ interface BadgeProps {
 }
 
 const badgeVariants = {
-  blue: 'bg-blue-50 text-blue-900 border-blue-200/60',
-  purple: 'bg-purple-50 text-purple-900 border-purple-200/60',
-  green: 'bg-emerald-50 text-emerald-900 border-emerald-200/60',
+  blue: 'bg-amber-50 text-amber-900 border-amber-200/60',
+  purple: 'bg-orange-50 text-orange-900 border-orange-200/60',
+  green: 'bg-olive-50 text-olive-900 border-olive-200/60',
   amber: 'bg-amber-50 text-amber-900 border-amber-200/60',
   rose: 'bg-rose-50 text-rose-900 border-rose-200/60',
-  cyan: 'bg-cyan-50 text-cyan-900 border-cyan-200/60',
-  slate: 'bg-slate-100 text-slate-700 border-slate-200/60',
+  cyan: 'bg-teal-50 text-teal-900 border-teal-200/60',
+  slate: 'bg-stone-100 text-stone-700 border-stone-200/60',
 };
 
 const dotColors = {
-  blue: 'bg-blue-500', purple: 'bg-purple-500', green: 'bg-emerald-500',
-  amber: 'bg-amber-500', rose: 'bg-rose-500', cyan: 'bg-cyan-500', slate: 'bg-slate-500',
+  blue: 'bg-amber-500', purple: 'bg-orange-500', green: 'bg-olive-500',
+  amber: 'bg-amber-500', rose: 'bg-rose-500', cyan: 'bg-teal-500', slate: 'bg-stone-500',
 };
 
 export const Badge: React.FC<BadgeProps> = ({
@@ -269,7 +269,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 //  Divider
 // ────────────────────────────────────────────────────
 export const Divider: React.FC<{ className?: string }> = ({ className }) => (
-  <div className={cn('h-px bg-slate-100', className)} />
+  <div className={cn('h-px bg-[#E8E2D5]', className)} />
 );
 
 // ────────────────────────────────────────────────────
@@ -280,7 +280,7 @@ export const LoadingSpinner: React.FC<{ className?: string; size?: number }> = (
 }) => (
   <div className={cn('flex flex-col items-center justify-center gap-3', className)}>
     <div
-      className="rounded-full border-2 border-slate-200 border-t-brand-blue animate-spin"
+      className="rounded-full border-2 border-[#E8E2D5] border-t-brand-amber animate-spin"
       style={{ width: size, height: size }}
     />
   </div>
@@ -299,7 +299,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({ className, count = 1 }) => (
     {Array.from({ length: count }).map((_, i) => (
       <div
         key={i}
-        className={cn('animate-skeleton bg-slate-100 rounded-lg', className)}
+        className={cn('animate-skeleton bg-[#E8E2D5] rounded-lg', className)}
       />
     ))}
   </div>
@@ -317,7 +317,7 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
-  value, max = 100, label, color = 'from-blue-500 to-blue-600', className,
+  value, max = 100, label, color = 'from-amber-500 to-amber-600', className,
 }) => {
   const pct = Math.min((value / max) * 100, 100);
   const [width, setWidth] = useState(0);
@@ -335,12 +335,12 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div ref={ref} className={cn('space-y-1.5', className)}>
       {label && (
-        <div className="flex justify-between text-xs text-slate-500">
+        <div className="flex justify-between text-xs text-stone-500">
           <span className="capitalize">{label}</span>
-          <span className="text-slate-700 font-medium">{Math.round(pct)}%</span>
+          <span className="text-stone-700 font-medium">{Math.round(pct)}%</span>
         </div>
       )}
-      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-[#E8E2D5] rounded-full overflow-hidden">
         <div
           className={cn('h-full rounded-full bg-gradient-to-r transition-all duration-1000 ease-out', color)}
           style={{ width: `${width}%` }}

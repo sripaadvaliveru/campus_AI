@@ -32,11 +32,11 @@ const SECTION_COLORS: Record<TabId, string> = {
 };
 
 const SECTION_BG: Record<TabId, string> = {
-  dashboard: 'bg-indigo-50 text-indigo-700',
-  chat: 'bg-blue-50 text-blue-700',
-  events: 'bg-amber-50 text-amber-700',
-  directory: 'bg-emerald-50 text-emerald-700',
-  analytics: 'bg-violet-50 text-violet-700',
+  dashboard: 'bg-amber-50 text-amber-800',
+  chat: 'bg-amber-50 text-amber-800',
+  events: 'bg-yellow-50 text-yellow-800',
+  directory: 'bg-olive-50 text-olive-800',
+  analytics: 'bg-orange-50 text-orange-800',
 };
 
 interface TopNavProps {
@@ -61,14 +61,14 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <>
       {/* Desktop + Tablet Top Nav */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/60">
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#FBF8F3]/80 backdrop-blur-md border-b border-[#E8E2D5]">
         <div className="flex items-center h-full px-4 md:px-6 lg:px-8 max-w-[1600px] mx-auto">
           {/* Logo */}
           <div className="flex items-center gap-2.5 mr-6 lg:mr-10 flex-shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
               <GraduationCap className="h-4 w-4 text-white" />
             </div>
-            <span className="font-display font-bold text-slate-900 text-sm tracking-tight hidden sm:inline">
+            <span className="font-display font-bold text-stone-900 text-sm tracking-tight hidden sm:inline">
               CampusAI
             </span>
           </div>
@@ -85,19 +85,19 @@ export const TopNav: React.FC<TopNavProps> = ({
                   aria-current={isActive ? 'page' : undefined}
                   className={cn(
                     'relative px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-amber',
                     isActive
                       ? SECTION_BG[item.id]
-                      : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                      : 'text-stone-500 hover:text-stone-700 hover:bg-[#F3ECE1]'
                   )}
                 >
                   <Icon className="h-4 w-4 inline mr-1.5" />
                   {item.label}
                   {item.badge && !isActive && (
-                    <span className="ml-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-medium bg-emerald-50 text-emerald-600">
+                    <span className="ml-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-medium bg-amber-50 text-amber-700">
                       <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500" />
                       </span>
                       {item.badge}
                     </span>
@@ -122,14 +122,14 @@ export const TopNav: React.FC<TopNavProps> = ({
               selected={selectedCollege}
               onSelect={onSelectCollege}
             />
-            <button className="p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors hidden md:flex" aria-label="Search">
+            <button className="p-2 rounded-lg hover:bg-[#F3ECE1] text-stone-500 transition-colors hidden md:flex" aria-label="Search">
               <Search className="h-4 w-4" />
             </button>
 
             {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors md:hidden"
+              className="p-2 rounded-lg text-stone-500 hover:bg-[#F3ECE1] transition-colors md:hidden"
               aria-label="Menu"
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -154,7 +154,7 @@ export const TopNav: React.FC<TopNavProps> = ({
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.25 }}
-              className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-2xl border-b border-slate-200 shadow-xl md:hidden"
+              className="fixed inset-x-0 top-0 z-50 bg-[#FBF8F3]/95 backdrop-blur-2xl border-b border-[#E8E2D5] shadow-xl md:hidden"
               role="dialog"
               aria-modal="true"
               aria-label="Navigation menu"
@@ -163,14 +163,14 @@ export const TopNav: React.FC<TopNavProps> = ({
                 {/* Header */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
                       <GraduationCap className="h-4 w-4 text-white" />
                     </div>
-                    <span className="font-display font-bold text-slate-900 text-sm">CampusAI</span>
+                    <span className="font-display font-bold text-stone-900 text-sm">CampusAI</span>
                   </div>
                   <button
                     onClick={() => setMobileOpen(false)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
+                    className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition"
                     aria-label="Close menu"
                   >
                     <X className="h-5 w-5" />
@@ -191,13 +191,13 @@ export const TopNav: React.FC<TopNavProps> = ({
                           'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors',
                           isActive
                             ? SECTION_BG[item.id]
-                            : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                            : 'text-stone-500 hover:text-stone-700 hover:bg-[#F3ECE1]'
                         )}
                       >
                         <Icon className="h-5 w-5" />
                         {item.label}
                         {item.badge && (
-                          <span className="ml-auto inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-medium bg-emerald-50 text-emerald-600">
+                          <span className="ml-auto inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-medium bg-amber-50 text-amber-700">
                             {item.badge}
                           </span>
                         )}
@@ -207,8 +207,8 @@ export const TopNav: React.FC<TopNavProps> = ({
                 </nav>
 
                 {/* College Picker (Mobile) */}
-                <div className="pt-2 border-t border-slate-100">
-                  <p className="px-4 text-xs text-slate-400 font-medium mb-2">Select College</p>
+                <div className="pt-2 border-t border-[#E8E2D5]">
+                  <p className="px-4 text-xs text-stone-400 font-medium mb-2">Select College</p>
                   <div className="px-4">
                     <CollegePopover
                       colleges={colleges}

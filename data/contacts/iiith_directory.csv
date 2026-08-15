@@ -1,0 +1,31 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Prof. Ramesh Bathula,Professor & HoD,CSE,ramesh.bathula@iiit.ac.in,+91-40-2312-0101,DBS Building,Mon-Fri 10:00-12:00,Data Structures and Algorithms
+2,Prof. Anirban Dasgupta,Professor & HoD,ECE,anirban.dasgupta@iiit.ac.in,+91-40-2312-0102,Research Building,Mon-Wed 14:00-16:00,Signal Processing and Communications
+3,Prof. K.V. Krishna,Professor & HoD,IT,kv.krishna@iiit.ac.in,+91-40-2312-0103,Academic Block,Mon-Fri 11:00-13:00,Information Security
+4,Prof. Murali Krishna Reddy,Professor & HoD,CSIS,murali.krishna@iiit.ac.in,+91-40-2312-0104,DBS Building,Tue-Thu 10:00-12:00,Cyber Security and Forensics
+5,Prof. Vasudeva Varma,Professor & HoD,AI-ML,vasudeva.varma@iiit.ac.in,+91-40-2312-0105,Research Building,Mon-Fri 15:00-17:00,Artificial Intelligence and Machine Learning
+6,Prof. Radhika Mamidi,Professor & HoD,Computational-Linguistics,radhika.mamidi@iiit.ac.in,+91-40-2312-0106,Academic Block,Wed-Fri 11:00-13:00,Natural Language Processing
+7,Prof. Sachin Kumar,Professor & HoD,VLSI,sachin.kumar@iiit.ac.in,+91-40-2312-0107,Research Building,Mon-Tue 14:00-16:00,Very Large Scale Integration Design
+8,Prof. Aparna Lalingkar,Professor & HoD,Design,aparna.lalingkar@iiit.ac.in,+91-40-2312-0108,Design Building,Mon-Fri 10:00-12:00,Interaction Design and Visualization
+9,Prof. Jawahar C.V.,Dean - Academics,jawahar.cv@iiit.ac.in,+91-40-2312-0201,Academic Block,Mon-Fri 09:00-11:00,Computer Vision and Deep Learning
+10,Prof. Raghu Ram Teja,Dean - Student Affairs,raghu.ram@iiit.ac.in,+91-40-2312-0202,Student Activity Center,Mon-Fri 16:00-18:00,Robotics and Automation
+11,Prof. P.J. Narayanan,Dean - R&D,pj.narayanan@iiit.ac.in,+91-40-2312-0203,Research Building,Mon-Fri 14:00-16:00,Graphics and Multimedia
+12,Prof. K.K. Biswas,Dean - Innovation,kk.biswas@iiit.ac.in,+91-40-2312-0204,Innovation Tower,Wed-Fri 10:00-12:00,Entrepreneurship and Innovation
+13,Rajendra Singh,Registrar,rajendra.singh@iiit.ac.in,+91-40-2312-0301,Admin Block,Mon-Fri 09:30-17:30,Administration and Compliance
+14,Venkatesh Sharma,Finance Officer,venkatesh.sharma@iiit.ac.in,+91-40-2312-0302,Admin Block,Mon-Fri 10:00-17:00,Financial Management and Accounts
+15,Dr. Srinivasa Rao,Controller of Examinations,srinivasa.rao@iiit.ac.in,+91-40-2312-0303,Examination Cell,Mon-Fri 09:00-17:00,Examination Management and Evaluation
+16,Praveen Kumar Reddy,Training and Placement Officer,praveen.kumar@iiit.ac.in,+91-40-2312-0304,Placement Cell,Mon-Sat 09:00-18:00,Industry Relations and Placements
+17,Mahesh Goud,Librarian,mahesh.goud@iiit.ac.in,+91-40-2312-0305,Library,Mon-Sat 08:00-20:00,Library and Information Science
+18,Dr. Padmavathi,Chief Medical Officer,padmavathi@iiit.ac.in,+91-40-2312-0306,Health Center,Mon-Fri 08:00-18:00,General Medicine and Student Health
+19,Ravi Kumar,Hostel Warden - LH-1,ravi.kumar@iiit.ac.in,+91-40-2312-0401,Ladies Hostel 1,Mon-Sat 08:00-22:00,Hostel Administration and Student Welfare
+20,Deepika Nair,Hostel Warden - BH-1,deepika.nair@iiit.ac.in,+91-40-2312-0402,Boys Hostel 1,Mon-Sat 08:00-22:00,Hostel Administration and Student Welfare
+21,Suresh Babu,Hostel Warden - BH-2,suresh.babu@iiit.ac.in,+91-40-2312-0403,Boys Hostel 2,Mon-Sat 08:00-22:00,Hostel Administration and Student Welfare
+22,Nagaraju M.,IT Support Manager,nagaraju.m@iiit.ac.in,+91-40-2312-0501,IT Office,Mon-Fri 09:00-18:00,Network Administration and IT Infrastructure
+23,Prof. Pradeepini Gera,Associate Professor,CSE,pradeepini.gera@iiit.ac.in,+91-40-2312-0109,DBS Building,Mon-Wed 11:00-13:00,Machine Learning and Data Mining
+24,Prof. Rajiv Ratan Singh,Associate Professor,ECE,rajiv.singh@iiit.ac.in,+91-40-2312-0110,Research Building,Tue-Thu 15:00-17:00,VLSI and Embedded Systems
+25,Prof. Vivek Chavan,Associate Professor,IT,vivek.chavan@iiit.ac.in,+91-40-2312-0111,Academic Block,Mon-Fri 14:00-16:00,Cloud Computing and DevOps
+26,Prof. Santosh Kumar Biswal,Assistant Professor,CSIS,santosh.biswal@iiit.ac.in,+91-40-2312-0112,DBS Building,Wed-Fri 10:00-12:00,Network Security and Cryptography
+27,Prof. Lavanya Annavarapu,Assistant Professor,AI-ML,lavanya.a@iiit.ac.in,+91-40-2312-0113,Research Building,Mon-Tue 11:00-13:00,Deep Learning and Computer Vision
+28,Prof. Harish Yvs,Assistant Professor,Computational-Linguistics,harish.yvs@iiit.ac.in,+91-40-2312-0114,Academic Block,Mon-Fri 15:00-17:00,Speech Processing and Information Retrieval
+29,Kiran Kumar,Chief Warden,kiran.kumar@iiit.ac.in,+91-40-2312-0601,Hostel Office,Mon-Sat 08:00-22:00,Overall Hostel Management and Discipline
+30,Priya Reddy,Student Welfare Officer,priya.reddy@iiit.ac.in,+91-40-2312-0602,Student Activity Center,Mon-Fri 09:30-17:30,Student Counseling and Grievance Redressal

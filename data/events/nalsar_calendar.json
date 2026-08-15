@@ -1,0 +1,434 @@
+{
+  "academic_year": "2026-2027",
+  "odd_semester": {
+    "name": "Odd Semester (July - November 2026)",
+    "events": [
+      {
+        "date": "2026-07-12",
+        "event": "Orientation Week Begins",
+        "category": "orientation",
+        "description": "Freshman orientation and induction programme for incoming students including campus tour, faculty introductions, and academic overview"
+      },
+      {
+        "date": "2026-07-14",
+        "event": "Orientation - Legal Research Methodology Workshop",
+        "category": "orientation",
+        "description": "Mandatory workshop on legal research databases, citation methods, and academic writing standards"
+      },
+      {
+        "date": "2026-07-15",
+        "event": "Orientation - Moot Court Introduction",
+        "category": "orientation",
+        "description": "Introduction to moot court culture at NALSAR, demonstration round by senior students"
+      },
+      {
+        "date": "2026-07-16",
+        "event": "Independence Day Celebrations",
+        "category": "cultural",
+        "description": "Flag hoisting ceremony and patriotic cultural programme organized by the Cultural Committee"
+      },
+      {
+        "date": "2026-07-20",
+        "event": "Odd Semester Classes Begin",
+        "category": "academic",
+        "description": "Commencement of regular classes for Semester 1, 3, 5, 7, and 9"
+      },
+      {
+        "date": "2026-08-01",
+        "event": "Guest Lecture - Constitutional Law",
+        "category": "academic",
+        "description": "Guest lecture by a senior Supreme Court advocate on emerging trends in Constitutional Law"
+      },
+      {
+        "date": "2026-08-15",
+        "event": "Independence Day Holiday",
+        "category": "holiday",
+        "description": "National holiday - Independence Day of India"
+      },
+      {
+        "date": "2026-08-22",
+        "event": "Inter-Semester Moot Court Rounds",
+        "category": "academic",
+        "description": "Internal moot court competition across all semesters to select teams for external competitions"
+      },
+      {
+        "date": "2026-08-30",
+        "event": "Legal Awareness Camp - Surrounding Villages",
+        "category": "social",
+        "description": "Community legal literacy programme conducted in nearby villages covering fundamental rights and remedies"
+      },
+      {
+        "date": "2026-09-01",
+        "event": "Internship Placement Drive - Tier 1 Law Firms",
+        "category": "placement",
+        "description": "Campus recruitment by top-tier law firms including AZB & Partners, Cyril Amarchand Mangaldas, Khaitan & Co for winter internships"
+      },
+      {
+        "date": "2026-09-05",
+        "event": "Teachers' Day Celebrations",
+        "category": "cultural",
+        "description": "Students organize cultural programme, felicitation of faculty members, and nostalgic tributes"
+      },
+      {
+        "date": "2026-09-12",
+        "event": "Legal Aid Camp",
+        "category": "social",
+        "description": "Free legal aid camp organized by the Legal Aid Society providing consultation to underprivileged communities"
+      },
+      {
+        "date": "2026-09-15",
+        "event": "Internship Placement Drive - Corporate Legal Departments",
+        "category": "placement",
+        "description": "Placement drives by corporate legal teams of TCS, Infosys, Reliance, and other major corporations"
+      },
+      {
+        "date": "2026-09-20",
+        "event": "National Seminar on Cyber Law",
+        "category": "academic",
+        "description": "Two-day national seminar on evolving jurisprudence in Cyber Law and Data Privacy"
+      },
+      {
+        "date": "2026-09-27",
+        "event": "Gandhi Jayanti Observance",
+        "category": "holiday",
+        "description": "Gandhi Jayanti holiday with special assembly and peace march organized by NSS unit"
+      },
+      {
+        "date": "2026-10-01",
+        "event": "Internship Placement Drive - Litigation Chambers",
+        "category": "placement",
+        "description": "Placement drives by senior advocates' chambers at Supreme Court and High Court for internship opportunities"
+      },
+      {
+        "date": "2026-10-05",
+        "event": "Nyaya Khel - Annual Sports Fest Begins",
+        "category": "sports",
+        "description": "Annual inter-college sports festival featuring cricket, football, basketball, badminton, athletics, and chess"
+      },
+      {
+        "date": "2026-10-08",
+        "event": "Nyaya Khel - Finals and Closing Ceremony",
+        "category": "sports",
+        "description": "Finals of all sports events and grand closing ceremony with prize distribution"
+      },
+      {
+        "date": "2026-10-12",
+        "event": "Moot Court Competition - Preliminary Rounds",
+        "category": "academic",
+        "description": "Preliminary rounds of the national moot court competition in Constitutional Law and Criminal Law"
+      },
+      {
+        "date": "2026-10-15",
+        "event": "Moot Court Competition - Semi-Finals",
+        "category": "academic",
+        "description": "Semi-final rounds of the national moot court competition with teams from law universities across India"
+      },
+      {
+        "date": "2026-10-18",
+        "event": "Moot Court Competition - Grand Finale",
+        "category": "academic",
+        "description": "Grand finale of the national moot court competition judged by sitting judges of the High Court"
+      },
+      {
+        "date": "2026-11-01",
+        "event": "National Law Conference - Day 1",
+        "category": "academic",
+        "description": "Annual National Law Conference inaugurated by the Chief Justice of the High Court with plenary sessions on emerging legal issues"
+      },
+      {
+        "date": "2026-11-02",
+        "event": "National Law Conference - Day 2",
+        "category": "academic",
+        "description": "Technical sessions, panel discussions, and paper presentations on constitutional reforms and judicial accountability"
+      },
+      {
+        "date": "2026-11-03",
+        "event": "National Law Conference - Closing Ceremony",
+        "category": "academic",
+        "description": "Valedictory session with keynote address by a Supreme Court judge, release of conference proceedings, and awards"
+      },
+      {
+        "date": "2026-11-15",
+        "event": "Odd Semester End Examinations Begin",
+        "category": "exam",
+        "description": "Commencement of end-semester examinations for all odd semester students"
+      }
+    ]
+  },
+  "even_semester": {
+    "name": "Even Semester (January - May 2027)",
+    "events": [
+      {
+        "date": "2027-01-05",
+        "event": "Winter Vacation Ends",
+        "category": "holiday",
+        "description": "End of winter break - students return to campus"
+      },
+      {
+        "date": "2027-01-06",
+        "event": "Even Semester Classes Begin",
+        "category": "academic",
+        "description": "Commencement of regular classes for Semester 2, 4, 6, 8, and 10"
+      },
+      {
+        "date": "2027-01-10",
+        "event": "Guest Lecture - Corporate Governance",
+        "category": "academic",
+        "description": "Guest lecture by a corporate law partner on SEBI regulations and corporate governance compliance"
+      },
+      {
+        "date": "2027-01-15",
+        "event": "Republic Day Holiday",
+        "category": "holiday",
+        "description": "National holiday - Republic Day of India with flag hoisting ceremony and cultural programme"
+      },
+      {
+        "date": "2027-01-20",
+        "event": "Internship Placement Drive - Summer Internships (Tier 1)",
+        "category": "placement",
+        "description": "Campus placement drives by top-tier law firms for summer internship positions 2027"
+      },
+      {
+        "date": "2027-01-25",
+        "event": "National Voters' Day Observance",
+        "category": "social",
+        "description": "Voter awareness drive organized by the Legal Awareness Society with panel discussion on electoral reforms"
+      },
+      {
+        "date": "2027-02-01",
+        "event": "Model Parliament - Inauguration",
+        "category": "academic",
+        "description": "Inauguration of the annual Model Parliament session simulating the Indian Parliament with legislative debates"
+      },
+      {
+        "date": "2027-02-03",
+        "event": "Model Parliament - Lok Sabha Session",
+        "category": "academic",
+        "description": "Full Lok Sabha session with question hour, zero hour, and passage of bills"
+      },
+      {
+        "date": "2027-02-05",
+        "event": "Model Parliament - Closing Ceremony",
+        "category": "academic",
+        "description": "Closing ceremony with best parliamentarian awards and address by a member of Parliament"
+      },
+      {
+        "date": "2027-02-10",
+        "event": "Internship Placement Drive - Summer Internships (Corporate Legal)",
+        "category": "placement",
+        "description": "Campus drives by corporate legal departments of major companies for summer internships"
+      },
+      {
+        "date": "2027-02-15",
+        "event": "Vidhik - Cultural Fest Begins",
+        "category": "cultural",
+        "description": "Annual cultural festival featuring competitions in music, dance, drama, art, photography, and literary events"
+      },
+      {
+        "date": "2027-02-17",
+        "event": "Vidhik - Cultural Fest Closing",
+        "category": "cultural",
+        "description": "Closing ceremony of Vidhik with celebrity performance, DJ night, and prize distribution"
+      },
+      {
+        "date": "2027-02-22",
+        "event": "Guest Lecture - International Trade Law",
+        "category": "academic",
+        "description": "Lecture by WTO trade law expert on dispute resolution and cross-border trade agreements"
+      },
+      {
+        "date": "2027-03-01",
+        "event": "Internship Placement Drive - Litigation Summer Internships",
+        "category": "placement",
+        "description": "Placement drives by senior advocates' chambers for summer internships at High Courts"
+      },
+      {
+        "date": "2027-03-05",
+        "event": "Legal Awareness Campaign - College Campuses",
+        "category": "social",
+        "description": "Legal awareness programme in nearby engineering and medical colleges on consumer rights and workplace harassment"
+      },
+      {
+        "date": "2027-03-10",
+        "event": "Lexicon - Annual Cultural Fest Begins",
+        "category": "cultural",
+        "description": "Flagship annual cultural festival of NALSAR featuring national-level competitions in debating, music, dance, theatre, art, and quizzing"
+      },
+      {
+        "date": "2027-03-12",
+        "event": "Lexicon - Battle of Bands and Dance Competitions",
+        "category": "cultural",
+        "description": "Day 2 of Lexicon with inter-college battle of bands, dance-offs, and fashion show"
+      },
+      {
+        "date": "2027-03-13",
+        "event": "Lexicon - Literary Events and Quiz",
+        "category": "cultural",
+        "description": "Day 3 of Lexicon with national-level quiz, debate, essay writing, and poetry slam competitions"
+      },
+      {
+        "date": "2027-03-14",
+        "event": "Lexicon - Closing Ceremony",
+        "category": "cultural",
+        "description": "Grand closing ceremony of Lexicon with concert, awards, and cultural finale"
+      },
+      {
+        "date": "2027-03-25",
+        "event": "Departmental Seminar - Family Law",
+        "category": "academic",
+        "description": "Seminar on reforms in personal law, Uniform Civil Code debates, and family law jurisprudence"
+      },
+      {
+        "date": "2027-04-01",
+        "event": "Holi Holiday",
+        "category": "holiday",
+        "description": "Holi festival holiday"
+      },
+      {
+        "date": "2027-04-10",
+        "event": "Internship Placement Drive - NGO and Think Tank Internships",
+        "category": "placement",
+        "description": "Placement drives by human rights organizations, think tanks, and NGOs for policy research internships"
+      },
+      {
+        "date": "2027-04-25",
+        "event": "Departmental Seminar - Jurisprudence",
+        "category": "academic",
+        "description": "Annual jurisprudence seminar featuring student paper presentations and faculty panel discussion"
+      },
+      {
+        "date": "2027-05-05",
+        "event": "Even Semester End Examinations Begin",
+        "category": "exam",
+        "description": "Commencement of end-semester examinations for all even semester students"
+      },
+      {
+        "date": "2027-05-20",
+        "event": "Even Semester End Examinations End",
+        "category": "exam",
+        "description": "Conclusion of all even semester examination papers"
+      }
+    ]
+  },
+  "placement_calendar": {
+    "events": [
+      {
+        "period": "September 2026",
+        "event": "Tier 1 Law Firm Internship Drives",
+        "description": "AZB & Partners, Cyril Amarchand Mangaldas, Khaitan & Co, J Sagar Associates, Trilegal conducting internship recruitment for winter 2026"
+      },
+      {
+        "period": "September 2026",
+        "event": "Corporate Legal Department Drives",
+        "description": "TCS Legal, Infosys Legal, Reliance Industries, Tata Group legal teams conducting internship recruitment"
+      },
+      {
+        "period": "October 2026",
+        "event": "Litigation Internship Drives",
+        "description": "Senior advocates' chambers at Supreme Court and Delhi High Court conducting internship interviews"
+      },
+      {
+        "period": "January 2027",
+        "event": "Summer Internship Drives - Tier 1 Firms",
+        "description": "Campus recruitment by top law firms for summer 2027 internship positions"
+      },
+      {
+        "period": "February 2027",
+        "event": "Summer Internship Drives - Corporate Legal",
+        "description": "Corporate legal departments conducting summer internship recruitment drives"
+      },
+      {
+        "period": "March 2027",
+        "event": "Litigation Summer Internship Drives",
+        "description": "Senior advocates and law firms conducting summer internship recruitment"
+      },
+      {
+        "period": "April 2027",
+        "event": "NGO and Think Tank Internship Drives",
+        "description": "Human rights organizations, policy think tanks, and NGOs conducting internship recruitment for policy research"
+      }
+    ]
+  },
+  "important_deadlines": [
+    {
+      "deadline": "2026-07-18",
+      "description": "Last date for course registration and add-drop period"
+    },
+    {
+      "deadline": "2026-08-15",
+      "description": "Last date for submission of first internal assignment"
+    },
+    {
+      "deadline": "2026-08-31",
+      "description": "Last date for Moot Court team registration for internal competition"
+    },
+    {
+      "deadline": "2026-09-10",
+      "description": "Last date for submitting internship certificates for credit evaluation"
+    },
+    {
+      "deadline": "2026-09-20",
+      "description": "Last date for research paper submission for National Seminar on Cyber Law"
+    },
+    {
+      "deadline": "2026-10-01",
+      "description": "Last date for submission of second internal assignment"
+    },
+    {
+      "deadline": "2026-10-10",
+      "description": "Last date for registering for Nyaya Khel sports events"
+    },
+    {
+      "deadline": "2026-10-25",
+      "description": "Last date for National Law Conference paper submission"
+    },
+    {
+      "deadline": "2026-11-05",
+      "description": "Last date for submitting research project proposals"
+    },
+    {
+      "deadline": "2026-11-12",
+      "description": "Last date for course withdrawal with refund"
+    },
+    {
+      "deadline": "2027-01-08",
+      "description": "Last date for course registration for even semester and add-drop period"
+    },
+    {
+      "deadline": "2027-01-25",
+      "description": "Last date for submitting internship certificates for winter internship evaluation"
+    },
+    {
+      "deadline": "2027-02-01",
+      "description": "Last date for Model Parliament participation registration"
+    },
+    {
+      "deadline": "2027-02-15",
+      "description": "Last date for Vidhik cultural fest event registration"
+    },
+    {
+      "deadline": "2027-02-28",
+      "description": "Last date for submission of mid-term assignments"
+    },
+    {
+      "deadline": "2027-03-05",
+      "description": "Last date for Lexicon competition registration"
+    },
+    {
+      "deadline": "2027-03-31",
+      "description": "Last date for submitting semester project proposals"
+    },
+    {
+      "deadline": "2027-04-10",
+      "description": "Last date for course withdrawal without academic penalty"
+    },
+    {
+      "deadline": "2027-04-30",
+      "description": "Last date for submission of research dissertations for final year students"
+    },
+    {
+      "deadline": "2027-05-02",
+      "description": "Last date for submission of all pending coursework and assignments"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+id,name,designation,department,email,phone,office_location,office_hours,specialization
+1,Prof. V.K. Bajaj,Dean Academics,Academic Affairs,dean.academics@nalsar.ac.in,+91-98490-12345,Academic Block - 301,"Mon-Fri 10:00-12:00",Constitutional Law
+2,Prof. Sunita Reddy,Dean Student Welfare,Student Affairs,dean.sw@nalsar.ac.in,+91-98490-12346,Student Welfare Centre - 102,"Mon-Fri 11:00-13:00",Family Law
+3,Prof. Raghavendra Prasad,Dean Research & Development,Research,dean.rd@nalsar.ac.in,+91-98490-12347,Academic Block - 405,"Mon-Fri 14:00-16:00",International Law
+4,Dr. Meera Nair,Dean Moot Court,Moot Court Division,dean.mootcourt@nalsar.ac.in,+91-98490-12348,Moot Court Hall - 201,"Mon-Fri 10:00-12:00",Criminal Law
+5,Prof. Arvind Kumar,Head of Department,Constitutional Law,hod.constitutional@nalsar.ac.in,+91-98490-12349,Academic Block - 201,"Mon-Wed-Fri 10:00-12:00",Constitutional Law
+6,Prof. Deepa Iyer,Head of Department,Criminal Law,hod.criminal@nalsar.ac.in,+91-98490-12350,Academic Block - 215,"Tue-Thu 11:00-13:00",Criminal Law & Criminology
+7,Prof. Rajesh Menon,Head of Department,Corporate Law,hod.corporate@nalsar.ac.in,+91-98490-12351,Academic Block - 310,"Mon-Fri 09:00-11:00",Corporate & Business Law
+8,Prof. Anjali Sharma,Head of Department,International Law,hod.international@nalsar.ac.in,+91-98490-12352,Academic Block - 412,"Tue-Thu 14:00-16:00",International Law & Human Rights
+9,Prof. Kavitha Rao,Head of Department,Family Law,hod.family@nalsar.ac.in,+91-98490-12353,Academic Block - 220,"Mon-Wed 11:00-13:00",Family Law & Gender Justice
+10,Prof. Suresh Babu,Head of Department,Intellectual Property,hod.ipr@nalsar.ac.in,+91-98490-12354,Academic Block - 318,"Mon-Fri 15:00-17:00",Intellectual Property Rights
+11,Prof. Lakshmi Devi,Head of Department,Human Rights,hod.humanrights@nalsar.ac.in,+91-98490-12355,Academic Block - 408,"Wed-Fri 10:00-12:00",Human Rights & Public Interest Litigation
+12,Prof. Nagaraj Holla,Head of Department,Environmental Law,hod.environmental@nalsar.ac.in,+91-98490-12356,Academic Block - 325,"Mon-Thu 14:00-16:00",Environmental Law & Policy
+13,Dr. Priya Venkatesh,Professor,Constitutional Law,prof.priya@nalsar.ac.in,+91-98490-12357,Academic Block - 203,"Mon-Fri 10:00-12:00",Constitutional Litigation
+14,Dr. Manohar Singh,Professor,Criminal Law,prof.manohar@nalsar.ac.in,+91-98490-12358,Academic Block - 217,"Tue-Thu 11:00-13:00",Criminal Jurisprudence
+15,Prof. Nandini Deshpande,Professor,Corporate Law,prof.nandini@nalsar.ac.in,+91-98490-12359,Academic Block - 312,"Mon-Fri 14:00-16:00",Mergers & Acquisitions
+16,Prof. Uday Sharma,Registrar,Administration,registrar@nalsar.ac.in,+91-98490-12360,Administrative Block - 101,"Mon-Fri 09:00-17:00",University Administration
+17,Shri Venkat Reddy,Finance Officer,Finance,finance.officer@nalsar.ac.in,+91-98490-12361,Administrative Block - 105,"Mon-Fri 10:00-16:00",Financial Management
+18,Dr. Asha Kumari,Controller of Examinations,Examinations,coe@nalsar.ac.in,+91-98490-12362,Examination Block - 101,"Mon-Fri 09:30-16:30",Examination Administration
+19,Ms. Priyanka Joshi,Placement Coordinator,Placement Cell,placement@nalsar.ac.in,+91-98490-12363,Placement Cell - 201,"Mon-Fri 10:00-17:00",Corporate Placements & Industry Relations
+20,Mr. Ravi Shankar,Senior Librarian,Library,librarian@nalsar.ac.in,+91-98490-12364,Library Block - 101,"Mon-Sat 08:00-20:00",Legal Research & Information Science
+21,Dr. Sunil Kumar,Chief Medical Officer,Health Centre,cmo@nalsar.ac.in,+91-98490-12365,Health Centre - 101,"Mon-Sat 09:00-18:00",General Medicine
+22,Mr. Ramesh Babu,Hostel Warden (Boys),Hostel Affairs,warden.boys@nalsar.ac.in,+91-98490-12366,Boys Hostel - Warden Office,"Mon-Sun 08:00-22:00",Hostel Administration
+23,Ms. Kavitha Prasad,Hostel Warden (Girls),Hostel Affairs,warden.girls@nalsar.ac.in,+91-98490-12367,Girls Hostel - Warden Office,"Mon-Sun 08:00-22:00",Hostel Administration & Student Welfare
+24,Mr. Srinivas Rao,NSS Officer,Student Activities,nss@nalsar.ac.in,+91-98490-12368,Student Activity Centre - 101,"Mon-Fri 10:00-17:00",Community Service & Social Outreach
+25,Capt. Vikram Reddy,NCC Officer,Student Activities,ncc@nalsar.ac.in,+91-98490-12369,NCC Office - Ground Floor,"Mon-Fri 14:00-17:00",National Cadet Corps Activities

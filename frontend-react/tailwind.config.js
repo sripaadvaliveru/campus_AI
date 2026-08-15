@@ -34,9 +34,9 @@ export default {
           foreground: 'hsl(var(--card-foreground))',
         },
         brand: {
-          blue: '#2563EB',
-          'blue-light': '#DBEAFE',
-          'blue-50': '#EFF6FF',
+          amber: '#D97706',
+          'amber-light': '#FEF3C7',
+          'amber-50': '#FFFBEB',
         },
         dashboard: 'hsl(var(--dashboard))',
         chat: 'hsl(var(--chat))',
@@ -60,12 +60,12 @@ export default {
         '3xl': '1.5rem',
       },
       backgroundImage: {
-        'grid-pattern': "linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px), linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px)",
-        'dot-pattern': "radial-gradient(rgba(37, 99, 235, 0.06) 1px, transparent 1px)",
+        'grid-pattern': "linear-gradient(rgba(217, 119, 6, 0.04) 1px, transparent 1px), linear-gradient(to right, rgba(217, 119, 6, 0.04) 1px, transparent 1px)",
+        'dot-pattern': "radial-gradient(rgba(217, 119, 6, 0.06) 1px, transparent 1px)",
       },
       boxShadow: {
-        'card': '0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        'card-hover': '0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04)',
+        'card': '0 1px 3px rgba(180, 83, 9, 0.04), 0 1px 2px rgba(180, 83, 9, 0.06)',
+        'card-hover': '0 4px 16px rgba(180, 83, 9, 0.06), 0 2px 4px rgba(180, 83, 9, 0.04)',
       },
       animation: {
         'cursor-blink': 'blink 1s step-end infinite',

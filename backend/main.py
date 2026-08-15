@@ -193,12 +193,13 @@ def list_colleges(college_id: Optional[str] = Query(None, description="Specific 
 
 @app.get("/contacts", tags=["Data"])
 def get_contacts(
+    college_id: Optional[str] = Query(None, description="College ID for college-specific contacts"),
     search: Optional[str] = Query(None, description="Search by name, dept or designation"),
     department: Optional[str] = Query(None, description="Filter by department name"),
     limit: int = Query(50, ge=1, le=200, description="Max results to return"),
 ):
     """Search the faculty and staff contact directory."""
-    contacts = load_contacts()
+    contacts = load_contacts(college_id)
     if not contacts:
         raise HTTPException(status_code=500, detail="Could not load contacts")
 
@@ -216,12 +217,13 @@ def get_contacts(
 
 @app.get("/events", tags=["Data"])
 def get_events(
+    college_id: Optional[str] = Query(None, description="College ID for college-specific events"),
     category: Optional[str] = Query(None, description="exam | cultural | sports | holiday | academic | placement"),
     semester: Optional[str] = Query(None, description="odd | even"),
     upcoming: bool = Query(False, description="Only show upcoming events"),
 ):
     """Get academic calendar events with optional filters."""
-    events = load_events()
+    events = load_events(college_id)
     if not events:
         raise HTTPException(status_code=500, detail="Could not load events")
 
