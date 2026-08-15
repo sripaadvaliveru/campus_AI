@@ -68,7 +68,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
               <GraduationCap className="h-4 w-4 text-white" />
             </div>
-            <span className="font-display font-bold text-stone-900 text-sm tracking-tight hidden sm:inline">
+            <span className="font-display font-bold text-stone-900 text-base tracking-tight hidden sm:inline">
               CampusAI
             </span>
           </div>
@@ -83,8 +83,8 @@ export const TopNav: React.FC<TopNavProps> = ({
                   key={item.id}
                   onClick={() => handleNav(item.id)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={cn(
-                    'relative px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150',
+                    className={cn(
+                      'relative px-3.5 py-2 rounded-lg text-base font-medium transition-colors duration-150',
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-amber',
                     isActive
                       ? SECTION_BG[item.id]
@@ -166,7 +166,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
                       <GraduationCap className="h-4 w-4 text-white" />
                     </div>
-                    <span className="font-display font-bold text-stone-900 text-sm">CampusAI</span>
+                    <span className="font-display font-bold text-stone-900 text-base">CampusAI</span>
                   </div>
                   <button
                     onClick={() => setMobileOpen(false)}
@@ -188,7 +188,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                         onClick={() => handleNav(item.id)}
                         aria-current={isActive ? 'page' : undefined}
                         className={cn(
-                          'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors',
+                          'w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-medium transition-colors',
                           isActive
                             ? SECTION_BG[item.id]
                             : 'text-stone-500 hover:text-stone-700 hover:bg-[#F3ECE1]'

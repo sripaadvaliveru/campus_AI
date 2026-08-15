@@ -88,13 +88,13 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-semibold text-stone-800">Chat with AI</h2>
+              <h2 className="text-base font-semibold text-stone-800">Chat with AI</h2>
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
               </span>
             </div>
-            <p className="text-xs text-stone-400">
+            <p className="text-sm text-stone-400">
               {college.icon} {college.name}
             </p>
           </div>
@@ -150,17 +150,17 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             </motion.div>
 
             <div className="space-y-2">
-              <h3 className="font-display text-2xl font-bold gradient-text bg-gradient-to-r from-amber-700 to-amber-800">
+              <h3 className="font-display text-3xl md:text-4xl font-bold gradient-text bg-gradient-to-r from-amber-700 to-amber-800">
                 What can I help you with?
               </h3>
-              <p className="text-sm text-stone-500 max-w-sm mx-auto">
+              <p className="text-base text-stone-500 max-w-md mx-auto">
                 Ask about academics, events, contacts, or campus life for {college.short}.
               </p>
             </div>
 
             {/* Suggestion cards */}
             <div className="w-full space-y-2">
-              <p className="text-xs text-stone-400 font-medium">Try asking</p>
+              <p className="text-sm text-stone-400 font-medium">Try asking</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {SUGGESTIONS.map((s, i) => (
                   <motion.button
@@ -169,7 +169,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 + i * 0.05 }}
                     onClick={() => setInput(s.text)}
-                    className="group flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] text-left text-xs text-stone-600 hover:border-amber-500/60 hover:bg-amber-50/50 hover:shadow-md hover:text-stone-900 transition-all duration-200"
+                    className="group flex items-center gap-3 px-5 py-3.5 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] text-left text-sm text-stone-600 hover:border-amber-500/60 hover:bg-amber-50/50 hover:shadow-md hover:text-stone-900 transition-all duration-200"
                   >
                     <span className="text-base flex-shrink-0">{s.icon}</span>
                     <span className="flex-1 truncate">{s.text}</span>
@@ -207,14 +207,14 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                         'relative group',
                         isBot
                           ? 'text-stone-700'
-                          : 'bg-gradient-to-r from-amber-600 to-amber-700 text-white px-4 py-2.5 rounded-2xl rounded-br-md shadow-md shadow-amber-900/10'
+                          : 'bg-gradient-to-r from-amber-600 to-amber-700 text-white px-5 py-3 rounded-2xl rounded-br-md shadow-md shadow-amber-900/10'
                       )}>
                         {isBot ? (
                           <div className="chat-prose prose prose-sm max-w-none">
                             <ReactMarkdown>{msg.content}</ReactMarkdown>
                           </div>
                         ) : (
-                          <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed">{msg.content}</pre>
+                          <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">{msg.content}</pre>
                         )}
 
                         {/* Bot metadata */}
@@ -315,7 +315,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                 <button
                   key={i}
                   onClick={() => { setInput(s.text); setShowSuggestions(false); }}
-                  className="group flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] hover:border-amber-500/60 hover:bg-amber-50/50 text-left text-xs text-stone-600 hover:text-stone-900 transition-all duration-200"
+                  className="group flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] hover:border-amber-500/60 hover:bg-amber-50/50 text-left text-sm text-stone-600 hover:text-stone-900 transition-all duration-200"
                 >
                   <span className="text-sm flex-shrink-0">{s.icon}</span>
                   <span className="flex-1 truncate">{s.text}</span>
@@ -334,7 +334,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             {/* College context */}
             <div className="flex items-center gap-2 px-4 pt-3 pb-0">
               <span className="text-sm">{college.icon}</span>
-              <span className="text-2xs text-stone-400 font-medium">Ask about {college.short}</span>
+              <span className="text-xs text-stone-400 font-medium">Ask about {college.short}</span>
             </div>
 
             {/* Textarea */}
@@ -347,7 +347,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
               aria-label={`Ask ${college.short} AI assistant a question`}
               rows={1}
               disabled={loading}
-              className="w-full bg-transparent text-sm text-stone-900 placeholder-stone-400 px-4 pt-2 pb-2 pr-12 focus:outline-none resize-none disabled:opacity-50 max-h-32 overflow-y-auto"
+              className="w-full bg-transparent text-base text-stone-900 placeholder-stone-400 px-5 pt-3 pb-3 pr-12 focus:outline-none resize-none disabled:opacity-50 max-h-40 overflow-y-auto"
               style={{ lineHeight: '1.6', transition: 'height 0.15s ease' }}
             />
 
@@ -369,7 +369,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             </div>
           </div>
 
-          <p className="text-2xs text-stone-400 text-center mt-2">
+          <p className="text-xs text-stone-400 text-center mt-2.5">
             Enter to send · Shift+Enter for new line
           </p>
         </div>

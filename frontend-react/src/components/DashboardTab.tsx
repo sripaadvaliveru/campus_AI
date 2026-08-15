@@ -105,7 +105,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-stone-500 text-sm md:text-base leading-relaxed max-w-xl mb-7"
+            className="text-stone-500 text-base md:text-lg leading-relaxed max-w-xl mb-7"
           >
             Universal campus intelligence for all Indian college types.
             Ask about academics, events, contacts, and campus life.
@@ -135,17 +135,17 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         {STATS.map((stat, i) => {
           const Icon = stat.icon;
           return (
-            <Card key={i} className="p-4 bg-[#F3ECE1]/50" hover={false}>
-              <div className="flex items-center justify-between mb-2.5">
-                <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', stat.bg)}>
-                  <Icon className={cn('h-4 w-4', stat.color)} />
+            <Card key={i} className="p-5 bg-[#F3ECE1]/50" hover={false}>
+              <div className="flex items-center justify-between mb-3">
+                <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', stat.bg)}>
+                  <Icon className={cn('h-5 w-5', stat.color)} />
                 </div>
                 <BlueprintStat label="" value={stat.tag} />
               </div>
-              <div className={cn('text-xl font-bold mb-0.5', stat.color)}>
+              <div className={cn('text-2xl font-bold mb-1', stat.color)}>
                 <AnimatedCounter to={stat.value} suffix={stat.suffix} duration={1800} />
               </div>
-              <p className="text-xs text-stone-500">{stat.label}</p>
+              <p className="text-sm text-stone-500">{stat.label}</p>
             </Card>
           );
         })}
@@ -156,8 +156,8 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         <section id="all-colleges" className="space-y-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-display text-xl font-semibold text-stone-900 tracking-tight">Campus Contexts</h2>
-              <p className="text-xs text-stone-500 mt-0.5">Select a college to focus your AI responses</p>
+              <h2 className="font-display text-2xl font-semibold text-stone-900 tracking-tight">Campus Contexts</h2>
+              <p className="text-sm text-stone-500 mt-1">Select a college to focus your AI responses</p>
             </div>
             <BlueprintStat label="DOCS" value="5.2k" />
           </div>
@@ -181,13 +181,13 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                   )} />
 
                   <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-xl">{college.icon}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{college.icon}</span>
                       <div className="min-w-0">
-                        <h3 title={college.name} className="font-medium text-sm text-stone-800 group-hover:text-amber-700 transition-colors truncate">
+                        <h3 title={college.name} className="font-medium text-base text-stone-800 group-hover:text-amber-700 transition-colors truncate">
                           {college.name}
                         </h3>
-                        <p className="text-xs text-stone-400 truncate">{college.location}</p>
+                        <p className="text-sm text-stone-400 truncate">{college.location}</p>
                       </div>
                     </div>
                     {/* Status beacon */}
@@ -201,8 +201,8 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
                   <div className="flex items-center justify-between">
                     <Badge variant="slate" className="text-2xs font-mono">{college.type.split(' ')[0]}</Badge>
-                    <span className="text-xs font-medium text-amber-700 flex items-center gap-1 group-hover:gap-1.5 transition-all">
-                      Ask <ChevronRight className="h-3 w-3" />
+                    <span className="text-sm font-medium text-amber-700 flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                      Ask <ChevronRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
                 </Card>
@@ -216,22 +216,22 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       <ScrollReveal>
         <section className="space-y-5">
           <div>
-            <h2 className="font-display text-xl font-semibold text-stone-900 tracking-tight">Academic Coverage</h2>
-            <p className="text-xs text-stone-500 mt-0.5">Knowledge depth across Indian regulatory domains</p>
+            <h2 className="font-display text-2xl font-semibold text-stone-900 tracking-tight">Academic Coverage</h2>
+            <p className="text-sm text-stone-500 mt-1">Knowledge depth across Indian regulatory domains</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {DISCIPLINES.map((d, i) => {
               const Icon = d.icon;
               return (
-                <Card key={i} className="p-4" hover={false}>
+                <Card key={i} className="p-5" hover={false}>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={cn('p-2 rounded-lg bg-gradient-to-br', d.color, 'bg-opacity-10')}>
-                      <Icon className="h-4 w-4 text-white" />
+                    <div className={cn('p-2.5 rounded-lg bg-gradient-to-br', d.color, 'bg-opacity-10')}>
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-sm text-stone-800">{d.label}</p>
-                      <p className="text-2xs text-stone-400 font-mono">{d.desc}</p>
+                      <p className="font-medium text-base text-stone-800">{d.label}</p>
+                      <p className="text-sm text-stone-400 font-mono">{d.desc}</p>
                     </div>
                   </div>
                   <ProgressBar value={d.coverage} label="coverage" color={d.color} />
@@ -245,22 +245,22 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       {/* ── Features ─────────────────────────────────── */}
       <ScrollReveal>
         <section className="space-y-5">
-          <h2 className="font-display text-xl font-semibold text-stone-900 tracking-tight">Technology</h2>
+          <h2 className="font-display text-2xl font-semibold text-stone-900 tracking-tight">Technology</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {getFeatures(modelName).map((f, i) => {
               const Icon = f.icon;
               return (
-                <Card key={i} className="p-5" hover={false}>
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-amber-50 rounded-lg flex-shrink-0">
-                      <Icon className="h-4 w-4 text-amber-700" />
+                <Card key={i} className="p-6" hover={false}>
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 bg-amber-50 rounded-lg flex-shrink-0">
+                      <Icon className="h-5 w-5 text-amber-700" />
                     </div>
-                    <div className="space-y-1 flex-1 min-w-0">
+                    <div className="space-y-1.5 flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-sm text-stone-800">{f.title}</p>
+                        <p className="font-medium text-base text-stone-800">{f.title}</p>
                         <Badge variant={f.badgeVariant} className="ml-auto">{f.badge}</Badge>
                       </div>
-                      <p className="text-xs text-stone-500 leading-relaxed">{f.desc}</p>
+                      <p className="text-sm text-stone-500 leading-relaxed">{f.desc}</p>
                     </div>
                   </div>
                 </Card>
@@ -274,8 +274,8 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       <ScrollReveal>
         <section className="rounded-xl border border-[#E8E2D5] bg-[#F3ECE1]/50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <p className="font-medium text-sm text-stone-800">Ready to explore?</p>
-            <p className="text-xs text-stone-500">Select a college and start your AI conversation.</p>
+            <p className="font-medium text-base text-stone-800">Ready to explore?</p>
+            <p className="text-sm text-stone-500">Select a college and start your AI conversation.</p>
           </div>
           <ShimmerButton onClick={() => setActiveTab('chat')} className="flex-shrink-0">
             Start Chatting <ChevronRight className="h-3.5 w-3.5" />

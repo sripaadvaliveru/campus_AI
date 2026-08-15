@@ -96,8 +96,8 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
     <div className="space-y-6 pb-10 relative">
       <DoodleData />
       <div className="relative z-10">
-        <h1 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-amber-700 to-amber-800 tracking-tight">Analytics</h1>
-        <p className="text-xs text-stone-500 mt-0.5">Usage metrics from the SQLite analytics engine.</p>
+        <h1 className="font-display text-2xl font-semibold gradient-text bg-gradient-to-r from-amber-700 to-amber-800 tracking-tight">Analytics</h1>
+        <p className="text-sm text-stone-500 mt-1">Usage metrics from the SQLite analytics engine.</p>
       </div>
 
       {/* KPI Cards */}
@@ -105,17 +105,17 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
         {KPI_CARDS.map((card, i) => {
           const Icon = card.icon;
           return (
-            <Card key={i} className="p-4 bg-[#F3ECE1]/50" hover={false}>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-xs text-stone-500">{card.label}</p>
-                <div className={cn('p-1.5 rounded-md', card.bg)}>
-                  <Icon className={cn('h-3.5 w-3.5', card.iconColor)} />
+            <Card key={i} className="p-5 bg-[#F3ECE1]/50" hover={false}>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm text-stone-500">{card.label}</p>
+                <div className={cn('p-2 rounded-md', card.bg)}>
+                  <Icon className={cn('h-4 w-4', card.iconColor)} />
                 </div>
               </div>
-              <div className={cn('text-xl font-bold', card.iconColor)}>
+              <div className={cn('text-2xl font-bold', card.iconColor)}>
                 <AnimatedCounter to={card.value} suffix={card.suffix || ''} duration={1500} decimals={card.suffix === '%' ? 1 : 0} />
               </div>
-              <p className="text-2xs text-stone-400 mt-0.5 font-mono">{card.sub}</p>
+              <p className="text-sm text-stone-400 mt-1 font-mono">{card.sub}</p>
             </Card>
           );
         })}
@@ -125,12 +125,12 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <Card className="lg:col-span-8 p-5" hover={false}>
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="h-4 w-4 text-amber-700" />
-            <h2 className="font-medium text-sm text-stone-800">Query Volume — Last 7 Days</h2>
+            <TrendingUp className="h-5 w-5 text-amber-700" />
+            <h2 className="font-medium text-base text-stone-800">Query Volume — Last 7 Days</h2>
             <Badge variant="amber" className="ml-auto">Live</Badge>
           </div>
           {chartData.length === 0 ? (
-            <p className="text-xs text-stone-500 text-center py-10">No data yet.</p>
+            <p className="text-sm text-stone-500 text-center py-10">No data yet.</p>
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={chartData}>
@@ -141,15 +141,15 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E8E2D5" />
-                <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#B8A99A' }} />
-                <YAxis tick={{ fontSize: 11, fill: '#B8A99A' }} />
+                <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#B8A99A' }} />
+                <YAxis tick={{ fontSize: 12, fill: '#B8A99A' }} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#FFFDF9',
                     border: '1px solid #E8E2D5',
                     borderRadius: '0.5rem',
                     boxShadow: '0 1px 3px rgba(180, 83, 9, 0.08)',
-                    fontSize: '12px',
+                    fontSize: '13px',
                   }}
                 />
                 <Area type="monotone" dataKey="count" stroke="#D97706" strokeWidth={1.5} fillOpacity={1} fill="url(#colorCount)" />
@@ -160,11 +160,11 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
 
         <Card className="lg:col-span-4 p-5" hover={false}>
           <div className="flex items-center gap-2 mb-4">
-            <Activity className="h-4 w-4 text-amber-700" />
-            <h2 className="font-medium text-sm text-stone-800">Top Categories</h2>
+            <Activity className="h-5 w-5 text-amber-700" />
+            <h2 className="font-medium text-base text-stone-800">Top Categories</h2>
           </div>
           {summary.top_categories.length === 0 ? (
-            <p className="text-xs text-stone-500 text-center py-8">No queries yet.</p>
+            <p className="text-sm text-stone-500 text-center py-8">No queries yet.</p>
           ) : (
             <div className="space-y-3">
               {summary.top_categories.map((c, i) => {
@@ -193,15 +193,15 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
       {/* Popular + Recent */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <Card className="lg:col-span-4 p-5" hover={false}>
-          <h2 className="font-medium text-sm text-stone-800 mb-3">Popular Queries</h2>
+          <h2 className="font-medium text-base text-stone-800 mb-4">Popular Queries</h2>
           <div className="divide-y divide-[#E8E2D5]">
             {popular_queries.length === 0
-              ? <p className="text-xs text-stone-500 py-6 text-center">No data.</p>
+              ? <p className="text-sm text-stone-500 py-6 text-center">No data.</p>
               : popular_queries.map((q, i) => (
                 <div key={i} className="py-2 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-2xs font-medium text-stone-400 w-4 flex-shrink-0">{i + 1}</span>
-                    <span className="text-xs text-stone-600 truncate">"{q.user_query}"</span>
+                    <span className="text-sm font-medium text-stone-400 w-5 flex-shrink-0">{i + 1}</span>
+                    <span className="text-sm text-stone-600 truncate">"{q.user_query}"</span>
                   </div>
                   <Badge variant="slate">{q.frequency}×</Badge>
                 </div>
@@ -210,11 +210,11 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
         </Card>
 
         <Card className="lg:col-span-8 p-5" hover={false}>
-          <h2 className="font-medium text-sm text-stone-800 mb-3">Recent Queries</h2>
+          <h2 className="font-medium text-base text-stone-800 mb-4">Recent Queries</h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-xs">
+            <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#E8E2D5] text-stone-500 text-2xs">
+                <tr className="border-b border-[#E8E2D5] text-stone-500 text-xs">
                   <th className="text-left pb-2 pr-4 font-medium">Query</th>
                   <th className="text-left pb-2 pr-4 font-medium">Category</th>
                   <th className="text-right pb-2 font-medium">Time</th>
@@ -225,15 +225,15 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ analyticsData, loadi
                   ? <tr><td colSpan={3} className="py-6 text-center text-stone-500">No logs yet.</td></tr>
                   : recent_queries.map(q => (
                     <tr key={q.id} className="hover:bg-[#F3ECE1]/50 transition-colors">
-                      <td className="py-2 pr-4 text-stone-600 truncate max-w-[240px]" title={q.user_query}>
+                      <td className="py-2.5 pr-4 text-stone-600 truncate max-w-[240px]" title={q.user_query}>
                         "{q.user_query}"
                       </td>
-                      <td className="py-2 pr-4">
+                      <td className="py-2.5 pr-4">
                         <Badge variant="slate" className="capitalize">{q.category || 'general'}</Badge>
                       </td>
-                      <td className="py-2 text-right text-stone-500">
+                      <td className="py-2.5 text-right text-stone-500">
                         {q.timestamp ? new Date(q.timestamp).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}
-                        <span className="block text-2xs text-stone-400">{q.response_time_ms}ms</span>
+                        <span className="block text-xs text-stone-400">{q.response_time_ms}ms</span>
                       </td>
                     </tr>
                   ))}

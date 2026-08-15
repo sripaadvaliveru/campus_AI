@@ -75,8 +75,8 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
       <DoodleCalendar />
       {/* Header */}
       <div className="relative z-10">
-        <h1 className="font-display text-xl font-semibold gradient-text bg-gradient-to-r from-amber-700 to-amber-800 tracking-tight">Academic Calendar</h1>
-        <p className="text-xs text-stone-500 mt-0.5">Exams, fests, holidays, and placements.</p>
+        <h1 className="font-display text-2xl font-semibold gradient-text bg-gradient-to-r from-amber-700 to-amber-800 tracking-tight">Academic Calendar</h1>
+        <p className="text-sm text-stone-500 mt-1">Exams, fests, holidays, and placements.</p>
       </div>
 
       {/* Filter bar */}
@@ -89,13 +89,13 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
               onChange={e => setSearch(e.target.value)}
               placeholder="Search events…"
               aria-label="Search events"
-              className="w-full bg-[#FFFDF9] text-sm text-stone-700 placeholder-stone-400 pl-9 pr-3 py-2 rounded-lg border border-[#E3D9C6] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition"
+              className="w-full bg-[#FFFDF9] text-base text-stone-700 placeholder-stone-400 pl-9 pr-3 py-2.5 rounded-lg border border-[#E3D9C6] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition"
             />
           </div>
           <select
             value={semester}
             onChange={e => setSemester(e.target.value)}
-            className="bg-[#FFFDF9] text-sm text-stone-700 px-3 py-2 rounded-lg border border-[#E3D9C6] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition sm:w-44 appearance-none cursor-pointer"
+            className="bg-[#FFFDF9] text-base text-stone-700 px-3 py-2.5 rounded-lg border border-[#E3D9C6] focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition sm:w-44 appearance-none cursor-pointer"
             style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2378716C' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2.5rem' }}
           >
             <option value="all">All Semesters</option>
@@ -105,7 +105,7 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
           <button
             onClick={() => setUpcoming(!upcoming)}
             className={cn(
-              'flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-colors duration-150 flex-shrink-0',
+              'flex items-center gap-2 px-3 py-2.5 rounded-lg border text-base font-medium transition-colors duration-150 flex-shrink-0',
               upcoming
                 ? 'bg-amber-50 border-amber-200 text-amber-800'
                 : 'bg-[#FFFDF9] border-[#E3D9C6] text-stone-500 hover:text-stone-700 hover:border-[#D6CFC2]'
@@ -123,7 +123,7 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
               key={c.id}
               onClick={() => setCategory(c.id)}
               className={cn(
-                'px-2.5 py-1 rounded-md text-xs font-medium border transition-colors duration-150',
+                'px-3 py-1.5 rounded-md text-sm font-medium border transition-colors duration-150',
                 category === c.id
                   ? 'bg-amber-600 border-amber-600 text-white'
                   : 'bg-[#FFFDF9] border-[#E3D9C6] text-stone-500 hover:text-stone-700 hover:border-[#D6CFC2]'
@@ -132,7 +132,7 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
               {c.label}
             </button>
           ))}
-          <span className="ml-auto text-xs text-stone-400 flex items-center gap-1">
+          <span className="ml-auto text-sm text-stone-400 flex items-center gap-1">
             <Filter className="h-3 w-3" />
             {filtered.length}
           </span>
@@ -150,8 +150,8 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
         <div className="flex flex-col items-center justify-center py-16 text-center gap-3">
           <Calendar className="h-8 w-8 text-stone-300" />
           <div>
-            <p className="text-stone-700 font-medium text-sm">No events found</p>
-            <p className="text-xs text-stone-500 mt-0.5">Try adjusting your filters</p>
+            <p className="text-stone-700 font-medium text-base">No events found</p>
+            <p className="text-sm text-stone-500 mt-1">Try adjusting your filters</p>
           </div>
           <ShimmerButton variant="ghost" size="sm" onClick={() => { setSearch(''); setCategory('all'); setUpcoming(false); }}>
             Clear filters
@@ -172,7 +172,7 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
                   transition={{ duration: 0.3, delay: i * 0.03 }}
                 >
                   <Card
-                    className={cn('p-4 relative overflow-hidden group', isPast && 'opacity-50')}
+                    className={cn('p-5 relative overflow-hidden group', isPast && 'opacity-50')}
                     hover={!isPast}
                   >
                     <div className={cn('absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r', accent)} />
@@ -183,23 +183,23 @@ export const EventsTab: React.FC<EventsTabProps> = ({ events, loading }) => {
                         <BlueprintStat label="" value={e.semester} />
                       </div>
 
-                      <h3 className={cn('font-medium text-sm text-stone-800 leading-snug line-clamp-2', !isPast && 'group-hover:text-amber-700 transition-colors')}>
+                      <h3 className={cn('font-medium text-base text-stone-800 leading-snug line-clamp-2', !isPast && 'group-hover:text-amber-700 transition-colors')}>
                         {e.event}
                       </h3>
 
                       {e.description && (
-                        <p className="text-xs text-stone-500 leading-relaxed line-clamp-2">{e.description}</p>
+                        <p className="text-sm text-stone-500 leading-relaxed line-clamp-2">{e.description}</p>
                       )}
 
-                      <div className="flex items-center justify-between pt-1.5 border-t border-[#E8E2D5]">
-                        <div className="flex items-center gap-1.5 text-xs text-amber-700">
+                      <div className="flex items-center justify-between pt-2 border-t border-[#E8E2D5]">
+                        <div className="flex items-center gap-1.5 text-sm text-amber-700">
                           <Clock className="h-3 w-3" />
                           {e.date}
                         </div>
                         {isPast ? (
-                          <span className="text-2xs text-stone-400">Done</span>
+                          <span className="text-sm text-stone-400">Done</span>
                         ) : (
-                          <span className="text-2xs text-amber-700 font-medium">Upcoming</span>
+                          <span className="text-sm text-amber-700 font-medium">Upcoming</span>
                         )}
                       </div>
                     </div>

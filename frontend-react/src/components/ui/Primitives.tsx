@@ -161,7 +161,7 @@ export const BlueprintStat: React.FC<BlueprintStatProps> = ({
   <span className={cn(
     'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md',
     'bg-[#F3ECE1] border border-[#E3D9C6]',
-    'font-mono text-2xs tracking-wider uppercase',
+    'font-mono text-xs tracking-wider uppercase',
     className
   )}>
     {label && <span className="text-stone-400">{label}:</span>}
@@ -335,7 +335,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div ref={ref} className={cn('space-y-1.5', className)}>
       {label && (
-        <div className="flex justify-between text-xs text-stone-500">
+        <div className="flex justify-between text-sm text-stone-500">
           <span className="capitalize">{label}</span>
           <span className="text-stone-700 font-medium">{Math.round(pct)}%</span>
         </div>
