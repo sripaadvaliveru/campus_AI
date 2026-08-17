@@ -222,7 +222,7 @@ export const App: React.FC = () => {
   const renderTab = () => {
     switch (tab) {
       case 'dashboard':
-        return <DashboardTab colleges={colleges} selectedCollege={selected} onSelectCollege={setSelected} setActiveTab={setTab} modelName={modelName} />;
+        return <DashboardTab colleges={colleges} selectedCollege={selected} onSelectCollege={setSelected} setActiveTab={setTab} modelName={modelName} onQuickQuery={handleSend} />;
       case 'chat':
         return <ChatTab selectedCollege={selected} messages={messages} onSendMessage={handleSend} onClearHistory={() => setMessages([])} onSendFeedback={handleFeedback} loading={chatLoading} />;
       case 'events':
