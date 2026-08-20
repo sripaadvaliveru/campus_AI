@@ -104,7 +104,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           {messages.length > 0 && (
             <button
               onClick={() => setShowSuggestions(v => !v)}
-              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition-all duration-150"
+              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition-colors duration-150"
               aria-label="Show suggestions"
             >
               <Lightbulb className="h-4 w-4" />
@@ -113,7 +113,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           {messages.length > 0 && (
             <button
               onClick={onClearHistory}
-              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition-all duration-150"
+              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 hover:bg-[#F3ECE1] transition-colors duration-150"
               aria-label="Clear chat history"
             >
               <Trash2 className="h-4 w-4" />
@@ -169,7 +169,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 + i * 0.05 }}
                     onClick={() => setInput(s.text)}
-                    className="group flex items-center gap-3 px-5 py-3.5 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] text-left text-sm text-stone-600 hover:border-amber-500/60 hover:bg-amber-50/50 hover:shadow-md hover:text-stone-900 transition-all duration-200"
+                    className="group flex items-center gap-3 px-5 py-3.5 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] text-left text-sm text-stone-600 hover:border-amber-500/60 hover:bg-amber-50/50 hover:shadow-md hover:text-stone-900 transition-colors duration-200 transition-shadow duration-200 transition-border-color duration-200"
                   >
                     <span className="text-base flex-shrink-0">{s.icon}</span>
                     <span className="flex-1 truncate">{s.text}</span>
@@ -304,10 +304,11 @@ export const ChatTab: React.FC<ChatTabProps> = ({
         {/* ── Collapsible Suggestions ──────────────────── */}
         {messages.length > 0 && showSuggestions && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="max-w-3xl mx-auto space-y-2 pt-3 pb-4 relative z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="max-w-3xl mx-auto space-y-2 pt-3 pb-4 relative z-10 overflow-hidden"
           >
             <p className="text-xs text-stone-400 font-medium px-1">Try asking</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -315,7 +316,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                 <button
                   key={i}
                   onClick={() => { setInput(s.text); setShowSuggestions(false); }}
-                  className="group flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] hover:border-amber-500/60 hover:bg-amber-50/50 text-left text-sm text-stone-600 hover:text-stone-900 transition-all duration-200"
+                  className="group flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#FFFDF9] border border-[#E3D9C6] hover:border-amber-500/60 hover:bg-amber-50/50 text-left text-sm text-stone-600 hover:text-stone-900 transition-colors duration-200 transition-shadow duration-200 transition-border-color duration-200"
                 >
                   <span className="text-sm flex-shrink-0">{s.icon}</span>
                   <span className="flex-1 truncate">{s.text}</span>

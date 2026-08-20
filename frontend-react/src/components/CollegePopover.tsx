@@ -73,6 +73,7 @@ export const CollegePopover: React.FC<CollegePopoverProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.96 }}
             transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.2 }}
+            style={{ transformOrigin: 'top right' }}
             className="absolute right-0 top-full mt-2 w-80 bg-[#FFFDF9] backdrop-blur-xl border border-[#E8E2D5] rounded-xl shadow-xl overflow-hidden z-50"
             role="dialog"
             aria-label="Select college"
@@ -97,11 +98,14 @@ export const CollegePopover: React.FC<CollegePopoverProps> = ({
               {filtered.length === 0 ? (
                 <p className="text-center text-base text-stone-500 py-8">No colleges found.</p>
               ) : (
-                filtered.map(college => {
+                filtered.map((college, idx) => {
                   const isSelected = selected?.id === college.id;
                   return (
-                    <button
+                    <motion.button
                       key={college.id}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.03, duration: 0.15 }}
                       role="option"
                       aria-selected={isSelected}
                       onClick={() => { onSelect(college); setIsOpen(false); }}
@@ -118,7 +122,7 @@ export const CollegePopover: React.FC<CollegePopoverProps> = ({
                         <p className="text-sm text-stone-400 truncate">{college.type}</p>
                       </div>
                       {isSelected && <Check className="h-4 w-4 text-amber-600 flex-shrink-0" />}
-                    </button>
+                    </motion.button>
                   );
                 })
               )}

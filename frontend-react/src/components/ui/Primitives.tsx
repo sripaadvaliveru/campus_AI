@@ -85,7 +85,7 @@ export const Card: React.FC<CardProps> = ({
 }) => (
   <div
     className={cn(
-      'bg-[#FFFDF9] rounded-xl border border-[#E8E2D5] shadow-card transition-all duration-200',
+      'bg-[#FFFDF9] rounded-xl border border-[#E8E2D5] shadow-card transition-shadow duration-200 ease-out transition-transform duration-200 ease-out transition-colors duration-200',
       hover && 'hover:shadow-card-hover hover:border-[#D6CFC2] hover:scale-[1.02] cursor-pointer',
       className
     )}
@@ -129,7 +129,7 @@ export const ShimmerButton: React.FC<ButtonProps> = ({
   return (
     <button
       className={cn(
-        'group/btn relative inline-flex items-center justify-center font-medium transition-all duration-150',
+        'group/btn relative inline-flex items-center justify-center font-medium transition-colors duration-150 transition-transform duration-150 ease-out',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-amber focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'active:scale-95',
@@ -342,8 +342,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       )}
       <div className="h-1.5 bg-[#E8E2D5] rounded-full overflow-hidden">
         <div
-          className={cn('h-full rounded-full bg-gradient-to-r transition-all duration-1000 ease-out', color)}
-          style={{ width: `${width}%` }}
+          className={cn('h-full rounded-full bg-gradient-to-r transition-transform duration-1000 ease-out', color)}
+          style={{ transform: `scaleX(${width / 100})`, transformOrigin: 'left' }}
         />
       </div>
     </div>

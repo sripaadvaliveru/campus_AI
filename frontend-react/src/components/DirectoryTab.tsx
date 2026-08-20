@@ -162,7 +162,7 @@ export const DirectoryTab: React.FC<DirectoryTabProps> = ({ contacts, loading })
                         </a>
                         <button
                           onClick={() => copy(c.email, `${i}-email`)}
-                          className="opacity-0 group-hover/row:opacity-100 p-0.5 rounded text-stone-400 hover:text-stone-700 transition-all duration-150 flex-shrink-0"
+                          className="opacity-0 group-hover/row:opacity-100 p-0.5 rounded text-stone-400 hover:text-stone-700 transition-colors duration-150 flex-shrink-0"
                         >
                           {copied === `${i}-email` ? <Check className="h-3 w-3 text-amber-600" /> : <Copy className="h-3 w-3" />}
                         </button>
@@ -179,7 +179,7 @@ export const DirectoryTab: React.FC<DirectoryTabProps> = ({ contacts, loading })
                           </a>
                           <button
                             onClick={() => copy(c.phone, `${i}-phone`)}
-                            className="opacity-0 group-hover/row:opacity-100 p-0.5 rounded text-stone-400 hover:text-stone-700 transition-all duration-150 flex-shrink-0"
+                            className="opacity-0 group-hover/row:opacity-100 p-0.5 rounded text-stone-400 hover:text-stone-700 transition-colors duration-150 flex-shrink-0"
                           >
                             {copied === `${i}-phone` ? <Check className="h-3 w-3 text-amber-600" /> : <Copy className="h-3 w-3" />}
                           </button>

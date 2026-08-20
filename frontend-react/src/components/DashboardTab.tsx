@@ -154,7 +154,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                   onClick={() => handleQueryClick(q.text)}
                   onMouseEnter={() => setHoveredQuery(q.text)}
                   onMouseLeave={() => setHoveredQuery(null)}
-                  className="w-full text-left p-3 rounded-xl bg-[#F8F4EC] hover:bg-amber-100/60 border border-[#E8E2D5] hover:border-amber-400/60 transition-all duration-150 group flex items-start gap-2.5"
+                  className="w-full text-left p-3 rounded-xl bg-[#F8F4EC] hover:bg-amber-100/60 border border-[#E8E2D5] hover:border-amber-400/60 transition-colors duration-150 transition-border-color duration-150 group flex items-start gap-2.5"
                 >
                   <span className="text-sm flex-shrink-0 mt-0.5">{q.icon}</span>
                   <div className="flex-1 min-w-0">
@@ -184,7 +184,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         {STATS.map((stat, i) => {
           const Icon = stat.icon;
           return (
-            <Card key={i} className="p-5 bg-[#FFFDF9] border-[#E8E2D5] hover:border-amber-300 transition-all" hover={false}>
+            <Card key={i} className="p-5 bg-[#FFFDF9] border-[#E8E2D5] hover:border-amber-300 transition-colors duration-200 transition-border-color duration-200" hover={false}>
               <div className="flex items-center justify-between mb-3">
                 <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', stat.bg)}>
                   <Icon className={cn('h-5 w-5', stat.color)} />
@@ -225,7 +225,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                 transition={{ ...spring.crisp, delay: i * 0.05 }}
               >
                 <Card
-                  className="p-5 group relative overflow-hidden bg-[#FFFDF9] border-[#E8E2D5] hover:border-amber-400 hover:shadow-md transition-all cursor-pointer"
+                  className="p-5 group relative overflow-hidden bg-[#FFFDF9] border-[#E8E2D5] hover:border-amber-400 hover:shadow-md transition-colors duration-200 transition-shadow duration-200 transition-border-color duration-200 cursor-pointer"
                   onClick={() => { onSelectCollege(college); setActiveTab('chat'); }}
                 >
                   <div className="flex items-start justify-between mb-3">
@@ -250,7 +250,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
                   <div className="flex items-center justify-between pt-3 border-t border-[#E8E2D5]/70">
                     <Badge variant="slate" className="text-2xs font-mono">{college.type.split(' ')[0]}</Badge>
-                    <span className="text-xs font-semibold text-amber-800 flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                    <span className="text-xs font-semibold text-amber-800 flex items-center gap-1 group-hover:gap-1.5 transition-transform duration-200 ease-out">
                       Ask AI <ChevronRight className="h-3.5 w-3.5" />
                     </span>
                   </div>

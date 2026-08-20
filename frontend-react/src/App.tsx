@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { TopNav } from './components/TopNav';
 import { DashboardTab } from './components/DashboardTab';
 import { ChatTab } from './components/ChatTab';
@@ -237,33 +237,35 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background bg-noise bg-section-grid">
-      <TopNav
-        colleges={colleges}
-        selectedCollege={selected}
-        onSelectCollege={setSelected}
-        activeTab={tab}
-        setActiveTab={setTab}
-        modelName={modelName}
-      />
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-screen bg-background bg-noise bg-section-grid">
+        <TopNav
+          colleges={colleges}
+          selectedCollege={selected}
+          onSelectCollege={setSelected}
+          activeTab={tab}
+          setActiveTab={setTab}
+          modelName={modelName}
+        />
 
-      {/* Main content */}
-      <main className="pt-16 min-h-screen flex flex-col relative z-10">
-        <div className={`flex-1 overflow-y-auto ${tab === 'chat' ? '' : 'px-4 md:px-6 lg:px-8 py-6 lg:py-8'}`}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={tab}
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={tab === 'chat' ? 'h-full' : 'max-w-6xl mx-auto'}
-            >
-              {renderTab()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </main>
-    </div>
+        {/* Main content */}
+        <main className="pt-16 min-h-screen flex flex-col relative z-10">
+          <div className={`flex-1 overflow-y-auto ${tab === 'chat' ? '' : 'px-4 md:px-6 lg:px-8 py-6 lg:py-8'}`}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tab}
+                variants={tabVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className={tab === 'chat' ? 'h-full' : 'max-w-6xl mx-auto'}
+              >
+                {renderTab()}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </main>
+      </div>
+    </MotionConfig>
   );
 };
